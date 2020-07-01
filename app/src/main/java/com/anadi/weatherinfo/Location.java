@@ -48,8 +48,10 @@ public class Location {
         countries.add(new Country("Ukraine", "UA"));
         countries.add(new Country("Brasil", "BR"));
 
-        cities.put("Ukraine", new ArrayList<String>(Arrays.asList(new String[]{"Kiev", "Harkiv"})));
-        cities.put("Brasil", new ArrayList<String>(Arrays.asList(new String[]{"Rio", "Bucho"})));
+        cities.put(countries.get(0).toString(), new ArrayList<String>(Arrays.asList(new String[]{"Kiev", "Harkiv"})));
+        cities.put(countries.get(1).toString(), new ArrayList<String>(Arrays.asList(new String[]{"Rio", "Bucho"})));
+
+
 
 //        jsonString = convert(context.getResources().openRawResource(R.raw.cities));
 //        Log.d("anadi_location", jsonString);
@@ -111,6 +113,10 @@ public class Location {
     }
 
     public static ArrayList<String> getCityNames(String country) {
+
+
+        Log.d("anadi_cities", "get cities for: " + country);
+
         return cities.get(country);
     }
 

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,7 +27,6 @@ public class AddLocation extends AppCompatActivity implements Spinner.OnItemSele
         setContentView(R.layout.activity_add_location);
 
         ArrayList<String> countries = new ArrayList<String>();
-        ArrayList<String> cities = new ArrayList<String>();
 
         countries = Location.getCountryNamesArray();
 
@@ -48,10 +48,15 @@ public class AddLocation extends AppCompatActivity implements Spinner.OnItemSele
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        selectedCountry = countrySpinner.getItemAtPosition(position).toString();
 
-        if(!selectedCountry.equalsIgnoreCase("Select Item"))
-            setCitySpinner();
+        if (parent.getId() == R.id.country_spinner) {
+            selectedCountry = countrySpinner.getItemAtPosition(position).toString();
+
+            if(!selectedCountry.equalsIgnoreCase("Select Item"))
+                setCitySpinner();
+        }
+
+
     }
 
     @Override
@@ -62,6 +67,16 @@ public class AddLocation extends AppCompatActivity implements Spinner.OnItemSele
     private void setCitySpinner() {
         ArrayList<String> cities = Location.getCityNames(selectedCountry);
 
+
+        if (null == cities) {
+
+            Log.d("anadi_spiner", "EMPTY cities LIST");
+            return;
+        }
+        else
+            Log.d("anadi_spiner", cities.toString());
+
+        citySpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, cities ));
     }
 }
 
