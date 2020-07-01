@@ -10,29 +10,41 @@
     android:foreground="?android:attr/selectableItemBackground">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textSize="20dp"
         android:textStyle="bold"
         android:id="@+id/city_row_name_text_view"
-        android:text="Kyiv"/>
+        android:text="Kyiv"
+        android:layout_weight="1"
+        android:minWidth="30dp"
+        android:maxWidth="30dp"
+        android:layout_gravity="center_vertical"/>
 
     <ImageView
         android:src="@drawable/clear_sky"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/city_row_icon_image_view"/>
+        android:id="@+id/city_row_icon_image_view"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"/>
+
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/city_row_wind_text_view"
-        android:text="15m/s"/>
+        android:text="15m/s"
+        android:layout_weight="1"
+        android:layout_gravity="right|center_vertical"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/city_row_temp_text_view"
-        android:text="20 celsium"/>
+        android:text="20 celsium"
+        android:layout_weight="1"
+        android:layout_gravity="right|center_vertical"/>
+
 
 </LinearLayout>

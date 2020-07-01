@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
 
         public LinearLayout containerView;
         public TextView cityNameTextView;
+        public ImageView iconImageView;
         public TextView windTextView;
         public TextView temperatureTextView;
 
@@ -26,6 +28,8 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
             super(itemView);
 
             containerView = itemView.findViewById(R.id.city_row);
+
+            iconImageView = itemView.findViewById(R.id.city_row_icon_image_view);
             cityNameTextView = itemView.findViewById(R.id.city_row_name_text_view);
             windTextView = itemView.findViewById(R.id.city_row_wind_text_view);
             temperatureTextView = itemView.findViewById(R.id.city_row_temp_text_view);
@@ -53,9 +57,11 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
 
     }
 
-//    public CityAdapter() {
-//
-//    }
+    public CityAdapter() {
+        cities.add(new CityInfo("Kiev", "Ukraine"));
+        cities.add(new CityInfo("Moscow", "Russia"));
+        cities.add(new CityInfo("Rio", "Brasil"));
+    }
 
     private ArrayList<CityInfo> cities = new ArrayList<>();
 
@@ -76,9 +82,10 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
     @Override
     public void onBindViewHolder(@NonNull CityAdapterHolder holder, int position) {
         CityInfo current = cities.get(position);
+        holder.iconImageView.setImageResource(R.drawable.clear_sky);
         holder.cityNameTextView.setText(current.getCityName());
-        holder.windTextView.setText(current.getInfo().getWindSpeed());
-        holder.temperatureTextView.setText(current.getInfo().getWindSpeed());
+        holder.windTextView.setText(current.getInfo().getWindSpeed() + " m/s");
+        holder.temperatureTextView.setText(current.getInfo().getTemperature() + " cels");
 
         holder.containerView.setTag(current);
     }
