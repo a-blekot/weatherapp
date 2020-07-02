@@ -1,5 +1,4 @@
 {
-{
   "Afghanistan": [
     "Herat",
     "Kabul",
@@ -45268,7 +45267,7 @@
     "San Cristobal",
     "San Cristobal",
     "San Felipe",
-    "San Felipe Torres Mochas [Ganaderia]",
+    "San Felipe Torres Mochas",
     "San Fernando",
     "San Fernando",
     "San Francisco",
@@ -45601,7 +45600,7 @@
     "Quelimane",
     "Tete"
   ],
-  "Myanmar [Burma]": [
+  "Myanmar": [
     "Hlaing",
     "Inya",
     "Kyauktada",
@@ -51549,7 +51548,7 @@
     "Yabucoa",
     "Yauco"
   ],
-  "Republic of Korea": [
+  "Korea": [
     "Andong",
     "Ansan-si",
     "Anseong",
@@ -51644,7 +51643,7 @@
     "Yongin",
     "Yongsan-dong"
   ],
-  "Republic of Lithuania": [
+  "Lithuania": [
     "Alytus",
     "Anciskiai",
     "Antakalnis",
@@ -51669,7 +51668,7 @@
     "Vilnius",
     "Visaginas"
   ],
-  "Republic of Moldova": [
+  "Moldova": [
     "Anenii Noi",
     "Briceni",
     "Cahul",
@@ -59666,7 +59665,7 @@
     "Zeytinburnu",
     "Zonguldak"
   ],
-  "U.S. Virgin Islands": [
+  "US Virgin Islands": [
     "Charlotte Amalie",
     "Christiansted",
     "Frederiksted",
