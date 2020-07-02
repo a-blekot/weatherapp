@@ -17,6 +17,8 @@ public class Location {
 
     //private static Map<Country, ArrayList<String>> locations = new HashMap<>();
 
+    private static Random random = new Random(145);
+
     private static Context context;
     private static ArrayList<Country> countries = new ArrayList<>();
     private static Map<String, ArrayList<String>> cities = new HashMap<>();
@@ -95,7 +97,7 @@ public class Location {
 
     public static ArrayList<String> getCityNames(String country) {
 
-        Log.d("anadi_cities", "get cities for: " + country);
+//        Log.d("anadi_cities", "get cities for: " + country);
 
         return cities.get(country);
     }
@@ -108,5 +110,30 @@ public class Location {
             countryNames.add(c.toString());
 
         return countryNames;
+    }
+
+    public static Country getCountryByName(String countryName) {
+
+        int index = countries.indexOf(countryName);
+        if (index == -1)
+            return null;
+
+        return countries.get(index);
+    }
+
+    public static Country getRandomCountry() {
+        if (countries.isEmpty())
+            return null;
+
+        return countries.get(random.nextInt(countries.size()));
+    }
+
+    public static String getRandomCity(String countryName) {
+        ArrayList<String> cityNames = getCityNames(countryName);
+        if (null == cityNames ||
+                cityNames.isEmpty())
+            return null;
+
+        return cityNames.get(random.nextInt(cityNames.size()));
     }
 }

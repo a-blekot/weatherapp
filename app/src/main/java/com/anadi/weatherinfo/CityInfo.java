@@ -1,19 +1,24 @@
 package com.anadi.weatherinfo;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.*;
 
 public class CityInfo {
+    private static int count = 0;
+    private int id = count++;
     private String cityName;
-    private String countryName;
+    private Country country;
     private WeatherInfo info;
 
-    public CityInfo(String cityName, String countryName) {
+    public CityInfo(String cityName, Country country) {
         this.cityName = cityName;
-        this.countryName = countryName;
+        this.country = country;
         info = new WeatherInfo(0, 0, WeatherInfo.State.NONE);
     }
+
+    public int getId() { return id;}
 
     public String getCityName() {
         return cityName;
@@ -23,12 +28,12 @@ public class CityInfo {
         this.cityName = cityName;
     }
 
-    public String getCountryName() {
-        return countryName;
+    public Country getCountry() {
+        return country;
     }
 
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
+    public void setCountry(Country countryName) {
+        this.country = country;
     }
 
     public WeatherInfo getInfo() {
@@ -54,7 +59,13 @@ public class CityInfo {
         CityInfo other = (CityInfo)obj;
 
         return other.cityName.equals(cityName) &&
-                other.countryName.equals(countryName) &&
+                other.country.equals(country) &&
                 other.info.equals(info);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return cityName + " | " + country;
     }
 }

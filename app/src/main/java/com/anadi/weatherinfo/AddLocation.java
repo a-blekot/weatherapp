@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class AddLocation extends AppCompatActivity implements Spinner.OnItemSele
     Spinner citySpinner;
     Button addLocationButton;
 
-    String selectedCountry;
+    String selectedCountry, selectedCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,21 @@ public class AddLocation extends AppCompatActivity implements Spinner.OnItemSele
 
 
     public void addLocation(View view) {
+
+        if (null == selectedCity || null == selectedCountry ||
+                selectedCity.equalsIgnoreCase("Select Item") ||
+                selectedCountry.equalsIgnoreCase("Select Item")) {
+            Log.d("anadi_spiner", "selectedCity: " + selectedCity +
+                                           "selectedCountry: " + selectedCountry);
+            return;
+        }
+
+        if (!CitiesCash.add(selectedCity, selectedCountry)) {
+            Toast.makeText(getApplicationContext(),
+                    "Can`t load info for:" + selectedCity + " (selectedCountry).",
+                    Toast.LENGTH_LONG).show();
+        }
+
         finish();
     }
 
@@ -56,7 +72,8 @@ public class AddLocation extends AppCompatActivity implements Spinner.OnItemSele
                 setCitySpinner();
         }
 
-
+        if (parent.getId() == R.id.city_spinner)
+            selectedCity = citySpinner.getItemAtPosition(position).toString();
     }
 
     @Override

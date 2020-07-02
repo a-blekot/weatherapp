@@ -47,8 +47,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
 
                     current = (CityInfo) tag;
                     Intent intent = new Intent(v.getContext(), CityActivity.class);
-                    intent.putExtra("city", current.getCityName());
-                    intent.putExtra("country", current.getCountryName());
+                    intent.putExtra("id", current.getId());
 
                     v.getContext().startActivity(intent);
                 }
@@ -58,9 +57,24 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
     }
 
     public CityAdapter() {
-        cities.add(new CityInfo("Kiev", "Ukraine"));
-        cities.add(new CityInfo("Moscow", "Russia"));
-        cities.add(new CityInfo("Rio", "Brasil"));
+
+        for (int i = 0; i < 8; i++) {
+            Country c = Location.getRandomCountry();
+            if (null == c)
+                return;
+
+            //cities.add(new CityInfo(Location.getRandomCity(c.toString()), c));
+
+            CitiesCash.add(Location.getRandomCity(c.toString()), c);
+        }
+
+        updateCities();
+    }
+
+    public void updateCities() {
+        cities = CitiesCash.cities();
+        Log.d("anadi_adapter", "cities = " + cities);
+        notifyDataSetChanged();
     }
 
     private ArrayList<CityInfo> cities = new ArrayList<>();
