@@ -67,7 +67,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
 
             //cities.add(new CityInfo(Location.getRandomCity(c.toString()), c));
 
-            CitiesCash.add(Location.getRandomCity(c.toString()), c);
+//            CitiesCash.add(Location.getRandomCity(c.toString()), c);
         }
 
         updateCities();

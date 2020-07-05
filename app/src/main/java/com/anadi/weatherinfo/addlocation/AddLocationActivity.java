@@ -1,4 +1,4 @@
-package com.anadi.weatherinfo;
+package com.anadi.weatherinfo.addlocation;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,14 +10,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.anadi.weatherinfo.CitiesCash;
+import com.anadi.weatherinfo.Location;
+import com.anadi.weatherinfo.R;
 
 import java.util.ArrayList;
 
 import timber.log.Timber;
 
-public class AddLocationActivity extends AppCompatActivity implements Spinner.OnItemSelectedListener {
+public class AddLocationActivity extends AppCompatActivity implements Spinner.OnItemSelectedListener, AddLocationView {
 
     Spinner countrySpinner;
     Spinner citySpinner;
@@ -26,10 +31,17 @@ public class AddLocationActivity extends AppCompatActivity implements Spinner.On
     private String selectedCountry;
     private String selectedCity;
 
+    private AddLocationPresenter presenter;
+
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
+
+        presenter = new AddLocationPresenter();
+        presenter.bind(this);
 
         ArrayList<String> countries = new ArrayList<String>();
 
@@ -39,6 +51,7 @@ public class AddLocationActivity extends AppCompatActivity implements Spinner.On
         countrySpinner = findViewById(R.id.country_spinner);
         citySpinner = findViewById(R.id.city_spinner);
         addLocationButton = findViewById(R.id.add_location_button);
+        progressBar = findViewById(R.id.progress);
 
         countrySpinner.setOnItemSelectedListener(this);
         citySpinner.setOnItemSelectedListener(this);
@@ -46,24 +59,26 @@ public class AddLocationActivity extends AppCompatActivity implements Spinner.On
         countrySpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, countries ));
     }
 
+    @Override
+    public void onAddedSuccess() {
+        progressBar.setVisibility(View.GONE);
+        finish();
+    }
+
+    @Override
+    public void loading() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+
+    @Override
+    public void onError(int resId) {
+        progressBar.setVisibility(View.GONE);
+        Toast.makeText(getApplicationContext(), getText(resId), Toast.LENGTH_LONG).show();
+    }
 
     public void addLocation(View view) {
-
-        if (TextUtils.isEmpty(selectedCity) || TextUtils.isEmpty(selectedCountry) ||
-                selectedCity.equalsIgnoreCase("Select Item") ||
-                selectedCountry.equalsIgnoreCase("Select Item")) {
-            Timber.d( "selectedCity: " + selectedCity +
-                                           "selectedCountry: " + selectedCountry);
-            return;
-        }
-
-        if (!CitiesCash.add(selectedCity, selectedCountry)) {
-            Toast.makeText(this,
-                    "Can`t load info for:" + selectedCity + " (selectedCountry).",
-                    Toast.LENGTH_LONG).show();
-        }
-
-        finish();
+        presenter.addLocation(selectedCity, selectedCountry);
     }
 
     @Override
