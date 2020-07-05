@@ -58,7 +58,7 @@ public class AddLocationActivity extends AppCompatActivity implements Spinner.On
         }
 
         if (!CitiesCash.add(selectedCity, selectedCountry)) {
-            Toast.makeText(getApplicationContext(),
+            Toast.makeText(this,
                     "Can`t load info for:" + selectedCity + " (selectedCountry).",
                     Toast.LENGTH_LONG).show();
         }
@@ -76,8 +76,9 @@ public class AddLocationActivity extends AppCompatActivity implements Spinner.On
                 setCitySpinner();
         }
 
-        if (parent.getId() == R.id.city_spinner)
+        if (parent.getId() == R.id.city_spinner) {
             selectedCity = citySpinner.getItemAtPosition(position).toString();
+        }
     }
 
     @Override
