@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import timber.log.Timber;
+
 public class AddLocationActivity extends AppCompatActivity implements Spinner.OnItemSelectedListener {
 
     Spinner countrySpinner;

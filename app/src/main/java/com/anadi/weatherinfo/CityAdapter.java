@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.*;
 
+import timber.log.Timber;
+
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHolder> {
 
     static class CityAdapterHolder extends RecyclerView.ViewHolder {

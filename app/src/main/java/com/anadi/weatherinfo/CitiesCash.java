@@ -13,6 +13,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
 
+import timber.log.Timber;
+
 public class CitiesCash {
 
     private static String API_KEY = "f9dee5683fdf51c7b611df7f57f26926";
