@@ -28,7 +28,7 @@ public class CitiesCash {
     public static boolean add(String cityName, String countryName) {
         Country country = Location.getCountryByName(countryName);
         if (country == null) {
-            Log.d("anadi_city_cash", "There is no such country: " + countryName);
+            Timber.d( "There is no such country: " + countryName);
             return false;
         }
 
@@ -48,12 +48,12 @@ public class CitiesCash {
                 try {
                     StringBuilder result = new StringBuilder();
 
-                    Log.d("anadi_load_weather", "Trying to load weather info for: " + cityInfo);
+                    Timber.d( "Trying to load weather info for: " + cityInfo);
 
                     LOCATION = cityInfo.getCityName() + "," + cityInfo.getCountry().code.toLowerCase();
                     urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + LOCATION + "&appid=" + API_KEY + "&units=metric";
 
-                    Log.d("anadi_load_weather", urlString);
+                    Timber.d( urlString);
 
                     URL url = new URL(urlString);
                     HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -61,7 +61,7 @@ public class CitiesCash {
 
                     if (conn.getResponseCode() == 404)
                     {
-                        Log.d("anadi_load_weather", "error code 404 for:" + urlString);
+                        Timber.d( "error code 404 for:" + urlString);
                         return;
                     }
 
@@ -81,17 +81,17 @@ public class CitiesCash {
                         result.append(line);
 
                     rd.close();
-//                    Log.d("anadi_load_weather", result.toString());
+//                    Timber.d( result.toString());
 
                     Map<String, Object> respMap = jsonToMap(result.toString());
                     Map<String, Object> mainMap = jsonToMap(respMap.get("main").toString());
                     Map<String, Object> windMap = jsonToMap(respMap.get("wind").toString());
 
 
-                    Log.d("anadi_load_weather", "Current tempreture: " + mainMap.get("temp"));
-//                    Log.d("anadi_load_weather", "Current humidity: " + mainMap.get("humidity"));
-//                    Log.d("anadi_load_weather", "Wind speeds: " + windMap.get("speed"));
-//                    Log.d("anadi_load_weather", "Wind angle: " + windMap.get("deg"));
+                    Timber.d( "Current tempreture: " + mainMap.get("temp"));
+//                    Timber.d( "Current humidity: " + mainMap.get("humidity"));
+//                    Timber.d( "Wind speeds: " + windMap.get("speed"));
+//                    Timber.d( "Wind angle: " + windMap.get("deg"));
 
                     int temperature = (int)Float.parseFloat(mainMap.get("temp").toString());
                     int winSpeed = (int)Float.parseFloat(windMap.get("speed").toString());

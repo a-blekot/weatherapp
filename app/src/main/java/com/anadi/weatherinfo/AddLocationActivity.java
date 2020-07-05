@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,13 +15,14 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class AddLocation extends AppCompatActivity implements Spinner.OnItemSelectedListener {
+public class AddLocationActivity extends AppCompatActivity implements Spinner.OnItemSelectedListener {
 
     Spinner countrySpinner;
     Spinner citySpinner;
     Button addLocationButton;
 
-    String selectedCountry, selectedCity;
+    private String selectedCountry;
+    private String selectedCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +47,10 @@ public class AddLocation extends AppCompatActivity implements Spinner.OnItemSele
 
     public void addLocation(View view) {
 
-        if (null == selectedCity || null == selectedCountry ||
+        if (TextUtils.isEmpty(selectedCity) || TextUtils.isEmpty(selectedCountry) ||
                 selectedCity.equalsIgnoreCase("Select Item") ||
                 selectedCountry.equalsIgnoreCase("Select Item")) {
-            Log.d("anadi_spiner", "selectedCity: " + selectedCity +
+            Timber.d( "selectedCity: " + selectedCity +
                                            "selectedCountry: " + selectedCountry);
             return;
         }
@@ -87,11 +89,11 @@ public class AddLocation extends AppCompatActivity implements Spinner.OnItemSele
 
         if (null == cities) {
 
-            Log.d("anadi_spiner", "EMPTY cities LIST");
+            Timber.d( "EMPTY cities LIST");
             return;
         }
         else
-            Log.d("anadi_spiner", cities.toString());
+            Timber.d( cities.toString());
 
         citySpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, cities ));
     }

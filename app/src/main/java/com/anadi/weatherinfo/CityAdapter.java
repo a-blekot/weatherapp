@@ -73,7 +73,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
 
     public void updateCities() {
         cities = CitiesCash.cities();
-        Log.d("anadi_adapter", "cities = " + cities);
+        Timber.d( "cities = " + cities);
         notifyDataSetChanged();
     }
 

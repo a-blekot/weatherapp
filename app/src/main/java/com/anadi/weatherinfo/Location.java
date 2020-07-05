@@ -13,6 +13,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
 
+import timber.log.Timber;
+
 public class Location {
 
     //private static Map<Country, ArrayList<String>> locations = new HashMap<>();
@@ -29,10 +31,10 @@ public class Location {
 
     public static void loadLocations() {
         String jsonString = convert(context.getResources().openRawResource(R.raw.countries_codes));
-//        Log.d("anadi_location", jsonString);
+//        Timber.d( jsonString);
 
         try {
-//            Log.d("anadi_location", "I`.m here!");
+//            Timber.d( "I`.m here!");
             JSONArray array = new JSONArray(jsonString);
             JSONObject obj;
             for (int i = 0; i < array.length(); i++) {
@@ -40,7 +42,7 @@ public class Location {
                 countries.add(new Country(obj.getString("name"), obj.getString("code")));
             }
 
-//            Log.d("anadi_location", countries.toString());
+//            Timber.d( countries.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -59,7 +61,7 @@ public class Location {
 
                 if (null == array) {
 //                    countries.remove(c);
-                    Log.d("anadi_location", "There are no cities for country: " + country.name);
+                    Timber.d( "There are no cities for country: " + country.name);
                     continue;
                 }
 
@@ -84,11 +86,11 @@ public class Location {
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line);
-//                Log.d("anadi_json", line);
+//                Timber.d( line);
             }
         }
         catch (IOException e) {
-            Log.d("anadi_json", e.getMessage());
+            Timber.d( e.getMessage());
             e.printStackTrace();
         }
 
@@ -97,7 +99,7 @@ public class Location {
 
     public static ArrayList<String> getCityNames(String country) {
 
-//        Log.d("anadi_cities", "get cities for: " + country);
+//        Timber.d( "get cities for: " + country);
 
         return cities.get(country);
     }

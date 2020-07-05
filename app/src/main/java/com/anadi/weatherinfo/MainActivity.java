@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import timber.log.Timber;
+
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -32,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
 
-        Log.d("anadi_lifecycle", "onCreate");
-        Toast.makeText(getApplicationContext(), "onCreate", Toast.LENGTH_SHORT);
+        Timber.d("onCreate");
+        Toast.makeText(getApplicationContext(), "onCreate", Toast.LENGTH_SHORT).show();
 
         ((CityAdapter)adapter).updateCities();
     }
@@ -41,22 +43,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d("anadi_lifecycle", "onDestroy");
-        Toast.makeText(getApplicationContext(), "onDestroy", Toast.LENGTH_SHORT);
+        Timber.d("onDestroy");
+        Toast.makeText(getApplicationContext(), "onDestroy", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("anadi_lifecycle", "onPause");
-        Toast.makeText(getApplicationContext(), "onPause", Toast.LENGTH_SHORT);
+        Timber.d("onPause");
+        Toast.makeText(getApplicationContext(), "onPause", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("anadi_lifecycle", "onResume");
-        Toast.makeText(getApplicationContext(), "onResume", Toast.LENGTH_SHORT);
+        Timber.d("onResume");
+        Toast.makeText(getApplicationContext(), "onResume", Toast.LENGTH_SHORT).show();
 
         ((CityAdapter)adapter).updateCities();
     }
@@ -64,26 +66,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        Log.d("anadi_lifecycle", "onPostResume");
-        Toast.makeText(getApplicationContext(), "onPostResume", Toast.LENGTH_SHORT);
+        Timber.d("onPostResume");
+        Toast.makeText(getApplicationContext(), "onPostResume", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("anadi_lifecycle", "onStart");
-        Toast.makeText(getApplicationContext(), "onStart", Toast.LENGTH_SHORT);
+        Timber.d("onStart");
+        Toast.makeText(getApplicationContext(), "onStart", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d("anadi_lifecycle", "onStop");
-        Toast.makeText(getApplicationContext(), "onStop", Toast.LENGTH_SHORT);
+        Timber.d("onStop");
+        Toast.makeText(getApplicationContext(), "onStop", Toast.LENGTH_SHORT).show();
     }
 
     public void addLocation(View view) {
-        Intent intent = new Intent(getApplicationContext(), AddLocation.class);
+        Intent intent = new Intent(getApplicationContext(), AddLocationActivity.class);
         startActivity(intent);
     }
 }
