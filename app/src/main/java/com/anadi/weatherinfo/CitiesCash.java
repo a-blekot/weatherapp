@@ -1,7 +1,10 @@
 package com.anadi.weatherinfo;
 
-import android.util.Log;
+import android.content.Context;
 
+import com.anadi.weatherinfo.addlocation.AddLocationContract;
+import com.anadi.weatherinfo.addlocation.LocationsProvider;
+import com.anadi.weatherinfo.mainactivity.MainActivityContract;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -10,25 +13,27 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.*;
 
 import timber.log.Timber;
 
-public class CitiesCash {
+public class CitiesCash implements AddLocationContract.Model, MainActivityContract.Model {
 
+  private LocationsProvider locations;
+
+  private static String API_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
   private static String API_KEY = "f9dee5683fdf51c7b611df7f57f26926";
-  private static String LOCATION;
-  private static String urlString;
+  private static CitiesCash instance = new CitiesCash();
 
-  private static ArrayList<CityInfo> cities = new ArrayList<>();
+  private ArrayList<CityInfo> cities = new ArrayList<>();
 
-  public static boolean add(String cityName, Country country) {
-    return load(cityName, country);
+  private CitiesCash() {
+    locations = Locations.getInstatnce();
   }
+  public static CitiesCash getInstance() { return instance; }
 
-  public static boolean add(String cityName, String countryName) {
-    Country country = Location.getCountryByName(countryName);
+  public boolean add(String cityName, String countryName) {
+    Country country = locations.getCountryByName(countryName);
     if (country == null) {
       Timber.d("There is no such country: " + countryName);
       return false;
@@ -37,11 +42,20 @@ public class CitiesCash {
     return load(cityName, country);
   }
 
-  public static ArrayList<CityInfo> cities() {
+  @Override
+  public ArrayList<CityInfo> getCities() {
     return cities;
   }
 
-  private static boolean load(final String cityName, final Country country) {
+  public void setContext(Context context) {
+    locations.setContext(context);
+  }
+
+  public void loadLocations() {
+    locations.loadLocations();
+  }
+
+  private boolean load(final String cityName, final Country country) {
 
     final CityInfo cityInfo = new CityInfo(cityName, country);
 
@@ -50,14 +64,7 @@ public class CitiesCash {
 
       Timber.d("Trying to load weather info for: " + cityInfo);
 
-      LOCATION = cityInfo.getCityName() + "," + cityInfo.getCountry().code.toLowerCase();
-      urlString =
-          "http://api.openweathermap.org/data/2.5/weather?q="
-              + LOCATION
-              + "&appid="
-              + API_KEY
-              + "&units=metric";
-
+      String urlString = composeUrl(cityInfo.getCityName() + "," + cityInfo.getCountry().code.toLowerCase());
       Timber.d(urlString);
 
       URL url = new URL(urlString);
@@ -112,7 +119,18 @@ public class CitiesCash {
     return true;
   }
 
-  private static Map<String, Object> jsonToMap(String str) {
+  private Map<String, Object> jsonToMap(String str) {
     return new Gson().fromJson(str, new TypeToken<HashMap<String, Object>>() {}.getType());
+  }
+
+  private String composeUrl(String location) {
+    StringBuilder stringBuilder = new StringBuilder(130);
+    stringBuilder.append(API_URL);
+    stringBuilder.append(location);
+    stringBuilder.append("&appid=");
+    stringBuilder.append(API_KEY);
+    stringBuilder.append("&units=metric");
+
+    return stringBuilder.toString();
   }
 }

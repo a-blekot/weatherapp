@@ -1,5 +1,6 @@
-package com.anadi.weatherinfo;
+package com.anadi.weatherinfo.mainactivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.anadi.weatherinfo.CityActivity;
+import com.anadi.weatherinfo.CityInfo;
+import com.anadi.weatherinfo.R;
 
 import java.util.*;
 
@@ -58,23 +63,28 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
 
     }
 
-    public CityAdapter() {
+    private MainActivityContract.Presenter presenter;
 
-        for (int i = 0; i < 8; i++) {
-            Country c = Location.getRandomCountry();
-            if (null == c)
-                return;
+    public CityAdapter(Context context) {
 
-            //cities.add(new CityInfo(Location.getRandomCity(c.toString()), c));
+        presenter = new MainPresenter(context);
+        presenter.loadLocations();
 
-//            CitiesCash.add(Location.getRandomCity(c.toString()), c);
-        }
+//        for (int i = 0; i < 8; i++) {
+//            Country c = Location.getRandomCountry();
+//            if (null == c)
+//                return;
+//
+//            //cities.add(new CityInfo(Location.getRandomCity(c.toString()), c));
+//
+////            CitiesCash.add(Location.getRandomCity(c.toString()), c);
+//        }
 
         updateCities();
     }
 
     public void updateCities() {
-        cities = CitiesCash.cities();
+        cities = presenter.getCities();
         Timber.d( "cities = " + cities);
         notifyDataSetChanged();
     }

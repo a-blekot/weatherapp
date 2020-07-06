@@ -1,22 +1,27 @@
 package com.anadi.weatherinfo.addlocation;
 
 import android.os.Handler;
-import android.os.Looper;
 import android.text.TextUtils;
 
 import com.anadi.weatherinfo.CitiesCash;
+import com.anadi.weatherinfo.Locations;
 import com.anadi.weatherinfo.R;
+
+import java.util.ArrayList;
 
 import timber.log.Timber;
 
-public class AddLocationPresenter {
+public class AddLocationPresenter implements AddLocationContract.Presenter {
 
-    private AddLocationView view;
-
+    private AddLocationContract.View view;
+    private AddLocationContract.Model model;
+    private LocationsProvider locations;
     private Handler handler = new Handler();
 
-    void bind(AddLocationView view) {
+    AddLocationPresenter(AddLocationContract.View view) {
         this.view = view;
+        model = CitiesCash.getInstance();
+        locations = Locations.getInstatnce();
     }
 
     public void addLocation(final String selectedCity, final String selectedCountry) {
@@ -33,11 +38,13 @@ public class AddLocationPresenter {
         new Thread(new Runnable() {
             public void run() {
                 try {
-                    Thread.sleep(5000);
-//                    boolean result = CitiesCash.add(selectedCity, selectedCountry);
-                    if (true) {
+
+                    boolean result = model.add(selectedCity, selectedCountry);
+
+                    if (result) {
                         onCityAdded();
-                    } else {
+                    }
+                    else {
                         onError();
                     }
 
@@ -50,6 +57,16 @@ public class AddLocationPresenter {
 
     }
 
+    @Override
+    public void onCountrySelected(String countryName) {
+        view.updateCityList(locations.getCityNames(countryName));
+    }
+
+    @Override
+    public ArrayList<String> getCountryNames() {
+        return locations.getCountryNames();
+    }
+
     private void onCityAdded() {
         handler.post(new Runnable() {
             @Override
@@ -59,7 +76,7 @@ public class AddLocationPresenter {
         });
     }
 
-    protected void onError() {
+    private void onError() {
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -67,5 +84,4 @@ public class AddLocationPresenter {
             }
         });
     }
-
 }

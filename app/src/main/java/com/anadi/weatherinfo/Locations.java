@@ -1,7 +1,8 @@
 package com.anadi.weatherinfo;
 
 import android.content.Context;
-import android.util.Log;
+
+import com.anadi.weatherinfo.addlocation.LocationsProvider;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,21 +16,24 @@ import java.util.*;
 
 import timber.log.Timber;
 
-public class Location {
+public class Locations implements LocationsProvider {
 
-    //private static Map<Country, ArrayList<String>> locations = new HashMap<>();
+    private static Locations instance = new Locations();
 
-    private static Random random = new Random(145);
+    private Random random = new Random(System.currentTimeMillis());
 
-    private static Context context;
-    private static ArrayList<Country> countries = new ArrayList<>();
-    private static Map<String, ArrayList<String>> cities = new HashMap<>();
+    private Context context;
+    private ArrayList<Country> countries = new ArrayList<>();
+    private Map<String, ArrayList<String>> cities = new HashMap<>();
 
-    public static void setContext(Context c) {
+    private Locations() {}
+    public static Locations getInstatnce() { return instance; }
+
+    public void setContext(Context c) {
         context = c;
     }
 
-    public static void loadLocations() {
+    public void loadLocations() {
         String jsonString = convert(context.getResources().openRawResource(R.raw.countries_codes));
 //        Timber.d( jsonString);
 
@@ -78,7 +82,7 @@ public class Location {
 
     }
 
-    private static String convert(InputStream inputStream) {
+    private String convert(InputStream inputStream) {
 
         StringBuilder stringBuilder = new StringBuilder();
         String line = null;
@@ -97,14 +101,14 @@ public class Location {
         return stringBuilder.toString();
     }
 
-    public static ArrayList<String> getCityNames(String country) {
+    public ArrayList<String> getCityNames(String country) {
 
 //        Timber.d( "get cities for: " + country);
 
         return cities.get(country);
     }
 
-    public static ArrayList<String> getCountryNamesArray() {
+    public ArrayList<String> getCountryNames() {
 
         ArrayList<String> countryNames = new ArrayList<>();
 
@@ -114,23 +118,33 @@ public class Location {
         return countryNames;
     }
 
-    public static Country getCountryByName(String countryName) {
+    public Country getCountryByName(String countryName) {
 
-        int index = countries.indexOf(countryName);
-        if (index == -1)
-            return null;
+        Iterator<Country> it = countries.listIterator();
+        while (it.hasNext()) {
+            Country country = it.next();
+//            if (country.equals(countryName))
+            if (country.name.equals(countryName))
+                return country;
+        }
 
-        return countries.get(index);
+        return null;
+
+//        int index = countries.indexOf(countryName);
+//        if (index == -1)
+//            return null;
+//
+//        return countries.get(index);
     }
 
-    public static Country getRandomCountry() {
+    public Country getRandomCountry() {
         if (countries.isEmpty())
             return null;
 
         return countries.get(random.nextInt(countries.size()));
     }
 
-    public static String getRandomCity(String countryName) {
+    public String getRandomCity(String countryName) {
         ArrayList<String> cityNames = getCityNames(countryName);
         if (null == cityNames ||
                 cityNames.isEmpty())
