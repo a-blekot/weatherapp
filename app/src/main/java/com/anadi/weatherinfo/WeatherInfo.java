@@ -76,7 +76,7 @@ public class WeatherInfo {
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        if (null == obj)
+        if (obj == null)
             return false;
 
         if (!(obj instanceof WeatherInfo))

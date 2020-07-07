@@ -14,18 +14,18 @@ public class Country {
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        if (null == obj)
+        if (obj == null)
             return false;
 
-        if (obj instanceof CityInfo) {
+        if (obj instanceof Country) {
             Country other = (Country) obj;
             return other.name.equals(name) &&
                     other.code.equals(code);
         } else if (obj instanceof String) {
             String string = (String) obj;
             return name.equals(string) ||
-                    code.equals(string) ||
-                    string.equals(this.toString());
+                    code.equals(string);
+//                    || string.equals(this.toString());
         } else
             return false;
     }

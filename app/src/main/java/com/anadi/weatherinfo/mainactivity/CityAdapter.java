@@ -72,7 +72,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
 
 //        for (int i = 0; i < 8; i++) {
 //            Country c = Location.getRandomCountry();
-//            if (null == c)
+//            if (c == null)
 //                return;
 //
 //            //cities.add(new CityInfo(Location.getRandomCity(c.toString()), c));

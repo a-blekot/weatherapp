@@ -32,27 +32,37 @@ public class CitiesCash implements AddLocationContract.Model, MainActivityContra
   }
   public static CitiesCash getInstance() { return instance; }
 
+  @Override
   public boolean add(String cityName, String countryName) {
     Country country = locations.getCountryByName(countryName);
+
     if (country == null) {
       Timber.d("There is no such country: " + countryName);
       return false;
+    }
+
+    CityInfo cityInfo = getCashedInfo(cityName, country);
+    if (cityInfo != null) {
+      Timber.d("City already loaded: " + cityName);
+      return true;
     }
 
     return load(cityName, country);
   }
 
   @Override
-  public ArrayList<CityInfo> getCities() {
-    return cities;
-  }
-
   public void setContext(Context context) {
     locations.setContext(context);
   }
 
+  @Override
   public void loadLocations() {
     locations.loadLocations();
+  }
+
+  @Override
+  public ArrayList<CityInfo> getCities() {
+    return cities;
   }
 
   private boolean load(final String cityName, final Country country) {
@@ -117,6 +127,19 @@ public class CitiesCash implements AddLocationContract.Model, MainActivityContra
     }
 
     return true;
+  }
+
+  private CityInfo getCashedInfo(final String cityName, final Country country) {
+
+    Iterator<CityInfo> it = cities.listIterator();
+    while (it.hasNext()) {
+      CityInfo cityInfo = it.next();
+      if (cityInfo.getCityName().equals(cityName) &&
+          cityInfo.getCountry().equals(country))
+        return cityInfo;
+    }
+
+    return null;
   }
 
   private Map<String, Object> jsonToMap(String str) {

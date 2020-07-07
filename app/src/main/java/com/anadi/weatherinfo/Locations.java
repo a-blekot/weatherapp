@@ -63,7 +63,7 @@ public class Locations implements LocationsProvider {
                 JSONObject obj = new JSONObject(jsonString);
                 JSONArray array = obj.getJSONArray(country.name);
 
-                if (null == array) {
+                if (array == null) {
 //                    countries.remove(c);
                     Timber.d( "There are no cities for country: " + country.name);
                     continue;
@@ -146,8 +146,7 @@ public class Locations implements LocationsProvider {
 
     public String getRandomCity(String countryName) {
         ArrayList<String> cityNames = getCityNames(countryName);
-        if (null == cityNames ||
-                cityNames.isEmpty())
+        if (cityNames == null || cityNames.isEmpty())
             return null;
 
         return cityNames.get(random.nextInt(cityNames.size()));
