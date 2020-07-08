@@ -2,7 +2,7 @@ package com.anadi.weatherinfo.mainactivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +20,7 @@ import com.anadi.weatherinfo.R;
 import java.util.*;
 
 import timber.log.Timber;
+
 
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHolder> {
 
@@ -41,51 +42,40 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
             windTextView = itemView.findViewById(R.id.city_row_wind_text_view);
             temperatureTextView = itemView.findViewById(R.id.city_row_temp_text_view);
 
-            containerView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Object tag = containerView.getTag();
-                    CityInfo current;
+            containerView.setOnClickListener(v -> {
+                Object tag = containerView.getTag();
+                CityInfo current;
 
-                    if (!(tag instanceof CityInfo)) {
-                        Log.d("anadi", "onClick :: containerView.getTag() is not CityInfo.class");
-                        return;
-                    }
-
-                    current = (CityInfo) tag;
-                    Intent intent = new Intent(v.getContext(), CityActivity.class);
-                    intent.putExtra("id", current.getId());
-
-                    v.getContext().startActivity(intent);
+                if (!(tag instanceof CityInfo)) {
+                    Timber.d("onClick :: containerView.getTag() is not CityInfo.class");
+                    return;
                 }
+
+                current = (CityInfo) tag;
+                Intent intent = new Intent(v.getContext(), CityActivity.class);
+                intent.putExtra("id", current.getId());
+
+                v.getContext().startActivity(intent);
             });
         }
 
     }
 
+    private Resources res;
     private MainActivityContract.Presenter presenter;
 
     public CityAdapter(Context context) {
 
         presenter = new MainPresenter(context);
         presenter.loadLocations();
-
-//        for (int i = 0; i < 8; i++) {
-//            Country c = Location.getRandomCountry();
-//            if (c == null)
-//                return;
-//
-//            //cities.add(new CityInfo(Location.getRandomCity(c.toString()), c));
-//
-////            CitiesCash.add(Location.getRandomCity(c.toString()), c);
-//        }
+        res = context.getResources();
 
         updateCities();
     }
 
     public void updateCities() {
         cities = presenter.getCities();
-        Timber.d( "cities = " + cities);
+        Timber.d( "cities = %s", cities);
         notifyDataSetChanged();
     }
 
@@ -110,8 +100,8 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
         CityInfo current = cities.get(position);
         holder.iconImageView.setImageResource(R.drawable.clear_sky);
         holder.cityNameTextView.setText(current.getCityName());
-        holder.windTextView.setText(current.getInfo().getWindSpeed() + " m/s");
-        holder.temperatureTextView.setText(current.getInfo().getTemperature() + " cels");
+        holder.windTextView.setText(res.getString(R.string.wind_speed_ms, current.getInfo().wind.speed));
+        holder.temperatureTextView.setText(res.getString(R.string.temp_celsium, current.getInfo().main.temp));
 
         holder.containerView.setTag(current);
     }

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.anadi.weatherinfo.addlocation.AddLocationContract;
 import com.anadi.weatherinfo.addlocation.LocationsProvider;
 import com.anadi.weatherinfo.mainactivity.MainActivityContract;
+import com.anadi.weatherinfo.repository.WeatherInfo;
 
 import java.util.*;
 
@@ -38,13 +39,13 @@ public class CitiesCash implements AddLocationContract.Model, MainActivityContra
     Country country = locations.getCountryByName(countryName);
 
     if (country == null) {
-      Timber.d("There is no such country: " + countryName);
+      Timber.d("There is no such country: %s", countryName);
       return false;
     }
 
     CityInfo cityInfo = getCashedInfo(cityName, country);
     if (cityInfo != null) {
-      Timber.d("City already loaded: " + cityName);
+      Timber.d("City already loaded: %s", cityName);
       return true;
     }
 
@@ -70,7 +71,7 @@ public class CitiesCash implements AddLocationContract.Model, MainActivityContra
 
     WeatherInfo weatherInfo = infoLoader.load(cityName, country);
 
-    if (weatherInfo == null || !weatherInfo.validState()) {
+    if (weatherInfo == null) {
       Timber.d("No info loaded for location: " + cityName + ", " + country);
       return false;
     }
@@ -84,11 +85,9 @@ public class CitiesCash implements AddLocationContract.Model, MainActivityContra
 
   private CityInfo getCashedInfo(final String cityName, final Country country) {
 
-    Iterator<CityInfo> it = cities.listIterator();
-    while (it.hasNext()) {
-      CityInfo cityInfo = it.next();
+    for (CityInfo cityInfo : cities) {
       if (cityInfo.getCityName().equals(cityName) &&
-          cityInfo.getCountry().equals(country))
+              cityInfo.getCountry().equals(country))
         return cityInfo;
     }
 

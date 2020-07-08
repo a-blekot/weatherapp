@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">WeatherInfo</string>
-    <string name="country_spinner_title">Select country...</string>
-    <string name="city_spiner_title">Select city...</string>
+    <string name="country_spinner_title">Select country…</string>
+    <string name="city_spiner_title">Select city…</string>
     <string name="on_error_select_city">Wrong city, please select again</string>
+    <string name="wind_speed_ms">%1$.1f m/s</string>
+    <string name="temp_celsium">%1$.1f cels</string>
+    <string name="welcome_messages">Hello, %1$s! You have %2$d new messages.</string>
 </resources>

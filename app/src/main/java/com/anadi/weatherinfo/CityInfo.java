@@ -3,7 +3,7 @@ package com.anadi.weatherinfo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.*;
+import com.anadi.weatherinfo.repository.WeatherInfo;
 
 public class CityInfo {
     private static int count = 0;
@@ -15,7 +15,6 @@ public class CityInfo {
     public CityInfo(String cityName, Country country) {
         this.cityName = cityName;
         this.country = country;
-        info = new WeatherInfo(0, 0, WeatherInfo.State.NONE);
     }
 
     public int getId() { return id;}
@@ -32,7 +31,7 @@ public class CityInfo {
         return country;
     }
 
-    public void setCountry(Country countryName) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 
@@ -45,7 +44,7 @@ public class CityInfo {
     }
 
     public boolean validInfo() {
-        return info.validState();
+        return info != null;
     }
 
     @Override

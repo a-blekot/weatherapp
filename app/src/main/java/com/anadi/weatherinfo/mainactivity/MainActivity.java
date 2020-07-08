@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.anadi.weatherinfo.BuildConfig;
 import com.anadi.weatherinfo.R;
 import com.anadi.weatherinfo.addlocation.AddLocationActivity;
 
@@ -24,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        if(BuildConfig.DEBUG){
+            Timber.plant(new Timber.DebugTree());
+//        }
 
         recyclerView = findViewById(R.id.recycler_view);
         adapter = new CityAdapter(this);
