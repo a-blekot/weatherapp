@@ -74,6 +74,10 @@ public class WeatherInfo {
         this.state = state;
     }
 
+    public boolean validState() {
+        return state != State.NONE;
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         if (obj == null)

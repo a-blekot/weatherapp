@@ -45,7 +45,7 @@ public class CityInfo {
     }
 
     public boolean validInfo() {
-        return info.getState() != WeatherInfo.State.NONE;
+        return info.validState();
     }
 
     @Override

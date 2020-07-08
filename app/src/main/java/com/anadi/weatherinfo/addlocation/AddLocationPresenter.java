@@ -21,7 +21,7 @@ public class AddLocationPresenter implements AddLocationContract.Presenter {
     AddLocationPresenter(AddLocationContract.View view) {
         this.view = view;
         model = CitiesCash.getInstance();
-        locations = Locations.getInstatnce();
+        locations = Locations.getInstance();
     }
 
     public void addLocation(final String selectedCity, final String selectedCountry) {

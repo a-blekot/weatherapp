@@ -17,17 +17,27 @@ import java.util.*;
 import timber.log.Timber;
 
 public class Locations implements LocationsProvider {
-
-    private static Locations instance = new Locations();
-
     private Random random = new Random(System.currentTimeMillis());
 
     private Context context;
     private ArrayList<Country> countries = new ArrayList<>();
     private Map<String, ArrayList<String>> cities = new HashMap<>();
 
+    // Singleton with double check
+    private static volatile Locations instance;
     private Locations() {}
-    public static Locations getInstatnce() { return instance; }
+    public static Locations getInstance() {
+        Locations result = instance;
+        if (result == null) {
+            synchronized (Locations.class) {
+                result = instance;
+                if (result == null) {
+                    instance = result = new Locations();
+                }
+            }
+        }
+        return result;
+    }
 
     public void setContext(Context c) {
         context = c;
