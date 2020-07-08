@@ -3,7 +3,9 @@ package com.anadi.weatherinfo.repository;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Wind {
+import java.io.Serializable;
+
+public class Wind implements Serializable {
 
     // Wind speed.
     // Unit Default: meter/sec, Metric: meter/sec, Imperial: miles/hour.

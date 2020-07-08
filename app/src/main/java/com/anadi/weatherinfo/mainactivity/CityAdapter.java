@@ -63,6 +63,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
 
     private Resources res;
     private MainActivityContract.Presenter presenter;
+    private ArrayList<CityInfo> cities = new ArrayList<>();
 
     public CityAdapter(Context context) {
 
@@ -79,7 +80,13 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
         notifyDataSetChanged();
     }
 
-    private ArrayList<CityInfo> cities = new ArrayList<>();
+    public void loadData() {
+        presenter.loadData();
+    }
+
+    public void saveData() {
+        presenter.saveData();
+    }
 
     @NonNull
     @Override

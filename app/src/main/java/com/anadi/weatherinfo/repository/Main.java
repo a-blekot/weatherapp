@@ -3,7 +3,9 @@ package com.anadi.weatherinfo.repository;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Main {
+import java.io.Serializable;
+
+public class Main implements Serializable {
 
     // Temperature.
     // Unit Default: Kelvin, Metric: Celsius, Imperial: Fahrenheit.

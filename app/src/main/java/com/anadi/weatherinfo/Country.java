@@ -3,7 +3,9 @@ package com.anadi.weatherinfo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class Country {
+import java.io.Serializable;
+
+public class Country implements Serializable {
     String name;
     String code;
 

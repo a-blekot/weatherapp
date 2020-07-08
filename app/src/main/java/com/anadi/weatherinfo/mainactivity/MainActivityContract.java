@@ -11,6 +11,8 @@ public interface MainActivityContract {
 
     interface Presenter {
         void loadLocations();
+        void saveData();
+        void loadData();
 
         ArrayList<CityInfo> getCities();
     }
@@ -18,6 +20,8 @@ public interface MainActivityContract {
     interface Model {
         void setContext(Context context);
         void loadLocations();
+        void saveData();
+        void loadData();
 
         ArrayList<CityInfo> getCities();
     }

@@ -5,7 +5,9 @@ import androidx.annotation.Nullable;
 
 import com.anadi.weatherinfo.repository.WeatherInfo;
 
-public class CityInfo {
+import java.io.Serializable;
+
+public class CityInfo implements Serializable {
     private static int count = 0;
     private int id = count++;
     private String cityName;

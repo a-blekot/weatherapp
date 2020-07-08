@@ -22,6 +22,16 @@ public class MainPresenter implements MainActivityContract.Presenter {
     }
 
     @Override
+    public void saveData() {
+        model.saveData();
+    }
+
+    @Override
+    public void loadData() {
+        model.loadData();
+    }
+
+    @Override
     public ArrayList<CityInfo> getCities() {
         return model.getCities();
     }

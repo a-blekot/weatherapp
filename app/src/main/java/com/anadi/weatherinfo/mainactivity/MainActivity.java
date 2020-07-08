@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         Timber.d("onCreate");
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
 
+        adapter.loadData();
         adapter.updateCities();
     }
 
@@ -57,13 +58,15 @@ public class MainActivity extends AppCompatActivity {
         adapter.updateCities();
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        Timber.d("onDestroy");
-//        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
-//    }
-//
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Timber.d("onDestroy");
+        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+
+        adapter.saveData();
+    }
+
 //    @Override
 //    protected void onPause() {
 //        super.onPause();

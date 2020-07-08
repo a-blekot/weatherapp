@@ -10,6 +10,8 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 import timber.log.Timber;
 
 public class InfoLoader {
@@ -17,6 +19,8 @@ public class InfoLoader {
     private static final String API_KEY = "f9dee5683fdf51c7b611df7f57f26926";
     private static final String mUnits = "metric";
     private static String mLang = "en";
+
+    private static final String TEST = API_URL + "weather/?q=Kiev,ua&appid=" + API_KEY + "&units=" + mUnits;
 
     private static volatile InfoLoader instance;
     private Retrofit mRetrofit;
@@ -46,7 +50,8 @@ public class InfoLoader {
         try {
             String location = cityName + "," + country.code.toLowerCase();
             Timber.d("Trying to load weather info for: %s", location);
-            Timber.d("\n\n\n\n\n");
+            Timber.d("TEST = %s", TEST);
+
 
             OpenWeatherMapInterface apiService = mRetrofit.create(OpenWeatherMapInterface.class);
             Call<WeatherInfo> call = apiService.getWeather(location, API_KEY, mUnits, mLang);
@@ -75,6 +80,13 @@ public class InfoLoader {
             }
 
             Timber.d("Call (%s) statusCode = %d", location, statusCode);
+
+            if (weatherInfo.weather == null)
+                Timber.d("WARNING!!! weatherInfo.weather == null");
+            else {
+                Timber.d("It's ok somebody created list.");
+                Timber.d("weather list size = %d", weatherInfo.weather.size());
+            }
 
             return weatherInfo;
         }

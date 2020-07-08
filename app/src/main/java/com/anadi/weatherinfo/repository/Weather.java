@@ -3,7 +3,9 @@ package com.anadi.weatherinfo.repository;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Weather {
+import java.io.Serializable;
+
+public class Weather implements Serializable {
 
     // Weather condition id
     @SerializedName("id")
