@@ -11,14 +11,16 @@
         android:layout_height="match_parent"
         android:id="@+id/recycler_view" />
 
-    <ImageButton
-        android:id="@+id/add_new_location_image_button"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
-        android:src="@drawable/add_location"
+        android:id="@+id/add_location_button"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:tint="@color/cardview_dark_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:onClick="addLocation"/>
+        android:onClick="addLocation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
