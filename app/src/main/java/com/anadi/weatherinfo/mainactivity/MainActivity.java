@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.anadi.weatherinfo.R;
 import com.anadi.weatherinfo.addlocation.AddLocationActivity;
+import com.anadi.weatherinfo.repository.IconMap;
 
 import timber.log.Timber;
 
@@ -28,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
 //        if(BuildConfig.DEBUG){
             Timber.plant(new Timber.DebugTree());
 //        }
+
+        // TODO
+        // fetch icon names from https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2
+        // to coresponding resourceId's
+        IconMap.init(this);
 
         recyclerView = findViewById(R.id.recycler_view);
         adapter = new LocationAdapter(this);

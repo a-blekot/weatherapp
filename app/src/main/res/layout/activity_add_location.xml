@@ -42,16 +42,16 @@
         app:layout_constraintStart_toStartOf="@+id/country_spinner"
         app:layout_constraintTop_toBottomOf="@+id/country_spinner" />
 
-    <Button
-        android:id="@+id/add_location_button"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add location"
-        android:onClick="addLocation"
+        android:id="@+id/add_location_button"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/check"
+        android:tint="@android:color/holo_blue_dark"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/city_spinner"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/city_spinner"
-        app:layout_constraintTop_toBottomOf="@+id/city_spinner" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="addLocation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

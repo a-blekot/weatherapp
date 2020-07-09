@@ -1,5 +1,7 @@
 package com.anadi.weatherinfo.repository;
 
+import androidx.annotation.Nullable;
+
 import com.anadi.weatherinfo.repository.data.OpenWeatherMapInterface;
 import com.anadi.weatherinfo.repository.data.WeatherInfo;
 
@@ -16,7 +18,7 @@ public class InfoLoader {
     private static final String API_URL = "http://api.openweathermap.org/data/2.5/";
     private static final String API_KEY = "f9dee5683fdf51c7b611df7f57f26926";
     private static final String mUnits = "metric";
-    private static String mLang = "en";
+    private String mLang = "en";
 
     private static final String TEST = API_URL + "weather/?q=Kiev,ua&appid=" + API_KEY + "&units=" + mUnits;
 
@@ -44,7 +46,7 @@ public class InfoLoader {
         return result;
     }
 
-    public WeatherInfo load(final String cityName, final Country country) {
+    public @Nullable WeatherInfo load(final String cityName, final Country country) {
         try {
             String location = cityName + "," + country.code.toLowerCase();
             Timber.d("Trying to load weather info for: %s", location);
@@ -78,13 +80,6 @@ public class InfoLoader {
             }
 
             Timber.d("Call (%s) statusCode = %d", location, statusCode);
-
-            if (weatherInfo.weather == null)
-                Timber.d("WARNING!!! weatherInfo.weather == null");
-            else {
-                Timber.d("It's ok somebody created list.");
-                Timber.d("weather list size = %d", weatherInfo.weather.size());
-            }
 
             return weatherInfo;
         }

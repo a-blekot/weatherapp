@@ -13,22 +13,21 @@ public class MainPresenter implements MainActivityContract.Presenter {
 
     public MainPresenter(Context context) {
         model = LocationsCash.getInstance();
-        model.setContext(context);
     }
 
     @Override
-    public void loadLocations() {
-        model.loadLocations();
+    public void loadLocations(Context context) {
+        model.loadLocations(context);
     }
 
     @Override
-    public void saveData() {
-        model.saveData();
+    public void saveData(Context context) {
+        model.saveData(context);
     }
 
     @Override
-    public void loadData() {
-        model.loadData();
+    public void loadData(Context context) {
+        model.loadData(context);
     }
 
     @Override

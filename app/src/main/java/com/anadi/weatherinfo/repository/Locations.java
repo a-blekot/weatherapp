@@ -2,6 +2,8 @@ package com.anadi.weatherinfo.repository;
 
 import android.content.Context;
 
+import androidx.annotation.Nullable;
+
 import com.anadi.weatherinfo.R;
 import com.anadi.weatherinfo.addlocation.LocationsProvider;
 
@@ -20,7 +22,6 @@ import timber.log.Timber;
 public class Locations implements LocationsProvider {
     private Random random = new Random(System.currentTimeMillis());
 
-    private Context context;
     private ArrayList<Country> countries = new ArrayList<>();
     private Map<String, ArrayList<String>> cities = new HashMap<>();
 
@@ -40,11 +41,7 @@ public class Locations implements LocationsProvider {
         return result;
     }
 
-    public void setContext(Context c) {
-        context = c;
-    }
-
-    public void loadLocations() {
+    public void loadLocations(Context context) {
         String jsonString = convert(context.getResources().openRawResource(R.raw.countries_codes));
 //        Timber.d( jsonString);
 
@@ -74,9 +71,9 @@ public class Locations implements LocationsProvider {
                 JSONObject obj = new JSONObject(jsonString);
                 JSONArray array = obj.getJSONArray(country.name);
 
-                if (array == null) {
+                if (array.length() == 0) {
 //                    countries.remove(c);
-                    Timber.d( "There are no cities for country: " + country.name);
+                    Timber.d( "There are no cities for country: %s", country.name);
                     continue;
                 }
 
@@ -96,7 +93,7 @@ public class Locations implements LocationsProvider {
     private String convert(InputStream inputStream) {
 
         StringBuilder stringBuilder = new StringBuilder();
-        String line = null;
+        String line;
 
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
             while ((line = bufferedReader.readLine()) != null) {
@@ -105,7 +102,6 @@ public class Locations implements LocationsProvider {
             }
         }
         catch (IOException e) {
-            Timber.d( e.getMessage());
             e.printStackTrace();
         }
 
@@ -129,33 +125,25 @@ public class Locations implements LocationsProvider {
         return countryNames;
     }
 
-    public Country getCountryByName(String countryName) {
+    public @Nullable Country getCountryByName(String countryName) {
 
-        Iterator<Country> it = countries.listIterator();
-        while (it.hasNext()) {
-            Country country = it.next();
-//            if (country.equals(countryName))
+        for (Country country : countries) {
+            //            if (country.equals(countryName))
             if (country.name.equals(countryName))
                 return country;
         }
 
         return null;
-
-//        int index = countries.indexOf(countryName);
-//        if (index == -1)
-//            return null;
-//
-//        return countries.get(index);
     }
 
-    public Country getRandomCountry() {
+    public  @Nullable Country getRandomCountry() {
         if (countries.isEmpty())
             return null;
 
         return countries.get(random.nextInt(countries.size()));
     }
 
-    public String getRandomCity(String countryName) {
+    public  @Nullable String getRandomCity(String countryName) {
         ArrayList<String> cityNames = getCityNames(countryName);
         if (cityNames == null || cityNames.isEmpty())
             return null;

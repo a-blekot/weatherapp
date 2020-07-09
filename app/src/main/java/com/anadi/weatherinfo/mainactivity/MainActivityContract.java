@@ -9,18 +9,17 @@ import java.util.ArrayList;
 public interface MainActivityContract {
 
     interface Presenter {
-        void loadLocations();
-        void saveData();
-        void loadData();
+        void loadLocations(Context context);
+        void saveData(Context context);
+        void loadData(Context context);
 
         ArrayList<LocationInfo> getLocations();
     }
 
     interface Model {
-        void setContext(Context context);
-        void loadLocations();
-        void saveData();
-        void loadData();
+        void loadLocations(Context context);
+        void saveData(Context context);
+        void loadData(Context context);
 
         ArrayList<LocationInfo> getLocations();
     }

@@ -7,8 +7,7 @@ import com.anadi.weatherinfo.repository.Country;
 import java.util.ArrayList;
 
 public interface LocationsProvider {
-    void setContext(Context context);
-    void loadLocations();
+    void loadLocations(Context context);
 
     ArrayList<String> getCityNames(String country);
     ArrayList<String> getCountryNames();

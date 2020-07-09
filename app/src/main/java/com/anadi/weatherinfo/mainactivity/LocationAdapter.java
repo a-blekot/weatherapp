@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anadi.weatherinfo.details.DetailsActivity;
+import com.anadi.weatherinfo.repository.IconMap;
 import com.anadi.weatherinfo.repository.LocationInfo;
 import com.anadi.weatherinfo.R;
 
@@ -57,12 +58,14 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     private Resources res;
     private MainActivityContract.Presenter presenter;
     private ArrayList<LocationInfo> locations = new ArrayList<>();
+    private Context context;
 
     public LocationAdapter(Context context) {
 
         presenter = new MainPresenter(context);
-        presenter.loadLocations();
+        presenter.loadLocations(context);
         res = context.getResources();
+        this.context = context;
 
         updateLocations();
     }
@@ -74,11 +77,11 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     }
 
     public void loadData() {
-        presenter.loadData();
+        presenter.loadData(context);
     }
 
     public void saveData() {
-        presenter.saveData();
+        presenter.saveData(context);
     }
 
     @NonNull
@@ -98,7 +101,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     @Override
     public void onBindViewHolder(@NonNull LocationAdapterHolder holder, int position) {
         LocationInfo current = locations.get(position);
-        holder.iconImageView.setImageResource(R.drawable.clear_sky);
+        holder.iconImageView.setImageResource(IconMap.getIconId(current.getInfo().weather.get(0).icon));
         holder.cityNameTextView.setText(current.getCityName());
         holder.windTextView.setText(res.getString(R.string.wind_speed_ms, current.getInfo().wind.speed));
         holder.temperatureTextView.setText(res.getString(R.string.temp_celsium, current.getInfo().main.temp));

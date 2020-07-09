@@ -5,11 +5,14 @@ import androidx.annotation.Nullable;
 
 import com.anadi.weatherinfo.repository.data.WeatherInfo;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class LocationInfo implements Serializable {
     private static int count = 0;
-    private int id = count++;
+    private int id;
     private String cityName;
     private Country country;
     private WeatherInfo info;
@@ -17,6 +20,7 @@ public class LocationInfo implements Serializable {
     public LocationInfo(String cityName, Country country) {
         this.cityName = cityName;
         this.country = country;
+        id = count++;
     }
 
     public int getId() { return id;}
@@ -47,6 +51,17 @@ public class LocationInfo implements Serializable {
 
     public boolean validInfo() {
         return info != null;
+    }
+
+    private void writeObject(ObjectOutputStream oos)
+            throws IOException {
+        oos.defaultWriteObject();
+    }
+
+    private void readObject(ObjectInputStream ois)
+            throws ClassNotFoundException, IOException {
+        ois.defaultReadObject();
+        id = count++;
     }
 
     @Override
