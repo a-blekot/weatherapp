@@ -14,29 +14,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-
         android:visibility="gone"
         tools:visibility="visible"
         />
 
-
-    <Spinner
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/country_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:prompt="@string/country_spinner_title"
-        app:layout_constraintBottom_toTopOf="@+id/city_spinner"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
+    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/city_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingTop="30dp"
         android:prompt="@string/city_spiner_title"
-        app:layout_constraintBottom_toTopOf="@+id/add_location_button"
         app:layout_constraintEnd_toEndOf="@+id/country_spinner"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/country_spinner"
