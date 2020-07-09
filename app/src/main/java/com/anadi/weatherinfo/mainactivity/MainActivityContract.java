@@ -2,9 +2,8 @@ package com.anadi.weatherinfo.mainactivity;
 
 import android.content.Context;
 
-import com.anadi.weatherinfo.CityInfo;
+import com.anadi.weatherinfo.repository.LocationInfo;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public interface MainActivityContract {
@@ -14,7 +13,7 @@ public interface MainActivityContract {
         void saveData();
         void loadData();
 
-        ArrayList<CityInfo> getCities();
+        ArrayList<LocationInfo> getLocations();
     }
 
     interface Model {
@@ -23,6 +22,6 @@ public interface MainActivityContract {
         void saveData();
         void loadData();
 
-        ArrayList<CityInfo> getCities();
+        ArrayList<LocationInfo> getLocations();
     }
 }

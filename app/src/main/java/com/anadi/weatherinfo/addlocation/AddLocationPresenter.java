@@ -3,8 +3,8 @@ package com.anadi.weatherinfo.addlocation;
 import android.os.Handler;
 import android.text.TextUtils;
 
-import com.anadi.weatherinfo.CitiesCash;
-import com.anadi.weatherinfo.Locations;
+import com.anadi.weatherinfo.repository.LocationsCash;
+import com.anadi.weatherinfo.repository.Locations;
 import com.anadi.weatherinfo.R;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class AddLocationPresenter implements AddLocationContract.Presenter {
 
     AddLocationPresenter(AddLocationContract.View view) {
         this.view = view;
-        model = CitiesCash.getInstance();
+        model = LocationsCash.getInstance();
         locations = Locations.getInstance();
     }
 

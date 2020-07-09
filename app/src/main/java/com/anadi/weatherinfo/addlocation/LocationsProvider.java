@@ -2,7 +2,7 @@ package com.anadi.weatherinfo.addlocation;
 
 import android.content.Context;
 
-import com.anadi.weatherinfo.Country;
+import com.anadi.weatherinfo.repository.Country;
 
 import java.util.ArrayList;
 

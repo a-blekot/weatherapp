@@ -13,7 +13,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
         <activity android:name=".addlocation.AddLocationActivity"></activity>
-        <activity android:name=".CityActivity" />
+        <activity android:name=".details.DetailsActivity" />
         <activity android:name=".mainactivity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

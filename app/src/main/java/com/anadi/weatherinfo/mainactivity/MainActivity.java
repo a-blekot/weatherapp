@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.anadi.weatherinfo.BuildConfig;
 import com.anadi.weatherinfo.R;
 import com.anadi.weatherinfo.addlocation.AddLocationActivity;
 
@@ -18,7 +17,7 @@ import timber.log.Timber;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private CityAdapter adapter;
+    private LocationAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
         recyclerView = findViewById(R.id.recycler_view);
-        adapter = new CityAdapter(this);
+        adapter = new LocationAdapter(this);
         layoutManager = new LinearLayoutManager(this);
 
         recyclerView.setAdapter(adapter);
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
 
         adapter.loadData();
-        adapter.updateCities();
+        adapter.updateLocations();
     }
 
     public void addLocation(View view) {
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         Timber.d("onResume");
         Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
 
-        adapter.updateCities();
+        adapter.updateLocations();
     }
 
     @Override

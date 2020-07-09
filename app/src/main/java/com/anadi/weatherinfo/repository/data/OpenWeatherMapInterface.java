@@ -1,4 +1,4 @@
-package com.anadi.weatherinfo.repository;
+package com.anadi.weatherinfo.repository.data;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

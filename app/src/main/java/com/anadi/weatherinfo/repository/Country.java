@@ -1,4 +1,4 @@
-package com.anadi.weatherinfo;
+package com.anadi.weatherinfo.repository;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

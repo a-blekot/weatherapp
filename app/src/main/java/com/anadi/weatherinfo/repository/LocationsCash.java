@@ -1,12 +1,11 @@
-package com.anadi.weatherinfo;
+package com.anadi.weatherinfo.repository;
 
 import android.content.Context;
-import android.os.Environment;
 
 import com.anadi.weatherinfo.addlocation.AddLocationContract;
 import com.anadi.weatherinfo.addlocation.LocationsProvider;
 import com.anadi.weatherinfo.mainactivity.MainActivityContract;
-import com.anadi.weatherinfo.repository.WeatherInfo;
+import com.anadi.weatherinfo.repository.data.WeatherInfo;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,27 +18,27 @@ import java.util.*;
 
 import timber.log.Timber;
 
-public class CitiesCash implements AddLocationContract.Model, MainActivityContract.Model {
+public class LocationsCash implements AddLocationContract.Model, MainActivityContract.Model {
 
   private static final String APP_DATA_FILE = "weatherinfo.db";
   private static final String APP_DATA_DIR = "db";
 
-  private LocationsProvider locations = Locations.getInstance();
+  private LocationsProvider locationsProvider = Locations.getInstance();
   private InfoLoader infoLoader = InfoLoader.getInstance();
 
-  private ArrayList<CityInfo> cities = new ArrayList<>();
+  private ArrayList<LocationInfo> locations = new ArrayList<>();
   private Context mContext;
 
   // Singleton with double check
-  private static volatile CitiesCash instance;
-  private CitiesCash() {}
-  public static CitiesCash getInstance() {
-    CitiesCash result = instance;
+  private static volatile LocationsCash instance;
+  private LocationsCash() {}
+  public static LocationsCash getInstance() {
+    LocationsCash result = instance;
     if (result == null) {
-      synchronized (CitiesCash.class) {
+      synchronized (LocationsCash.class) {
         result = instance;
         if (result == null) {
-          instance = result = new CitiesCash();
+          instance = result = new LocationsCash();
         }
       }
     }
@@ -48,15 +47,15 @@ public class CitiesCash implements AddLocationContract.Model, MainActivityContra
 
   @Override
   public boolean add(String cityName, String countryName) {
-    Country country = locations.getCountryByName(countryName);
+    Country country = locationsProvider.getCountryByName(countryName);
 
     if (country == null) {
       Timber.d("There is no such country: %s", countryName);
       return false;
     }
 
-    CityInfo cityInfo = getCashedInfo(cityName, country);
-    if (cityInfo != null) {
+    LocationInfo locationInfo = getCashedInfo(cityName, country);
+    if (locationInfo != null) {
       Timber.d("City already loaded: %s", cityName);
       return true;
     }
@@ -66,13 +65,13 @@ public class CitiesCash implements AddLocationContract.Model, MainActivityContra
 
   @Override
   public void setContext(Context context) {
-    locations.setContext(context);
+    locationsProvider.setContext(context);
     mContext = context;
   }
 
   @Override
   public void loadLocations() {
-    locations.loadLocations();
+    locationsProvider.loadLocations();
   }
 
   @Override
@@ -96,8 +95,8 @@ public class CitiesCash implements AddLocationContract.Model, MainActivityContra
     try(FileOutputStream fos = new FileOutputStream(file);
         ObjectOutputStream oos = new ObjectOutputStream(fos);) {
 
-      oos.writeObject(cities);
-//      for (CityInfo cityInfo: cities) {
+      oos.writeObject(locations);
+//      for (CityInfo cityInfo: locations) {
 //        oos.writeObject(cityInfo);
 //      }
 
@@ -127,7 +126,7 @@ public class CitiesCash implements AddLocationContract.Model, MainActivityContra
     try(FileInputStream fis = new FileInputStream(file);
         ObjectInputStream ois = new ObjectInputStream(fis);) {
 
-      cities = (ArrayList<CityInfo>) ois.readObject();
+      locations = (ArrayList<LocationInfo>) ois.readObject();
 
     } catch (FileNotFoundException e) {
       e.printStackTrace();
@@ -139,8 +138,8 @@ public class CitiesCash implements AddLocationContract.Model, MainActivityContra
   }
 
   @Override
-  public ArrayList<CityInfo> getCities() {
-    return cities;
+  public ArrayList<LocationInfo> getLocations() {
+    return locations;
   }
 
   private boolean load(final String cityName, final Country country) {
@@ -152,19 +151,19 @@ public class CitiesCash implements AddLocationContract.Model, MainActivityContra
       return false;
     }
 
-    final CityInfo cityInfo = new CityInfo(cityName, country);
-    cityInfo.setInfo(weatherInfo);
-    cities.add(cityInfo);
+    final LocationInfo locationInfo = new LocationInfo(cityName, country);
+    locationInfo.setInfo(weatherInfo);
+    locations.add(locationInfo);
 
     return true;
   }
 
-  private CityInfo getCashedInfo(final String cityName, final Country country) {
+  private LocationInfo getCashedInfo(final String cityName, final Country country) {
 
-    for (CityInfo cityInfo : cities) {
-      if (cityInfo.getCityName().equals(cityName) &&
-              cityInfo.getCountry().equals(country))
-        return cityInfo;
+    for (LocationInfo locationInfo : locations) {
+      if (locationInfo.getCityName().equals(cityName) &&
+              locationInfo.getCountry().equals(country))
+        return locationInfo;
     }
 
     return null;

@@ -1,4 +1,4 @@
-package com.anadi.weatherinfo.repository;
+package com.anadi.weatherinfo.repository.data;
 
 import java.io.Serializable;
 import java.util.List;

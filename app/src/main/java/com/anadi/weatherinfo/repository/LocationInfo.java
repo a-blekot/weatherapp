@@ -1,20 +1,20 @@
-package com.anadi.weatherinfo;
+package com.anadi.weatherinfo.repository;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.anadi.weatherinfo.repository.WeatherInfo;
+import com.anadi.weatherinfo.repository.data.WeatherInfo;
 
 import java.io.Serializable;
 
-public class CityInfo implements Serializable {
+public class LocationInfo implements Serializable {
     private static int count = 0;
     private int id = count++;
     private String cityName;
     private Country country;
     private WeatherInfo info;
 
-    public CityInfo(String cityName, Country country) {
+    public LocationInfo(String cityName, Country country) {
         this.cityName = cityName;
         this.country = country;
     }
@@ -54,10 +54,10 @@ public class CityInfo implements Serializable {
         if (obj == null)
             return false;
 
-        if (!(obj instanceof CityInfo))
+        if (!(obj instanceof LocationInfo))
             return false;
 
-        CityInfo other = (CityInfo)obj;
+        LocationInfo other = (LocationInfo)obj;
 
         return other.cityName.equals(cityName) &&
                 other.country.equals(country) &&

@@ -2,8 +2,8 @@ package com.anadi.weatherinfo.mainactivity;
 
 import android.content.Context;
 
-import com.anadi.weatherinfo.CitiesCash;
-import com.anadi.weatherinfo.CityInfo;
+import com.anadi.weatherinfo.repository.LocationsCash;
+import com.anadi.weatherinfo.repository.LocationInfo;
 
 import java.util.*;
 
@@ -12,7 +12,7 @@ public class MainPresenter implements MainActivityContract.Presenter {
     private MainActivityContract.Model model;
 
     public MainPresenter(Context context) {
-        model = CitiesCash.getInstance();
+        model = LocationsCash.getInstance();
         model.setContext(context);
     }
 
@@ -32,7 +32,7 @@ public class MainPresenter implements MainActivityContract.Presenter {
     }
 
     @Override
-    public ArrayList<CityInfo> getCities() {
-        return model.getCities();
+    public ArrayList<LocationInfo> getLocations() {
+        return model.getLocations();
     }
 }

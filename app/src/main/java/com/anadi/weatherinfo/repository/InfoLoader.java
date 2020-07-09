@@ -1,7 +1,7 @@
-package com.anadi.weatherinfo;
+package com.anadi.weatherinfo.repository;
 
-import com.anadi.weatherinfo.repository.OpenWeatherMapInterface;
-import com.anadi.weatherinfo.repository.WeatherInfo;
+import com.anadi.weatherinfo.repository.data.OpenWeatherMapInterface;
+import com.anadi.weatherinfo.repository.data.WeatherInfo;
 
 import java.io.IOException;
 
@@ -10,8 +10,6 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
 import timber.log.Timber;
 
 public class InfoLoader {

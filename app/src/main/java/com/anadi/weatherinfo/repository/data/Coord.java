@@ -1,4 +1,4 @@
-package com.anadi.weatherinfo.repository;
+package com.anadi.weatherinfo.repository.data;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

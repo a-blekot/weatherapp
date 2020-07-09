@@ -1,7 +1,8 @@
-package com.anadi.weatherinfo;
+package com.anadi.weatherinfo.repository;
 
 import android.content.Context;
 
+import com.anadi.weatherinfo.R;
 import com.anadi.weatherinfo.addlocation.LocationsProvider;
 
 import org.json.JSONArray;

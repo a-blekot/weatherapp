@@ -13,8 +13,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.anadi.weatherinfo.CityActivity;
-import com.anadi.weatherinfo.CityInfo;
+import com.anadi.weatherinfo.details.DetailsActivity;
+import com.anadi.weatherinfo.repository.LocationInfo;
 import com.anadi.weatherinfo.R;
 
 import java.util.*;
@@ -22,9 +22,9 @@ import java.util.*;
 import timber.log.Timber;
 
 
-public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHolder> {
+public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationAdapterHolder> {
 
-    static class CityAdapterHolder extends RecyclerView.ViewHolder {
+    static class LocationAdapterHolder extends RecyclerView.ViewHolder {
 
         public LinearLayout containerView;
         public TextView cityNameTextView;
@@ -32,7 +32,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
         public TextView windTextView;
         public TextView temperatureTextView;
 
-        CityAdapterHolder(@NonNull View itemView) {
+        LocationAdapterHolder(@NonNull View itemView) {
             super(itemView);
 
             containerView = itemView.findViewById(R.id.city_row);
@@ -43,16 +43,9 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
             temperatureTextView = itemView.findViewById(R.id.city_row_temp_text_view);
 
             containerView.setOnClickListener(v -> {
-                Object tag = containerView.getTag();
-                CityInfo current;
+                final LocationInfo current = (LocationInfo) containerView.getTag();
 
-                if (!(tag instanceof CityInfo)) {
-                    Timber.d("onClick :: containerView.getTag() is not CityInfo.class");
-                    return;
-                }
-
-                current = (CityInfo) tag;
-                Intent intent = new Intent(v.getContext(), CityActivity.class);
+                Intent intent = new Intent(v.getContext(), DetailsActivity.class);
                 intent.putExtra("id", current.getId());
 
                 v.getContext().startActivity(intent);
@@ -63,20 +56,20 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
 
     private Resources res;
     private MainActivityContract.Presenter presenter;
-    private ArrayList<CityInfo> cities = new ArrayList<>();
+    private ArrayList<LocationInfo> locations = new ArrayList<>();
 
-    public CityAdapter(Context context) {
+    public LocationAdapter(Context context) {
 
         presenter = new MainPresenter(context);
         presenter.loadLocations();
         res = context.getResources();
 
-        updateCities();
+        updateLocations();
     }
 
-    public void updateCities() {
-        cities = presenter.getCities();
-        Timber.d( "cities = %s", cities);
+    public void updateLocations() {
+        locations = presenter.getLocations();
+        Timber.d( "cities = %s", locations);
         notifyDataSetChanged();
     }
 
@@ -90,21 +83,21 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityAdapterHol
 
     @NonNull
     @Override
-    public CityAdapterHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public LocationAdapterHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.city_row, parent, false);
+                .inflate(R.layout.location_row, parent, false);
 
-        return new CityAdapterHolder(view);
+        return new LocationAdapterHolder(view);
     }
 
     @Override
     public int getItemCount() {
-        return cities.size();
+        return locations.size();
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CityAdapterHolder holder, int position) {
-        CityInfo current = cities.get(position);
+    public void onBindViewHolder(@NonNull LocationAdapterHolder holder, int position) {
+        LocationInfo current = locations.get(position);
         holder.iconImageView.setImageResource(R.drawable.clear_sky);
         holder.cityNameTextView.setText(current.getCityName());
         holder.windTextView.setText(res.getString(R.string.wind_speed_ms, current.getInfo().wind.speed));
