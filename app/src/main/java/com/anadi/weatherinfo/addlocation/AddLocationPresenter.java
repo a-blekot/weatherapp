@@ -8,6 +8,8 @@ import com.anadi.weatherinfo.repository.Locations;
 import com.anadi.weatherinfo.R;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import timber.log.Timber;
 
@@ -18,10 +20,13 @@ public class AddLocationPresenter implements AddLocationContract.Presenter {
     private LocationsProvider locations;
     private Handler handler = new Handler();
 
+    private Executor exec;
+
     AddLocationPresenter(AddLocationContract.View view) {
         this.view = view;
         model = LocationsCash.getInstance();
         locations = Locations.getInstance();
+        exec = Executors.newSingleThreadExecutor();
     }
 
     public void addLocation(final String selectedCity, final String selectedCountry) {
@@ -35,26 +40,22 @@ public class AddLocationPresenter implements AddLocationContract.Presenter {
             return;
         }
 
-        new Thread(new Runnable() {
-            public void run() {
-                try {
+        exec.execute(() -> {
+            try {
+                boolean result = model.add(selectedCity, selectedCountry);
 
-                    boolean result = model.add(selectedCity, selectedCountry);
-
-                    if (result) {
-                        onCityAdded();
-                    }
-                    else {
-                        onError();
-                    }
-
-                } catch (Exception e) {
-                    System.err.println(e.getMessage());
-                    e.printStackTrace();
+                if (result) {
+                    onCityAdded();
                 }
-            }
-        }).start();
+                else {
+                    onError();
+                }
 
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override
@@ -68,20 +69,10 @@ public class AddLocationPresenter implements AddLocationContract.Presenter {
     }
 
     private void onCityAdded() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                view.onAddedSuccess();
-            }
-        });
+        handler.post(() -> view.onAddedSuccess());
     }
 
     private void onError() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                view.onError(R.string.on_error_select_city);
-            }
-        });
+        handler.post(() -> view.onError(R.string.on_error_select_city));
     }
 }
