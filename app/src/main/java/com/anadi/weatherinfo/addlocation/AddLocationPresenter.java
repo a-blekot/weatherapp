@@ -1,5 +1,6 @@
 package com.anadi.weatherinfo.addlocation;
 
+import android.app.NotificationChannel;
 import android.os.Handler;
 import android.text.TextUtils;
 
@@ -8,6 +9,7 @@ import com.anadi.weatherinfo.repository.Locations;
 import com.anadi.weatherinfo.R;
 
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 

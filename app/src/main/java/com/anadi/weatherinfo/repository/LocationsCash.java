@@ -16,15 +16,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.time.Instant;
 import java.util.*;
 
 import timber.log.Timber;
 
-public class LocationsCash implements AddLocationContract.Model,
+public class LocationsCash extends Observable implements AddLocationContract.Model,
         MainActivityContract.Model, DetailsContract.Model {
 
   private static final String APP_DATA_FILE = "weatherinfo.db";
   private static final String APP_DATA_DIR = "db";
+  private static final int TIME_TO_UPDATE = 1000 * 60 * 60; // data is considered to be "fresh" during one hour
 
   private LocationsProvider locationsProvider = Locations.getInstance();
   private InfoLoader infoLoader = InfoLoader.getInstance();
@@ -139,7 +141,7 @@ public class LocationsCash implements AddLocationContract.Model,
     WeatherInfo weatherInfo = infoLoader.load(cityName, country);
 
     if (weatherInfo == null) {
-      Timber.d("No info loaded for location: " + cityName + ", " + country);
+      Timber.d("No info loaded for location: %s, %s", cityName, country);
       return false;
     }
 
@@ -167,8 +169,13 @@ public class LocationsCash implements AddLocationContract.Model,
     for (LocationInfo locationInfo: locations) {
       if (locationInfo.getId() == id) {
 
-        // TODO
+        WeatherInfo weatherInfo = infoLoader.load(locationInfo.getCityName(), locationInfo.getCountry());
+        if (weatherInfo == null) {
+          Timber.d("No info loaded for location: " + locationInfo);
+          return false;
+        }
 
+        locationInfo.setInfo(weatherInfo);
         return true;
       }
     }
@@ -177,16 +184,18 @@ public class LocationsCash implements AddLocationContract.Model,
   }
 
   @Override
-  public boolean alreadyUpToDate(int id) {
+  public boolean needUpdate(int id) {
     for (LocationInfo locationInfo: locations) {
       if (locationInfo.getId() == id) {
-
-        // TODO
-
-        return true;
+         if (dataIsOld(locationInfo.getInfo().dt)) {
+           return true;
+         }
+         else
+           return false;
       }
     }
 
+    Timber.d("There is no data at all for id = %d", id);
     return false;
   }
 
@@ -199,5 +208,9 @@ public class LocationsCash implements AddLocationContract.Model,
     }
 
     return null;
+  }
+
+  private boolean dataIsOld(int timestamp) {
+    return System.currentTimeMillis() - timestamp > TIME_TO_UPDATE;
   }
 }

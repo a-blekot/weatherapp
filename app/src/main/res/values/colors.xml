@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+<!--    <color name="colorPrimary">#6200EE</color>-->
+<!--    <color name="colorPrimaryDark">#3700B3</color>-->
+<!--    <color name="colorAccent">#03DAC5</color>-->
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="myBackgroundColor">#FFF043</color>
+
+    <color name="skyBlue">#559fe3</color>
+
+    <color name="color_blue_20">#ffffff</color>
+    <color name="color_blue_19">#f1f8fd</color>
+    <color name="color_blue_18">#e3f1fb</color>
+    <color name="color_blue_17">#d5eaf9</color>
+    <color name="color_blue_16">#c8e3f7</color>
+    <color name="color_blue_15">#badcf5</color>
+    <color name="color_blue_14">#acd5f3</color>
+    <color name="color_blue_13">#9fcef1</color>
+    <color name="color_blue_12">#91c7ef</color>
+    <color name="color_blue_11">#83c0ed</color>
+    <color name="color_blue_10">#76B9EC</color>
+    <color name="color_blue_09">#6aa6d4</color>
+    <color name="color_blue_08">#5e94bc</color>
+    <color name="color_blue_07">#5281a5</color>
+    <color name="color_blue_06">#466f8d</color>
+    <color name="color_blue_05">#3b5c76</color>
+    <color name="color_blue_04">#2f4a5e</color>
+    <color name="color_blue_03">#233746</color>
+    <color name="color_blue_02">#17252f</color>
+    <color name="color_blue_01">#0b1217</color>
+    <color name="color_blue_00">#000000</color>
+
+    <color name="color_green_20">#ffffff</color>
+    <color name="color_green_19">#eefdf7</color>
+    <color name="color_green_18">#ddfbef</color>
+    <color name="color_green_17">#ccfae7</color>
+    <color name="color_green_16">#bbf8df</color>
+    <color name="color_green_15">#aaf7d8</color>
+    <color name="color_green_14">#99f5d0</color>
+    <color name="color_green_13">#88f3c8</color>
+    <color name="color_green_12">#77f2c0</color>
+    <color name="color_green_11">#66f0b8</color>
+    <color name="color_green_10">#56efb1</color>
+    <color name="color_green_09">#4dd79f</color>
+    <color name="color_green_08">#44bf8d</color>
+    <color name="color_green_07">#3ca77b</color>
+    <color name="color_green_06">#338f6a</color>
+    <color name="color_green_05">#2b7758</color>
+    <color name="color_green_04">#225f46</color>
+    <color name="color_green_03">#194735</color>
+    <color name="color_green_02">#112f23</color>
+    <color name="color_green_01">#081711</color>
+    <color name="color_green_00">#000000</color>
+
+
+
+
+
 </resources>

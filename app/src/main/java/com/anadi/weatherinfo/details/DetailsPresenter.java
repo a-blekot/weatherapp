@@ -1,28 +1,35 @@
 package com.anadi.weatherinfo.details;
 
 import android.os.Handler;
-
-import androidx.annotation.DrawableRes;
+import android.widget.Toast;
 
 import com.anadi.weatherinfo.R;
 import com.anadi.weatherinfo.repository.LocationsCash;
 import com.anadi.weatherinfo.repository.data.WeatherInfo;
 
+import java.util.Observable;
+
+import timber.log.Timber;
+
 public class DetailsPresenter implements DetailsContract.Presenter {
 
-    DetailsContract.View view;
-    DetailsContract.Model model;
+    private DetailsContract.View view;
+    private DetailsContract.Model model;
     private Handler handler = new Handler();
+    private int id;
 
-    DetailsPresenter(DetailsContract.View view) {
+    DetailsPresenter(DetailsContract.View view, int id) {
         this.view = view;
         model = LocationsCash.getInstance();
+        this.id = id;
+
+        onUpdated();
     }
 
     @Override
-    public void update(int id) {
-        if (model.alreadyUpToDate(id)) {
-            onUpdated(id, false);
+    public void update() {
+        if (!model.needUpdate(id)) {
+            Timber.d("No need for update. Data is fresh id = %d", id);
             return;
         }
 
@@ -34,7 +41,7 @@ public class DetailsPresenter implements DetailsContract.Presenter {
                 boolean result = model.update(id);
 
                 if (result) {
-                    onUpdated(id, true);
+                    onUpdated();
                 }
                 else {
                     onError();
@@ -52,8 +59,13 @@ public class DetailsPresenter implements DetailsContract.Presenter {
         return model.getInfo(id);
     }
 
-    private void onUpdated(int id, boolean needRedraw) {
-        handler.post(() -> view.onUpdateSuccess(needRedraw));
+    @Override
+    public void update(Observable o, Object arg) {
+        onUpdated();
+    }
+
+    private void onUpdated() {
+        handler.post(() -> view.onUpdateSuccess());
     }
 
     private void onError() {

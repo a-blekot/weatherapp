@@ -44,8 +44,6 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
     
     private ProgressBar progressBar;
 
-    boolean updated = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,8 +69,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 0);
 
-        presenter = new DetailsPresenter(this);
-        presenter.update(id);
+        presenter = new DetailsPresenter(this, id);
     }
 
     @Override
@@ -87,10 +84,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
     }
 
     @Override
-    public void onUpdateSuccess(boolean needRedraw) {
-        if (updated && !needRedraw)
-            return;
-
+    public void onUpdateSuccess() {
         progressBar.setVisibility(View.GONE);
 
         WeatherInfo info = presenter.getInfo(id);
@@ -113,9 +107,9 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
         timezoneTv.setText(getString(R.string.timezone, sign, hours, minutes));
         mainTempTv.setText(getString(R.string.temp_celsium, info.main.temp));
         windSpeedTv.setText(getString(R.string.wind_speed_ms, info.wind.speed));
-        weatherMainTv.setText(info.weather.get(0).main);
+//        weatherMainTv.setText(info.weather.get(0).main);
         tempFeelsLikeTv.setText(getString(R.string.feels_like_celsium, info.main.feelsLike));
-        weatherDescriptionTv.setText(info.weather.get(0).description);
+//        weatherDescriptionTv.setText(info.weather.get(0).description);
         mainPressureTv.setText(getString(R.string.pressure, info.main.pressure));
         mainHumidityTv.setText(getString(R.string.humidity, info.main.humidity));
 
@@ -127,11 +121,9 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
         sysSunriseTv.setText(getString(R.string.sunrise, format.format(sunrise)));
         sysSunsetTv.setText(getString(R.string.sunset, format.format(sunset)));
         coordinatesTv.setText(getString(R.string.coordinates, info.coord.lat, info.coord.lon));
-
-        updated = true;
     }
 
     public void update(View view) {
-        presenter.update(id);
+        presenter.update();
     }
 }

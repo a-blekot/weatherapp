@@ -20,33 +20,36 @@ public class WeatherInfo implements Serializable {
     @SerializedName("base")
     @Expose
     public String base;
+
     @SerializedName("main")
     @Expose
     public Main main;
+
     @SerializedName("visibility")
     @Expose
     public int visibility;
+
     @SerializedName("wind")
     @Expose
     public Wind wind;
+
     @SerializedName("clouds")
     @Expose
     public Clouds clouds;
-    @SerializedName("dt")
-    @Expose
 
     // Time of data calculation, unix, UTC
+    @SerializedName("dt")
+    @Expose
     public int dt;
+
     @SerializedName("sys")
     @Expose
-
-
     public Sys sys;
-    @SerializedName("timezone")
-    @Expose
 
     // Shift in seconds from UTC
     // Devide in 3600 to get +/- hours
+    @SerializedName("timezone")
+    @Expose
     public int timezone;
 
     // City ID

@@ -7,7 +7,7 @@ import com.anadi.weatherinfo.repository.LocationInfo;
 
 import java.util.*;
 
-public class MainPresenter implements MainActivityContract.Presenter {
+public class MainPresenter implements MainActivityContract.Presenter{
 
     private MainActivityContract.Model model;
 
@@ -33,5 +33,10 @@ public class MainPresenter implements MainActivityContract.Presenter {
     @Override
     public ArrayList<LocationInfo> getLocations() {
         return model.getLocations();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }

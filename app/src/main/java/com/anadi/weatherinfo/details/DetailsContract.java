@@ -7,6 +7,8 @@ import androidx.annotation.StringRes;
 
 import com.anadi.weatherinfo.repository.data.WeatherInfo;
 
+import java.util.Observer;
+
 public interface DetailsContract {
 
     interface View {
@@ -15,11 +17,11 @@ public interface DetailsContract {
 
         void onError(@StringRes int resId);
 
-        void onUpdateSuccess(boolean needRedraw);
+        void onUpdateSuccess();
     }
 
-    interface Presenter {
-        void update(int id);
+    interface Presenter extends Observer {
+        void update();
 
         WeatherInfo getInfo(int id);
     }
@@ -27,6 +29,6 @@ public interface DetailsContract {
     interface Model {
         WeatherInfo getInfo(int id);
         boolean update(int id);
-        boolean alreadyUpToDate(int id);
+        boolean needUpdate(int id);
     }
 }

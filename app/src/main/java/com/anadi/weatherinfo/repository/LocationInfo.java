@@ -82,6 +82,6 @@ public class LocationInfo implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return cityName + " | " + country;
+        return cityName + ", " + country;
     }
 }
