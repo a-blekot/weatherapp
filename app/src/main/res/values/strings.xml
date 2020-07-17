@@ -21,4 +21,7 @@
     <string name="timezone" translatable="false">GMT %1$s%2$02d:%3$02d</string>
     <string name="coordinates">Lat: %1$.4f, Lon: %2$.4f</string>
     <string name="bacground_picture">Bacground picture</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_order">Order</string>
+    <string name="order_message">You ordere something</string>
 </resources>

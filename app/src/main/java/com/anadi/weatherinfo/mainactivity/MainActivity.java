@@ -1,13 +1,16 @@
 package com.anadi.weatherinfo.mainactivity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.anadi.weatherinfo.R;
 import com.anadi.weatherinfo.addlocation.AddLocationActivity;
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
 //        if(BuildConfig.DEBUG){
             Timber.plant(new Timber.DebugTree());
@@ -46,11 +51,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.updateLocations();
     }
 
-    public void addLocation(View view) {
-        Intent intent = new Intent(getApplicationContext(), AddLocationActivity.class);
-        startActivity(intent);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -67,6 +67,32 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
 
         adapter.saveData();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        switch (item.getItemId()) {
+            case R.id.action_order:
+                Toast.makeText(this, R.string.order_message, Toast.LENGTH_SHORT).show();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void addLocation(View view) {
+        Intent intent = new Intent(getApplicationContext(), AddLocationActivity.class);
+        startActivity(intent);
     }
 
 //    @Override
