@@ -24,4 +24,6 @@
     <string name="action_settings">Settings</string>
     <string name="action_order">Order</string>
     <string name="order_message">You ordere something</string>
+    <string name="menu_custom_delete">Delete</string>
+    <string name="menu_context_favorite">Add to favorite</string>
 </resources>

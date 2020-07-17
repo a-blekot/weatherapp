@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/city_row"
+    android:id="@+id/location_row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
@@ -10,7 +10,7 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/city_row_name_text_view"
+        android:id="@+id/location_row_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -22,7 +22,7 @@
         android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/city_row_icon_image_view"
+        android:id="@+id/location_row_icon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -32,7 +32,7 @@
 
 
     <TextView
-        android:id="@+id/city_row_wind_text_view"
+        android:id="@+id/location_row_wind"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -40,7 +40,7 @@
         android:baselineAligned="false" />
 
     <TextView
-        android:id="@+id/city_row_temp_text_view"
+        android:id="@+id/location_row_temp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

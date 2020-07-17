@@ -14,15 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.anadi.weatherinfo.R;
 import com.anadi.weatherinfo.addlocation.AddLocationActivity;
+import com.anadi.weatherinfo.details.DetailsActivity;
 import com.anadi.weatherinfo.repository.IconMap;
+import com.anadi.weatherinfo.repository.LocationInfo;
 
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LocationAdapter.OnLocationSelectedListener{
 
     private RecyclerView recyclerView;
     private LocationAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private MainActivityContract.Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
         IconMap.init(this);
 
         recyclerView = findViewById(R.id.recycler_view);
-        adapter = new LocationAdapter(this);
+        presenter = new MainPresenter(this);
+        presenter.loadLocations(this);
+
+        adapter = new LocationAdapter(this, this, presenter);
         layoutManager = new LinearLayoutManager(this);
 
         recyclerView.setAdapter(adapter);
@@ -47,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         Timber.d("onCreate");
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
 
-        adapter.loadData();
+        presenter.loadData(this);
         adapter.updateLocations();
     }
 
@@ -66,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         Timber.d("onDestroy");
         Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
 
-        adapter.saveData();
+        presenter.saveData(this);
     }
 
     @Override
@@ -91,8 +97,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addLocation(View view) {
-        Intent intent = new Intent(getApplicationContext(), AddLocationActivity.class);
+        Intent intent = new Intent(this, AddLocationActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onSelected(LocationInfo locationInfo) {
+        if (locationInfo == null) {
+            Timber.wtf("locationInfo == null onSelected");
+            return;
+        }
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra("id", locationInfo.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onMenuAction(LocationInfo locationInfo, MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_context_delete:
+                presenter.deleteLocation(locationInfo);
+                adapter.updateLocations();
+                break;
+            case R.id.menu_context_favorite:
+
+                break;
+        }
     }
 
 //    @Override

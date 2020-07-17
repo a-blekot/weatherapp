@@ -1,9 +1,11 @@
 package com.anadi.weatherinfo.mainactivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,9 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.anadi.weatherinfo.details.DetailsActivity;
 import com.anadi.weatherinfo.repository.IconMap;
 import com.anadi.weatherinfo.repository.LocationInfo;
 import com.anadi.weatherinfo.R;
@@ -23,74 +25,79 @@ import java.util.*;
 import timber.log.Timber;
 
 
-public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationAdapterHolder> {
-
-    static class LocationAdapterHolder extends RecyclerView.ViewHolder {
-
-        public LinearLayout containerView;
-        public TextView cityNameTextView;
-        public ImageView iconImageView;
-        public TextView windTextView;
-        public TextView temperatureTextView;
-
-        LocationAdapterHolder(@NonNull View itemView) {
-            super(itemView);
-
-            containerView = itemView.findViewById(R.id.city_row);
-
-            iconImageView = itemView.findViewById(R.id.city_row_icon_image_view);
-            cityNameTextView = itemView.findViewById(R.id.city_row_name_text_view);
-            windTextView = itemView.findViewById(R.id.city_row_wind_text_view);
-            temperatureTextView = itemView.findViewById(R.id.city_row_temp_text_view);
-
-            containerView.setOnClickListener(v -> {
-                final LocationInfo current = (LocationInfo) containerView.getTag();
-
-                Intent intent = new Intent(v.getContext(), DetailsActivity.class);
-                intent.putExtra("id", current.getId());
-
-                v.getContext().startActivity(intent);
-            });
-        }
-
-    }
+public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationHolder> {
+    @NonNull
+    private OnLocationSelectedListener listener;
 
     private Resources res;
     private MainActivityContract.Presenter presenter;
     private ArrayList<LocationInfo> locations = new ArrayList<>();
-    private Context context;
 
-    public LocationAdapter(Context context) {
+    public interface OnLocationSelectedListener {
+        void onSelected(LocationInfo locationInfo);
+        void onMenuAction(LocationInfo locationInfo, MenuItem item);
+    }
 
-        presenter = new MainPresenter(context);
-        presenter.loadLocations(context);
+    class LocationHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener,
+                       View.OnCreateContextMenuListener,
+                       PopupMenu.OnMenuItemClickListener {
+
+        public LinearLayout containerView;
+        public TextView name;
+        public ImageView icon;
+        public TextView wind;
+        public TextView temp;
+
+        LocationHolder(@NonNull View itemView) {
+            super(itemView);
+
+            containerView = itemView.findViewById(R.id.location_row);
+            containerView.setOnClickListener(this);
+            containerView.setOnCreateContextMenuListener(this);
+
+            icon = itemView.findViewById(R.id.location_row_icon);
+            name = itemView.findViewById(R.id.location_row_name);
+            wind = itemView.findViewById(R.id.location_row_wind);
+            temp = itemView.findViewById(R.id.location_row_temp);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            listener.onSelected(locations.get(position));
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            PopupMenu popup = new PopupMenu(v.getContext(), v);
+            popup.getMenuInflater().inflate(R.menu.menu_context, popup.getMenu());
+            popup.setOnMenuItemClickListener(this);
+            popup.show();
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            listener.onMenuAction(locations.get(getAdapterPosition()), item);
+            return false;
+        }
+    }
+
+    public LocationAdapter(Context context, OnLocationSelectedListener listener, MainActivityContract.Presenter presenter) {
+        this.listener = listener;
+        this.presenter = presenter;
+
         res = context.getResources();
-        this.context = context;
-
         updateLocations();
-    }
-
-    public void updateLocations() {
-        locations = presenter.getLocations();
-        Timber.d( "cities = %s", locations);
-        notifyDataSetChanged();
-    }
-
-    public void loadData() {
-        presenter.loadData(context);
-    }
-
-    public void saveData() {
-        presenter.saveData(context);
     }
 
     @NonNull
     @Override
-    public LocationAdapterHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public LocationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.location_row, parent, false);
 
-        return new LocationAdapterHolder(view);
+        return new LocationHolder(view);
     }
 
     @Override
@@ -99,13 +106,19 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LocationAdapterHolder holder, int position) {
+    public void onBindViewHolder(@NonNull LocationHolder holder, int position) {
         LocationInfo current = locations.get(position);
-        holder.iconImageView.setImageResource(IconMap.getIconId(current.getInfo().weather.get(0).icon));
-        holder.cityNameTextView.setText(current.getCityName());
-        holder.windTextView.setText(res.getString(R.string.wind_speed_ms, current.getInfo().wind.speed));
-        holder.temperatureTextView.setText(res.getString(R.string.temp_celsium, current.getInfo().main.temp));
+        holder.icon.setImageResource(IconMap.getIconId(current.getInfo().weather.get(0).icon));
+        holder.name.setText(current.getCityName());
+        holder.wind.setText(res.getString(R.string.wind_speed_ms, current.getInfo().wind.speed));
+        holder.temp.setText(res.getString(R.string.temp_celsium, current.getInfo().main.temp));
 
         holder.containerView.setTag(current);
+    }
+
+    public void updateLocations() {
+        locations = presenter.getLocations();
+        Timber.d( "cities = %s", locations);
+        notifyDataSetChanged();
     }
 }

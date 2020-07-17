@@ -15,6 +15,8 @@ public interface MainActivityContract {
         void loadData(Context context);
 
         ArrayList<LocationInfo> getLocations();
+
+        boolean deleteLocation(LocationInfo locationInfo);
     }
 
     interface Model {
@@ -23,5 +25,7 @@ public interface MainActivityContract {
         void loadData(Context context);
 
         ArrayList<LocationInfo> getLocations();
+
+        boolean deleteLocation(LocationInfo locationInfo);
     }
 }

@@ -36,6 +36,11 @@ public class MainPresenter implements MainActivityContract.Presenter{
     }
 
     @Override
+    public boolean deleteLocation(LocationInfo locationInfo) {
+        return model.deleteLocation(locationInfo);
+    }
+
+    @Override
     public void update(Observable o, Object arg) {
 
     }

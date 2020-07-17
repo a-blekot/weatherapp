@@ -136,6 +136,11 @@ public class LocationsCash extends Observable implements AddLocationContract.Mod
     return locations;
   }
 
+  @Override
+  public boolean deleteLocation(LocationInfo locationInfo) {
+    return locations.remove(locationInfo);
+  }
+
   private boolean load(final String cityName, final Country country) {
 
     WeatherInfo weatherInfo = infoLoader.load(cityName, country);
