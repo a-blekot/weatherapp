@@ -34,9 +34,7 @@ public class MainActivity extends AppCompatActivity implements LocationAdapter.O
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        if(BuildConfig.DEBUG){
-            Timber.plant(new Timber.DebugTree());
-//        }
+
 
         IconMap.init(this);
 

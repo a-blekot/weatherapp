@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -15,5 +15,73 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    // display location temperature and wind speed
+
+    <style name="row_info" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/row_info</item>
+        <item name="android:textSize">@dimen/row_info</item>
+        <item name="android:baselineAligned">false</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">@dimen/adaptive</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    // display location name in the list
+
+    <style name="row_name" parent="row_info">
+        <item name="android:textColor">@color/row_name</item>
+        <item name="android:textSize">@dimen/row_name</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lines">1</item>
+        <item name="android:layout_weight">4</item>
+    </style>
+
+    // display common weather info in DetailsActivity
+
+    <style name="details_info" parent="TextAppearance.AppCompat.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/details_margin</item>
+        <item name="android:layout_marginTop">@dimen/details_margin</item>
+        <item name="android:padding">@dimen/details_padding</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/details_info</item>
+        <item name="android:textSize">@dimen/details_info</item>
+    </style>
+
+    <style name="details_main" parent="TextAppearance.AppCompat.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/details_margin</item>
+        <item name="android:padding">@dimen/details_padding</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/details_info</item>
+        <item name="android:textSize">@dimen/details_main</item>
+    </style>
+
+    <style name="details_name" parent="details_main">
+        <item name="android:textSize">@dimen/details_name</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lines">1</item>
+        <item name="android:layout_marginBottom">@dimen/details_margin</item>
+    </style>
+
+<!--    parent="Widget.MaterialComponents.FloatingActionButton"-->
+
+    <style name="fab">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/margin_regular</item>
+        <item name="android:layout_marginBottom">@dimen/margin_regular</item>
+        <item name="android:backgroundTint">@color/color_blue_12</item>
+        <item name="android:tint">@color/color_blue_04</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="fabSize">normal</item>
+        <item name="elevation">@dimen/fab_elevation</item>
+    </style>
 
 </resources>

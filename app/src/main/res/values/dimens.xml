@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="my_view_width">300dp</dimen>
-    <dimen name="count_text_size">200sp</dimen>
-    <dimen name="counter_height">300dp</dimen>
+<!--    <dimen name="activity_horizontal_margin">16dp</dimen>-->
+<!--    <dimen name="activity_vertical_margin">16dp</dimen>-->
+<!--    <dimen name="my_view_width">300dp</dimen>-->
+<!--    <dimen name="count_text_size">200sp</dimen>-->
+<!--    <dimen name="counter_height">300dp</dimen>-->
+
+    <dimen name="activity_horizontal_padding">16dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_regular">16dp</dimen>
+<!--    <dimen name="content_left_margin_wh">8sp</dimen>-->
+<!--    <dimen name="text_large_margin_top">40dp</dimen>-->
+    <dimen name="text_heading_text_size">40sp</dimen>
+    <dimen name="text_xlarge_text_size">30sp</dimen>
+    <dimen name="text_large_text_size">20sp</dimen>
+    <dimen name="text_subheader_text_size">16sp</dimen>
+    <dimen name="text_regular_text_size">15sp</dimen>
+<!--    <dimen name="view_margin">20dp</dimen>-->
+<!--    <dimen name="white_background_padding">20dp</dimen>-->
+<!--    <dimen name="edittext_margin_top">10dp</dimen>-->
+<!--    <dimen name="spinner_margin_left">10dp</dimen>-->
+<!--    <dimen name="card_margin_top">40dp</dimen>-->
+
+    <dimen name="adaptive">0dp</dimen>
+
+    <dimen name="row_name">@dimen/text_large_text_size</dimen>
+    <dimen name="row_info">@dimen/text_regular_text_size</dimen>
+    <dimen name="row_padding">@dimen/padding_small</dimen>
+
+    <dimen name="details_name">@dimen/text_heading_text_size</dimen>
+    <dimen name="details_info">@dimen/text_large_text_size</dimen>
+    <dimen name="details_main">@dimen/text_xlarge_text_size</dimen>
+    <dimen name="details_padding">@dimen/padding_small</dimen>
+    <dimen name="details_margin">@dimen/margin_small</dimen>
+
+
+    <dimen name="fab_elevation">@dimen/margin_small</dimen>
+
+
 </resources>

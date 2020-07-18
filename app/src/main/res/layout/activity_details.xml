@@ -6,67 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".details.DetailsActivity">
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/details_weather_main"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:padding="8dp"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:textStyle="bold"-->
-    <!--        app:layout_constraintEnd_toEndOf="@+id/details_weather_icon"-->
-    <!--        app:layout_constraintStart_toStartOf="@+id/details_weather_icon"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/details_weather_icon"-->
-    <!--        tools:text="Sun" />-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/details_weather_description"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="8dp"-->
-    <!--        android:lines="2"-->
-    <!--        android:padding="8dp"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:textStyle="bold"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/details_weather_main"-->
-    <!--        tools:layout_editor_absoluteX="5dp"-->
-    <!--        tools:text="Weather description" />-->
-
     <ImageView
         android:id="@+id/details_background"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/adaptive"
+        android:layout_height="@dimen/adaptive"
         android:contentDescription="@string/bacground_picture"
-        android:src="@drawable/sky"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:scaleType="centerCrop"
-        />
-
-
+        android:src="@drawable/sky"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/details_location_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="16dp"
-        android:lines="1"
-        android:padding="8dp"
-        android:textSize="40sp"
-        android:textStyle="bold"
+        style="@style/details_name"
         app:layout_constraintBottom_toTopOf="@+id/details_coordinates"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Sun Francisco, USA" />
 
     <TextView
         android:id="@+id/details_main_temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:textSize="30sp"
-        android:textStyle="bold"
+        style="@style/details_main"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -75,10 +36,7 @@
 
     <TextView
         android:id="@+id/details_wind_speed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textStyle="bold"
+        style="@style/details_main"
         app:layout_constraintBaseline_toBaselineOf="@+id/details_main_temp"
         app:layout_constraintStart_toEndOf="@id/barrier"
         app:layout_goneMarginStart="8dp"
@@ -88,7 +46,7 @@
         android:id="@+id/details_wind_degree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="@dimen/margin_small"
         android:contentDescription="@string/wind_degree_description"
         android:rotation="45"
         android:src="@drawable/wind_degree"
@@ -98,9 +56,9 @@
 
     <ImageView
         android:id="@+id/details_weather_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="@dimen/adaptive"
+        android:layout_height="@dimen/adaptive"
+        android:layout_marginTop="@dimen/margin_small"
         android:contentDescription="@string/weather_icon_description"
         android:src="@drawable/s01d"
         app:layout_constraintBottom_toTopOf="@+id/details_main_temp"
@@ -110,62 +68,36 @@
 
     <TextView
         android:id="@+id/details_temp_feels_like"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        style="@style/details_info"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/details_main_temp"
         tools:text="Feels like 20,0 C" />
 
     <TextView
         android:id="@+id/details_main_pressure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        style="@style/details_info"
         android:layout_marginTop="24dp"
-        android:padding="8dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/details_temp_feels_like"
         tools:text="Presure: 1020 hPa" />
 
     <TextView
         android:id="@+id/details_main_humidity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        style="@style/details_info"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/details_main_pressure"
         tools:text="Humidity: 52%" />
 
     <TextView
         android:id="@+id/details_sys_sunrise"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        style="@style/details_info"
         app:layout_constraintBaseline_toBaselineOf="@+id/details_main_pressure"
         app:layout_constraintStart_toEndOf="@id/barrier"
-        app:layout_goneMarginStart="8dp"
         tools:text="Sunrise: 04:45:12" />
 
     <TextView
         android:id="@+id/details_sys_sunset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        style="@style/details_info"
         app:layout_constraintBaseline_toBaselineOf="@+id/details_main_humidity"
         app:layout_constraintStart_toEndOf="@id/barrier"
         app:layout_goneMarginStart="8dp"
@@ -173,40 +105,24 @@
 
     <TextView
         android:id="@+id/details_timezone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/barrier"
+        style="@style/details_info"
         app:layout_constraintBaseline_toBaselineOf="@+id/details_temp_feels_like"
-        app:layout_goneMarginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/barrier"
         tools:text="GMT +03:00" />
 
     <TextView
         android:id="@+id/details_coordinates"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:padding="8dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        style="@style/details_info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Lat: 50,4300, Lon: 30,5200" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/update_location_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        style="@style/fab"
         android:onClick="update"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/update" />
+        app:srcCompat="@drawable/ic_update"
+        tools:ignore="MissingConstraints" />
 
     <ProgressBar
         android:id="@+id/progress_update"
@@ -225,8 +141,5 @@
         android:layout_height="wrap_content"
         app:barrierDirection="end"
         app:constraint_referenced_ids="details_main_temp,details_main_humidity,details_main_pressure,details_temp_feels_like" />
-
-    <!--    app:srcCompat="mater"-->
-    <!--    android:tint="@android:color/holo_blue_dark"-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

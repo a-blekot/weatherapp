@@ -56,7 +56,9 @@
     <color name="color_green_00">#000000</color>
 
 
-
+    <color name="row_name">@color/color_blue_01</color>
+    <color name="row_info">@color/color_blue_03</color>
+    <color name="details_info">@color/color_blue_03</color>
 
 
 </resources>

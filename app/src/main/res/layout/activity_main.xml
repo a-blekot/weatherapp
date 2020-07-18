@@ -22,21 +22,16 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recycler_view"
-        android:background="@drawable/sky_pink"/>
+        android:background="@drawable/sky_pink" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/add_location_button"
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        app:srcCompat="@android:drawable/ic_input_add"
-        android:tint="@color/cardview_dark_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:onClick="addLocation" />
+        style="@style/fab"
+        android:onClick="addLocation"
+        app:srcCompat="@drawable/ic_add"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

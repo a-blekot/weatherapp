@@ -33,9 +33,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
     private TextView timezoneTv;
     private TextView mainTempTv;
     private TextView windSpeedTv;
-    private TextView weatherMainTv;
     private TextView tempFeelsLikeTv;
-    private TextView weatherDescriptionTv;
     private TextView mainPressureTv;
     private TextView mainHumidityTv;
     private TextView sysSunriseTv;
@@ -55,9 +53,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
         timezoneTv = findViewById(R.id.details_timezone);
         mainTempTv = findViewById(R.id.details_main_temp);
         windSpeedTv = findViewById(R.id.details_wind_speed);
-        weatherMainTv = findViewById(R.id.details_weather_main);
         tempFeelsLikeTv = findViewById(R.id.details_temp_feels_like);
-        weatherDescriptionTv = findViewById(R.id.details_weather_description);
         mainPressureTv = findViewById(R.id.details_main_pressure);
         mainHumidityTv = findViewById(R.id.details_main_humidity);
         sysSunriseTv = findViewById(R.id.details_sys_sunrise);
@@ -107,9 +103,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
         timezoneTv.setText(getString(R.string.timezone, sign, hours, minutes));
         mainTempTv.setText(getString(R.string.temp_celsium, info.main.temp));
         windSpeedTv.setText(getString(R.string.wind_speed_ms, info.wind.speed));
-//        weatherMainTv.setText(info.weather.get(0).main);
         tempFeelsLikeTv.setText(getString(R.string.feels_like_celsium, info.main.feelsLike));
-//        weatherDescriptionTv.setText(info.weather.get(0).description);
         mainPressureTv.setText(getString(R.string.pressure, info.main.pressure));
         mainHumidityTv.setText(getString(R.string.humidity, info.main.humidity));
 

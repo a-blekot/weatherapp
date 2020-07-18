@@ -7,46 +7,24 @@
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="@dimen/row_padding">
 
     <TextView
         android:id="@+id/location_row_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="4"
-        android:baselineAligned="false"
-        android:ellipsize="end"
-        android:lines="1"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        style="@style/row_name" />
 
     <ImageView
         android:id="@+id/location_row_icon"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:baselineAligned="false"
+        style="@style/row_info"
         android:contentDescription="@string/weather_icon_description" />
-
 
     <TextView
         android:id="@+id/location_row_wind"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:baselineAligned="false" />
+        style="@style/row_info" />
 
     <TextView
         android:id="@+id/location_row_temp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:baselineAligned="false"
-        android:textStyle="bold" />
+        style="@style/row_info" />
 
 
 </LinearLayout>
