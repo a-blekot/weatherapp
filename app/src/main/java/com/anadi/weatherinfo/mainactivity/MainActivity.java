@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +21,7 @@ import com.anadi.weatherinfo.repository.LocationInfo;
 
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity implements LocationAdapter.OnLocationSelectedListener{
+public class MainActivity extends AppCompatActivity implements LocationAdapter.OnLocationSelectedListener {
 
     private RecyclerView recyclerView;
     private LocationAdapter adapter;
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements LocationAdapter.O
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
 
         IconMap.init(this);
@@ -77,6 +77,19 @@ public class MainActivity extends AppCompatActivity implements LocationAdapter.O
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem item = menu.findItem(R.id.action_night_mode);
+
+        int nightMode = AppCompatDelegate.getDefaultNightMode();
+        if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+            item.setTitle(R.string.day_mode);
+            item.setIcon(R.drawable.ic_day_mode);
+        }
+        else {
+            item.setTitle(R.string.night_mode);
+            item.setIcon(R.drawable.ic_night_mode);
+        }
+
         return true;
     }
 
@@ -88,6 +101,22 @@ public class MainActivity extends AppCompatActivity implements LocationAdapter.O
         switch (item.getItemId()) {
             case R.id.action_order:
                 Toast.makeText(this, R.string.order_message, Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.action_night_mode:
+                int nightMode = AppCompatDelegate.getDefaultNightMode();
+                // Set the theme mode for the restarted activity.
+                if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
+                    AppCompatDelegate.setDefaultNightMode
+                            (AppCompatDelegate.MODE_NIGHT_NO);
+                }
+                else {
+                    AppCompatDelegate.setDefaultNightMode
+                            (AppCompatDelegate.MODE_NIGHT_YES);
+                }
+
+                // Recreate the activity for the theme change to take effect.
+                recreate();
                 return true;
         }
 

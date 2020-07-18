@@ -26,4 +26,6 @@
     <string name="order_message">You ordere something</string>
     <string name="menu_custom_delete">Delete</string>
     <string name="menu_context_favorite">Add to favorite</string>
+    <string name="night_mode">Night mode</string>
+    <string name="day_mode">Day mode</string>
 </resources>

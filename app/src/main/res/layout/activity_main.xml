@@ -25,7 +25,9 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/sky_pink" />
+         />
+
+<!--    android:background="@drawable/sky_pink"-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_location_button"

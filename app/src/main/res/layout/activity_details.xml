@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".details.DetailsActivity">
 
-    <ImageView
-        android:id="@+id/details_background"
-        android:layout_width="@dimen/adaptive"
-        android:layout_height="@dimen/adaptive"
-        android:contentDescription="@string/bacground_picture"
-        android:scaleType="centerCrop"
-        android:src="@drawable/sky"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <ImageView-->
+<!--        android:id="@+id/details_background"-->
+<!--        android:layout_width="@dimen/adaptive"-->
+<!--        android:layout_height="@dimen/adaptive"-->
+<!--        android:contentDescription="@string/bacground_picture"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/sky"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <TextView
         android:id="@+id/details_location_name"

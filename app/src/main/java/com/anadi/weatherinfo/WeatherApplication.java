@@ -17,8 +17,8 @@ public class WeatherApplication extends Application {
             Timber.plant(new Timber.DebugTree());
         }
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.getDefaultNightMode());
-//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.getDefaultNightMode());
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
     }
 
     // Called by the system when the device configuration changes while your component is running.
