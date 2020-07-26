@@ -76,8 +76,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginEnd">@dimen/margin_regular</item>
         <item name="android:layout_marginBottom">@dimen/margin_regular</item>
-        <item name="android:backgroundTint">@color/color_blue_12</item>
-        <item name="android:tint">@color/color_blue_04</item>
+        <item name="android:tint">@color/color_white</item>
         <item name="layout_constraintBottom_toBottomOf">parent</item>
         <item name="layout_constraintEnd_toEndOf">parent</item>
         <item name="fabSize">normal</item>
