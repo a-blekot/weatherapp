@@ -68,6 +68,13 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
         id = intent.getIntExtra("id", 0);
 
         presenter = new DetailsPresenter(this, id);
+        presenter.subscribe();
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.unsubscribe();
+        super.onDestroy();
     }
 
     @Override

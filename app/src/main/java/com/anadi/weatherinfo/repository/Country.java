@@ -38,4 +38,12 @@ public class Country implements Serializable {
 //        return code + " : " + name;
         return name;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCode() {
+        return code;
+    }
 }

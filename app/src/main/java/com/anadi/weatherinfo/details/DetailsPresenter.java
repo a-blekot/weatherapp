@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import com.anadi.weatherinfo.R;
+import com.anadi.weatherinfo.repository.LocationInfo;
 import com.anadi.weatherinfo.repository.LocationsCash;
 import com.anadi.weatherinfo.repository.data.WeatherInfo;
 
@@ -21,6 +22,7 @@ public class DetailsPresenter implements DetailsContract.Presenter {
     DetailsPresenter(DetailsContract.View view, int id) {
         this.view = view;
         model = LocationsCash.getInstance();
+
         this.id = id;
 
         onUpdated();
@@ -55,13 +57,27 @@ public class DetailsPresenter implements DetailsContract.Presenter {
     }
 
     @Override
+    public void subscribe() {
+        Observable modelObservable = LocationsCash.getInstance();
+        modelObservable.addObserver(this);
+    }
+
+    @Override
+    public void unsubscribe() {
+        Observable modelObservable = LocationsCash.getInstance();
+        modelObservable.deleteObserver(this);
+    }
+
+    @Override
     public WeatherInfo getInfo(int id) {
         return model.getInfo(id);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        onUpdated();
+        if (arg instanceof LocationInfo && ((LocationInfo)arg).getId() == id ) {
+            onUpdated();
+        }
     }
 
     private void onUpdated() {

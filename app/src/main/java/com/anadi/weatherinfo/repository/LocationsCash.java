@@ -138,7 +138,13 @@ public class LocationsCash extends Observable implements AddLocationContract.Mod
 
   @Override
   public boolean deleteLocation(LocationInfo locationInfo) {
-    return locations.remove(locationInfo);
+    boolean result = locations.remove(locationInfo);
+    if (result) {
+      setChanged();
+      notifyObservers();
+    }
+
+    return result;
   }
 
   private boolean load(final String cityName, final Country country) {
@@ -153,6 +159,8 @@ public class LocationsCash extends Observable implements AddLocationContract.Mod
     final LocationInfo locationInfo = new LocationInfo(cityName, country);
     locationInfo.setInfo(weatherInfo);
     locations.add(locationInfo);
+    setChanged();
+    notifyObservers();
 
     return true;
   }
@@ -181,6 +189,8 @@ public class LocationsCash extends Observable implements AddLocationContract.Mod
         }
 
         locationInfo.setInfo(weatherInfo);
+        setChanged();
+        notifyObservers(locationInfo);
         return true;
       }
     }

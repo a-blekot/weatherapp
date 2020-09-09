@@ -1,6 +1,7 @@
 package com.anadi.weatherinfo.mainactivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anadi.weatherinfo.R;
+import com.anadi.weatherinfo.UpdateReceiver;
 import com.anadi.weatherinfo.addlocation.AddLocationActivity;
 import com.anadi.weatherinfo.details.DetailsActivity;
 import com.anadi.weatherinfo.repository.IconMap;
@@ -21,12 +23,14 @@ import com.anadi.weatherinfo.repository.LocationInfo;
 
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity implements LocationAdapter.OnLocationSelectedListener {
+public class MainActivity extends AppCompatActivity implements LocationAdapter.OnLocationSelectedListener,
+            MainActivityContract.View {
 
     private RecyclerView recyclerView;
     private LocationAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private MainActivityContract.Presenter presenter;
+//    private UpdateReceiver mReceiver = new UpdateReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +56,10 @@ public class MainActivity extends AppCompatActivity implements LocationAdapter.O
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
 
         presenter.loadData(this);
+        presenter.subscribe();
         adapter.updateLocations();
+
+//        registerReceiver();
     }
 
     @Override
@@ -60,17 +67,18 @@ public class MainActivity extends AppCompatActivity implements LocationAdapter.O
         super.onResume();
         Timber.d("onResume");
         Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
-
-        adapter.updateLocations();
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         Timber.d("onDestroy");
         Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
 
         presenter.saveData(this);
+        presenter.unsubscribe();
+//        unregisterReceiver(mReceiver);
+
+        super.onDestroy();
     }
 
     @Override
@@ -151,6 +159,22 @@ public class MainActivity extends AppCompatActivity implements LocationAdapter.O
                 break;
         }
     }
+
+    @Override
+    public void onUpdate() {
+        Timber.d("2");
+        adapter.updateLocations();
+    }
+
+//    private void registerReceiver() {
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+//        filter.addAction(Intent.ACTION_POWER_CONNECTED);
+//        filter.addAction(UpdateReceiver.NOTIFICATION);
+//
+//        // Register the receiver using the activity context.
+//        registerReceiver(mReceiver, filter);
+//    }
 
 //    @Override
 //    protected void onPause() {

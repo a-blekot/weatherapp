@@ -22,6 +22,8 @@ public interface DetailsContract {
 
     interface Presenter extends Observer {
         void update();
+        void subscribe();
+        void unsubscribe();
 
         WeatherInfo getInfo(int id);
     }

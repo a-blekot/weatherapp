@@ -28,4 +28,6 @@
     <string name="menu_context_favorite">Add to favorite</string>
     <string name="night_mode">Night mode</string>
     <string name="day_mode">Day mode</string>
+    <string name="channel_name">update channel</string>
+    <string name="channel_description">Description of Update-channel</string>
 </resources>
