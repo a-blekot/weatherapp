@@ -1,9 +1,10 @@
 package com.anadi.weatherinfo.repository.data;
 
-import java.io.Serializable;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+import java.util.List;
 
 public class WeatherInfo implements Serializable {
 
@@ -68,14 +69,13 @@ public class WeatherInfo implements Serializable {
     public int cod;
 
     public enum State {
-        NONE(0, "None", "None", -1),
-        CLEAR_SKY(800, "Clear", "Clear sky", 0),
-        CLOUDS(801, "Clouds", "few clouds: 11-25%", 1);
+        NONE(0, "None", "None", -1), CLEAR_SKY(800, "Clear", "Clear sky", 0), CLOUDS(801, "Clouds", "few clouds: " +
+                                                                                                    "11-25%", 1);
 
-        private int id;
-        private String mainDescription;
-        private String detailedDescription;
-        private int iconId;
+        private final int id;
+        private final String mainDescription;
+        private final String detailedDescription;
+        private final int iconId;
 
         State(int id, String mainDescription, String detailedDescription, int iconId) {
             this.id = id;

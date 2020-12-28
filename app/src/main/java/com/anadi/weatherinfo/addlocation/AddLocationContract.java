@@ -5,7 +5,6 @@ import androidx.annotation.StringRes;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Observer;
 
 public interface AddLocationContract {
 

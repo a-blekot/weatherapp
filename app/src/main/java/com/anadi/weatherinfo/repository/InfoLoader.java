@@ -18,19 +18,14 @@ public class InfoLoader {
     private static final String API_URL = "http://api.openweathermap.org/data/2.5/";
     private static final String API_KEY = "f9dee5683fdf51c7b611df7f57f26926";
     private static final String mUnits = "metric";
-    private String mLang = "en";
-
     private static final String TEST = API_URL + "weather/?q=Kiev,ua&appid=" + API_KEY + "&units=" + mUnits;
-
     private static volatile InfoLoader instance;
-    private Retrofit mRetrofit;
+    private final String mLang = "en";
+    private final Retrofit mRetrofit;
 
     // Singleton with double check
     private InfoLoader() {
-        mRetrofit = new Retrofit.Builder()
-            .baseUrl(API_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
+        mRetrofit = new Retrofit.Builder().baseUrl(API_URL).addConverterFactory(GsonConverterFactory.create()).build();
     }
 
     public static InfoLoader getInstance() {
@@ -46,12 +41,12 @@ public class InfoLoader {
         return result;
     }
 
-    public @Nullable WeatherInfo load(final String cityName, final Country country) {
+    public @Nullable
+    WeatherInfo load(final String cityName, final Country country) {
         try {
             String location = cityName + "," + country.code.toLowerCase();
             Timber.d("Trying to load weather info for: %s", location);
             Timber.d("TEST = %s", TEST);
-
 
             OpenWeatherMapInterface apiService = mRetrofit.create(OpenWeatherMapInterface.class);
             Call<WeatherInfo> call = apiService.getWeather(location, API_KEY, mUnits, mLang);
@@ -64,9 +59,8 @@ public class InfoLoader {
             // код 200
             if (response.isSuccessful()) {
                 Timber.d("Yeah baby!!!");
-            }
-            else {
-                switch(statusCode) {
+            } else {
+                switch (statusCode) {
                     case 404:
                         // страница не найдена. можно использовать ResponseBody, см. ниже
                         break;
@@ -75,15 +69,15 @@ public class InfoLoader {
                         break;
                 }
                 ResponseBody errorBody = response.errorBody();
-                if (errorBody != null)
+                if (errorBody != null) {
                     Timber.d("Error message: %s", errorBody.string());
+                }
             }
 
             Timber.d("Call (%s) statusCode = %d", location, statusCode);
 
             return weatherInfo;
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
             return null;

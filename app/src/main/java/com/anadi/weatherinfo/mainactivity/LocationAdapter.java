@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,32 +15,67 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.anadi.weatherinfo.R;
 import com.anadi.weatherinfo.repository.IconMap;
 import com.anadi.weatherinfo.repository.LocationInfo;
-import com.anadi.weatherinfo.R;
 
-import java.util.*;
+import java.util.ArrayList;
 
 import timber.log.Timber;
 
-
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.LocationHolder> {
-    @NonNull
-    private OnLocationSelectedListener listener;
-
-    private Resources res;
-    private MainActivityContract.Presenter presenter;
-    private ArrayList<LocationInfo> locations = new ArrayList<>();
-
     public interface OnLocationSelectedListener {
         void onSelected(LocationInfo locationInfo);
+
         void onMenuAction(LocationInfo locationInfo, MenuItem item);
     }
+    @NonNull
+    private final OnLocationSelectedListener listener;
+    private final Resources res;
+    private final MainActivityContract.Presenter presenter;
+    private ArrayList<LocationInfo> locations = new ArrayList<>();
 
-    class LocationHolder extends RecyclerView.ViewHolder
-            implements View.OnClickListener,
-                       View.OnCreateContextMenuListener,
-                       PopupMenu.OnMenuItemClickListener {
+    public LocationAdapter(Context context, OnLocationSelectedListener listener,
+                           MainActivityContract.Presenter presenter) {
+        this.listener = listener;
+        this.presenter = presenter;
+
+        res = context.getResources();
+        updateLocations();
+    }
+
+    @NonNull
+    @Override
+    public LocationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_row, parent, false);
+
+        return new LocationHolder(view);
+    }
+
+    @Override
+    public int getItemCount() {
+        return locations.size();
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull LocationHolder holder, int position) {
+        LocationInfo current = locations.get(position);
+        holder.icon.setImageResource(IconMap.getIconId(current.getInfo().weather.get(0).icon));
+        holder.name.setText(current.getCityName());
+        holder.wind.setText(res.getString(R.string.wind_speed_ms, current.getInfo().wind.speed));
+        holder.temp.setText(res.getString(R.string.temp_celsium, current.getInfo().main.temp));
+
+        holder.containerView.setTag(current);
+    }
+
+    public void updateLocations() {
+        locations = presenter.getLocations();
+        Timber.d("cities = %s", locations);
+        notifyDataSetChanged();
+    }
+
+    class LocationHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+            View.OnCreateContextMenuListener, PopupMenu.OnMenuItemClickListener {
 
         public LinearLayout containerView;
         public TextView name;
@@ -81,44 +115,5 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
             listener.onMenuAction(locations.get(getAdapterPosition()), item);
             return false;
         }
-    }
-
-    public LocationAdapter(Context context, OnLocationSelectedListener listener, MainActivityContract.Presenter presenter) {
-        this.listener = listener;
-        this.presenter = presenter;
-
-        res = context.getResources();
-        updateLocations();
-    }
-
-    @NonNull
-    @Override
-    public LocationHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.location_row, parent, false);
-
-        return new LocationHolder(view);
-    }
-
-    @Override
-    public int getItemCount() {
-        return locations.size();
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull LocationHolder holder, int position) {
-        LocationInfo current = locations.get(position);
-        holder.icon.setImageResource(IconMap.getIconId(current.getInfo().weather.get(0).icon));
-        holder.name.setText(current.getCityName());
-        holder.wind.setText(res.getString(R.string.wind_speed_ms, current.getInfo().wind.speed));
-        holder.temp.setText(res.getString(R.string.temp_celsium, current.getInfo().main.temp));
-
-        holder.containerView.setTag(current);
-    }
-
-    public void updateLocations() {
-        locations = presenter.getLocations();
-        Timber.d( "cities = %s", locations);
-        notifyDataSetChanged();
     }
 }

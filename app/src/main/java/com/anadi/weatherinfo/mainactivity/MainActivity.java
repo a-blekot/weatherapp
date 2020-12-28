@@ -1,7 +1,6 @@
 package com.anadi.weatherinfo.mainactivity;
 
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anadi.weatherinfo.R;
-import com.anadi.weatherinfo.UpdateReceiver;
 import com.anadi.weatherinfo.addlocation.AddLocationActivity;
 import com.anadi.weatherinfo.details.DetailsActivity;
 import com.anadi.weatherinfo.repository.IconMap;
@@ -24,62 +22,13 @@ import com.anadi.weatherinfo.repository.LocationInfo;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements LocationAdapter.OnLocationSelectedListener,
-            MainActivityContract.View {
+        MainActivityContract.View {
 
     private RecyclerView recyclerView;
     private LocationAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private MainActivityContract.Presenter presenter;
-//    private UpdateReceiver mReceiver = new UpdateReceiver();
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
-        IconMap.init(this);
-
-        recyclerView = findViewById(R.id.recycler_view);
-        presenter = new MainPresenter(this);
-        presenter.loadLocations(this);
-
-        adapter = new LocationAdapter(this, this, presenter);
-        layoutManager = new LinearLayoutManager(this);
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(layoutManager);
-
-        Timber.d("onCreate");
-        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
-
-        presenter.loadData(this);
-        presenter.subscribe();
-        adapter.updateLocations();
-
-//        registerReceiver();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Timber.d("onResume");
-        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onDestroy() {
-        Timber.d("onDestroy");
-        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
-
-        presenter.saveData(this);
-        presenter.unsubscribe();
-//        unregisterReceiver(mReceiver);
-
-        super.onDestroy();
-    }
+    //    private UpdateReceiver mReceiver = new UpdateReceiver();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,8 +41,7 @@ public class MainActivity extends AppCompatActivity implements LocationAdapter.O
         if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
             item.setTitle(R.string.day_mode);
             item.setIcon(R.drawable.ic_day_mode);
-        }
-        else {
+        } else {
             item.setTitle(R.string.night_mode);
             item.setIcon(R.drawable.ic_night_mode);
         }
@@ -115,12 +63,9 @@ public class MainActivity extends AppCompatActivity implements LocationAdapter.O
                 int nightMode = AppCompatDelegate.getDefaultNightMode();
                 // Set the theme mode for the restarted activity.
                 if (nightMode == AppCompatDelegate.MODE_NIGHT_YES) {
-                    AppCompatDelegate.setDefaultNightMode
-                            (AppCompatDelegate.MODE_NIGHT_NO);
-                }
-                else {
-                    AppCompatDelegate.setDefaultNightMode
-                            (AppCompatDelegate.MODE_NIGHT_YES);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 }
 
                 // Recreate the activity for the theme change to take effect.
@@ -166,41 +111,89 @@ public class MainActivity extends AppCompatActivity implements LocationAdapter.O
         adapter.updateLocations();
     }
 
-//    private void registerReceiver() {
-//        IntentFilter filter = new IntentFilter();
-//        filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
-//        filter.addAction(Intent.ACTION_POWER_CONNECTED);
-//        filter.addAction(UpdateReceiver.NOTIFICATION);
-//
-//        // Register the receiver using the activity context.
-//        registerReceiver(mReceiver, filter);
-//    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        Timber.d("onPause");
-//        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
-//    }
-//
-//    @Override
-//    protected void onPostResume() {
-//        super.onPostResume();
-//        Timber.d("onPostResume");
-//        Toast.makeText(this, "onPostResume", Toast.LENGTH_SHORT).show();
-//    }
-//
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        Timber.d("onStart");
-//        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
-//    }
-//
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        Timber.d("onStop");
-//        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
-//    }
+        IconMap.init(this);
+
+        recyclerView = findViewById(R.id.recycler_view);
+        presenter = new MainPresenter(this);
+        presenter.loadLocations(this);
+
+        adapter = new LocationAdapter(this, this, presenter);
+        layoutManager = new LinearLayoutManager(this);
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
+
+        Timber.d("onCreate");
+        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+
+        presenter.loadData(this);
+        presenter.subscribe();
+        adapter.updateLocations();
+
+        //        registerReceiver();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Timber.d("onResume");
+        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Timber.d("onDestroy");
+        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
+
+        presenter.saveData(this);
+        presenter.unsubscribe();
+        //        unregisterReceiver(mReceiver);
+
+        super.onDestroy();
+    }
+
+    //    private void registerReceiver() {
+    //        IntentFilter filter = new IntentFilter();
+    //        filter.addAction(Intent.ACTION_POWER_DISCONNECTED);
+    //        filter.addAction(Intent.ACTION_POWER_CONNECTED);
+    //        filter.addAction(UpdateReceiver.NOTIFICATION);
+    //
+    //        // Register the receiver using the activity context.
+    //        registerReceiver(mReceiver, filter);
+    //    }
+
+    //    @Override
+    //    protected void onPause() {
+    //        super.onPause();
+    //        Timber.d("onPause");
+    //        Toast.makeText(this, "onPause", Toast.LENGTH_SHORT).show();
+    //    }
+    //
+    //    @Override
+    //    protected void onPostResume() {
+    //        super.onPostResume();
+    //        Timber.d("onPostResume");
+    //        Toast.makeText(this, "onPostResume", Toast.LENGTH_SHORT).show();
+    //    }
+    //
+    //    @Override
+    //    protected void onStart() {
+    //        super.onStart();
+    //        Timber.d("onStart");
+    //        Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show();
+    //    }
+    //
+    //    @Override
+    //    protected void onStop() {
+    //        super.onStop();
+    //        Timber.d("onStop");
+    //        Toast.makeText(this, "onStop", Toast.LENGTH_SHORT).show();
+    //    }
 }

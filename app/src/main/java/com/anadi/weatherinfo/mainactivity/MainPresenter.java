@@ -3,18 +3,19 @@ package com.anadi.weatherinfo.mainactivity;
 import android.content.Context;
 import android.os.Handler;
 
-import com.anadi.weatherinfo.repository.LocationsCash;
 import com.anadi.weatherinfo.repository.LocationInfo;
+import com.anadi.weatherinfo.repository.LocationsCash;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Observable;
 
 import timber.log.Timber;
 
-public class MainPresenter implements MainActivityContract.Presenter{
+public class MainPresenter implements MainActivityContract.Presenter {
 
-    private MainActivityContract.Model model;
-    private MainActivityContract.View view;
-    private Handler handler = new Handler();
+    private final MainActivityContract.Model model;
+    private final MainActivityContract.View view;
+    private final Handler handler = new Handler();
 
     public MainPresenter(MainActivityContract.View view) {
         model = LocationsCash.getInstance();

@@ -1,8 +1,5 @@
 package com.anadi.weatherinfo.details;
 
-import android.content.Context;
-
-import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 
 import com.anadi.weatherinfo.repository.data.WeatherInfo;
@@ -22,7 +19,9 @@ public interface DetailsContract {
 
     interface Presenter extends Observer {
         void update();
+
         void subscribe();
+
         void unsubscribe();
 
         WeatherInfo getInfo(int id);
@@ -30,7 +29,9 @@ public interface DetailsContract {
 
     interface Model {
         WeatherInfo getInfo(int id);
+
         boolean update(int id);
+
         boolean needUpdate(int id);
     }
 }

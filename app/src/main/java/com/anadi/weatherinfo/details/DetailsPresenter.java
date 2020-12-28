@@ -1,7 +1,6 @@
 package com.anadi.weatherinfo.details;
 
 import android.os.Handler;
-import android.widget.Toast;
 
 import com.anadi.weatherinfo.R;
 import com.anadi.weatherinfo.repository.LocationInfo;
@@ -14,10 +13,10 @@ import timber.log.Timber;
 
 public class DetailsPresenter implements DetailsContract.Presenter {
 
-    private DetailsContract.View view;
-    private DetailsContract.Model model;
-    private Handler handler = new Handler();
-    private int id;
+    private final DetailsContract.View view;
+    private final DetailsContract.Model model;
+    private final Handler handler = new Handler();
+    private final int id;
 
     DetailsPresenter(DetailsContract.View view, int id) {
         this.view = view;
@@ -44,8 +43,7 @@ public class DetailsPresenter implements DetailsContract.Presenter {
 
                 if (result) {
                     onUpdated();
-                }
-                else {
+                } else {
                     onError();
                 }
 
@@ -75,7 +73,7 @@ public class DetailsPresenter implements DetailsContract.Presenter {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof LocationInfo && ((LocationInfo)arg).getId() == id ) {
+        if (arg instanceof LocationInfo && ((LocationInfo) arg).getId() == id) {
             onUpdated();
         }
     }

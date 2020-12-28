@@ -31,8 +31,8 @@ public class Main implements Serializable {
     @Expose
     public float tempMax;
 
-//    Atmospheric pressure (on the sea level,
-//    if there is no sea_level or grnd_level data), hPa
+    //    Atmospheric pressure (on the sea level,
+    //    if there is no sea_level or grnd_level data), hPa
     @SerializedName("pressure")
     @Expose
     public int pressure;

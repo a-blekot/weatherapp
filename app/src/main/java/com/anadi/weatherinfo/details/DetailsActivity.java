@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.animation.AnimationSet;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,39 +42,6 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
     private TextView coordinatesTv;
 
     private ProgressBar progressBar;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
-
-        weatherIconIv = findViewById(R.id.details_weather_icon);
-        windDegreeIv = findViewById(R.id.details_wind_degree);
-        locationNameTv = findViewById(R.id.details_location_name);
-        timezoneTv = findViewById(R.id.details_timezone);
-        mainTempTv = findViewById(R.id.details_main_temp);
-        windSpeedTv = findViewById(R.id.details_wind_speed);
-        tempFeelsLikeTv = findViewById(R.id.details_temp_feels_like);
-        mainPressureTv = findViewById(R.id.details_main_pressure);
-        mainHumidityTv = findViewById(R.id.details_main_humidity);
-        sysSunriseTv = findViewById(R.id.details_sys_sunrise);
-        sysSunsetTv = findViewById(R.id.details_sys_sunset);
-        coordinatesTv = findViewById(R.id.details_coordinates);
-
-        progressBar = findViewById(R.id.progress_update);
-
-        Intent intent = getIntent();
-        id = intent.getIntExtra("id", 0);
-
-        presenter = new DetailsPresenter(this, id);
-        presenter.subscribe();
-    }
-
-    @Override
-    protected void onDestroy() {
-        presenter.unsubscribe();
-        super.onDestroy();
-    }
 
     @Override
     public void loading() {
@@ -116,7 +82,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
         mainPressureTv.setText(getString(R.string.pressure, info.main.pressure));
         mainHumidityTv.setText(getString(R.string.humidity, info.main.humidity));
 
-//        SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
+        //        SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
         DateFormat format = DateFormat.getTimeInstance();
         Date sunrise = new Date(info.sys.sunrise * 1000);
         Date sunset = new Date(info.sys.sunset * 1000);
@@ -128,9 +94,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
 
     public void update(View view) {
 
-        ObjectAnimator animation = ObjectAnimator.ofFloat(windDegreeIv,
-                "rotation",
-                windDegreeIv.getRotation()-720f);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(windDegreeIv, "rotation", windDegreeIv.getRotation() - 720f);
         animation.setDuration(500);
         animation.start();
 
@@ -139,34 +103,67 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
         presenter.update();
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_details);
+
+        weatherIconIv = findViewById(R.id.details_weather_icon);
+        windDegreeIv = findViewById(R.id.details_wind_degree);
+        locationNameTv = findViewById(R.id.details_location_name);
+        timezoneTv = findViewById(R.id.details_timezone);
+        mainTempTv = findViewById(R.id.details_main_temp);
+        windSpeedTv = findViewById(R.id.details_wind_speed);
+        tempFeelsLikeTv = findViewById(R.id.details_temp_feels_like);
+        mainPressureTv = findViewById(R.id.details_main_pressure);
+        mainHumidityTv = findViewById(R.id.details_main_humidity);
+        sysSunriseTv = findViewById(R.id.details_sys_sunrise);
+        sysSunsetTv = findViewById(R.id.details_sys_sunset);
+        coordinatesTv = findViewById(R.id.details_coordinates);
+
+        progressBar = findViewById(R.id.progress_update);
+
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id", 0);
+
+        presenter = new DetailsPresenter(this, id);
+        presenter.subscribe();
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.unsubscribe();
+        super.onDestroy();
+    }
+
     private void createAnimation() {
-        if (weatherIconIv == null)
+        if (weatherIconIv == null) {
             return;
+        }
 
         switch (weatherIconIv.getVisibility()) {
             case View.VISIBLE:
                 animationHideImage();
                 break;
 
-//            case View.INVISIBLE:
-//                animationShowImage();
-//                break;
+            //            case View.INVISIBLE:
+            //                animationShowImage();
+            //                break;
         }
     }
 
     private void animationShowImage() {
-// Get the center for the clipping circle.
+        // Get the center for the clipping circle.
         int cx = weatherIconIv.getWidth() / 2;
         int cy = weatherIconIv.getHeight() / 2;
 
-// Get the final radius for the clipping circle.
+        // Get the final radius for the clipping circle.
         float finalRadius = (float) Math.hypot(cx, cy);
 
-// Create the animator for this view (the start radius is zero).
-        Animator anim = ViewAnimationUtils
-                .createCircularReveal(weatherIconIv, cx, cy, 0, finalRadius);
+        // Create the animator for this view (the start radius is zero).
+        Animator anim = ViewAnimationUtils.createCircularReveal(weatherIconIv, cx, cy, 0, finalRadius);
 
-// Make the view visible and start the animation.
+        // Make the view visible and start the animation.
         weatherIconIv.setVisibility(View.VISIBLE);
         anim.start();
     }
@@ -183,7 +180,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsContrac
 
         // Create the animation (the final radius is zero.
         Animator anim = ViewAnimationUtils.
-                createCircularReveal(weatherIconIv, cx, cy, initialRadius, 0);
+                                                  createCircularReveal(weatherIconIv, cx, cy, initialRadius, 0);
 
         // Make the view invisible when the animation is done.
         anim.addListener(new AnimatorListenerAdapter() {

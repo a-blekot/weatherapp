@@ -10,10 +10,12 @@ public interface LocationsProvider {
     void loadLocations(Context context);
 
     ArrayList<String> getCityNames(String country);
+
     ArrayList<String> getCountryNames();
 
     Country getCountryByName(String countryName);
 
     Country getRandomCountry();
+
     String getRandomCity(String countryName);
 }
