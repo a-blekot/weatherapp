@@ -6,7 +6,7 @@
     <string name="wind_speed_ms">%1$.1f м/с</string>
     <string name="on_error_update">Данные не доступны. Пожалуйста, проверьте интернет соединение.</string>
     <string name="details_temp_label">Темп.</string>
-    <string name="details_wind_speed">Скорость\nветра</string>
+    <string name="wind_speed">Скорость\nветра</string>
     <string name="feels_like_celsium">Ощущается %1$.1f\u2103</string>
     <string name="feels_like_fahrenheit">Ощущается %1$.1f\u2109</string>
     <string name="on_error_select_city">Неверный город, пожалуйста выберите еще раз</string>

@@ -14,8 +14,8 @@
     <string name="sunrise">Sunrise: %1$s</string>
     <string name="sunset">Sunset: %1$s</string>
     <string name="details_temp_label">Current \ntemp</string>
-    <string name="details_wind_speed">Wind\nspeed</string>
-    <string name="details_location_name" translatable="false">%1$s, %2$s</string>
+    <string name="wind_speed">Wind\nspeed</string>
+    <string name="location_name" translatable="false">%1$s, %2$s</string>
     <string name="weather_icon_description">Weather icon</string>
     <string name="wind_degree_description">Wind degree</string>
     <string name="timezone" translatable="false">GMT %1$s%2$02d:%3$02d</string>
