@@ -2,8 +2,7 @@ package com.anadi.weatherinfo.di
 
 import com.anadi.weatherinfo.repository.InfoLoader
 import com.anadi.weatherinfo.repository.LocationsCash
-import com.anadi.weatherinfo.repository.LocationsProvideImpl
-import com.anadi.weatherinfo.ui.addlocation.AddLocationActivity
+import com.anadi.weatherinfo.repository.LocationsProviderImpl
 import com.anadi.weatherinfo.ui.addlocation.AddLocationContract
 import com.anadi.weatherinfo.ui.addlocation.AddLocationPresenter
 import com.anadi.weatherinfo.ui.addlocation.LocationsProvider
@@ -36,7 +35,7 @@ class LocationProviderModule {
 
     @Provides
     @Singleton
-    fun createLocationsProvider(): LocationsProvider = LocationsProvideImpl()
+    fun createLocationsProvider(): LocationsProvider = LocationsProviderImpl()
 
     @Provides
     @Singleton

@@ -7,7 +7,7 @@ import java.io.ObjectOutputStream
 import java.io.Serializable
 import kotlin.jvm.Throws
 
-class LocationInfo(var cityName: String?, var country: Country) : Serializable {
+class LocationInfo(var cityName: String, var country: Country) : Serializable {
     var id: Int
         private set
     lateinit var info: WeatherInfo

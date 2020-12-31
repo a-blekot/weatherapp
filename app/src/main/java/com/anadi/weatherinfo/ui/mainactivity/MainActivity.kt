@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), OnLocationSelect
     private val binding by viewBinding(ActivityMainBinding::bind, R.id.layout)
     
     private lateinit var adapter: LocationAdapter
-    private lateinit var layoutManager: RecyclerView.LayoutManager
     @Inject
     lateinit var presenter: MainActivityContract.Presenter
 
@@ -110,11 +109,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), OnLocationSelect
         presenter.view = this
         presenter.loadLocations(this)
         adapter = LocationAdapter(this, this, presenter)
-        layoutManager = LinearLayoutManager(this)
-        
-        binding.recyclerView.setAdapter(adapter)
-        binding.recyclerView.setLayoutManager(layoutManager)
-        
+
+        binding.recyclerView.adapter = adapter
+
         Timber.d("onCreate")
         Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show()
         presenter.loadData(this)

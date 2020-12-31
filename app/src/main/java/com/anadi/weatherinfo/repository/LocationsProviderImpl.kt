@@ -13,16 +13,16 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.*
 
-class LocationsProvideImpl : LocationsProvider {
+class LocationsProviderImpl : LocationsProvider {
     private val random = Random(System.currentTimeMillis())
     private val countries = ArrayList<Country>()
     private val cities: MutableMap<String, ArrayList<String>> = HashMap()
 
     override fun loadLocations(context: Context) {
         var jsonString = convert(context.resources.openRawResource(R.raw.countries_codes))
-        //        Timber.d( jsonString);
+        Timber.d(jsonString);
         try {
-            //            Timber.d( "I`.m here!");
+            Timber.d("I`.m here!");
             val array = JSONArray(jsonString)
             var obj: JSONObject
             for (i in 0 until array.length()) {
@@ -30,10 +30,11 @@ class LocationsProvideImpl : LocationsProvider {
                 countries.add(Country(obj.getString("name"), obj.getString("code")))
             }
 
-            //            Timber.d( countries.toString());
+            Timber.d(countries.toString());
         } catch (e: JSONException) {
-            e.printStackTrace()
+            Timber.e(e)
         }
+
         try {
             for (country in countries) {
                 val resourceName = country.name.toLowerCase().replace(" ", "_")
@@ -55,11 +56,12 @@ class LocationsProvideImpl : LocationsProvider {
                 cities[country.toString()] = cityArray
             }
         } catch (e: JSONException) {
-            e.printStackTrace()
+            Timber.e(e)
         }
     }
 
-    override fun getCountryByName(countryName: String) = countries.firstOrNull{it.name == countryName} ?: Country.EMPTY
+    override fun getCountryByName(countryName: String) = countries.firstOrNull { it.name == countryName }
+            ?: Country.EMPTY
 
     override fun getRandomCity(countryName: String): String {
         val cityNames = getCityNames(countryName)
@@ -68,9 +70,10 @@ class LocationsProvideImpl : LocationsProvider {
 
     override fun getCityNames(country: String) = cities[country]!!
 
-    override val randomCountry= if (countries.isEmpty()) Country.EMPTY else countries[random.nextInt(countries.size)]
+    override val randomCountry = if (countries.isEmpty()) Country.EMPTY else countries[random.nextInt(countries.size)]
 
-    override val countryNames = countries.map { it.toString() }
+    override val countryNames: List<String>
+        get() = countries.map { it.toString() }
 
     private fun convert(inputStream: InputStream): String {
         val stringBuilder = StringBuilder()
@@ -83,7 +86,7 @@ class LocationsProvideImpl : LocationsProvider {
                 }
             }
         } catch (e: IOException) {
-            e.printStackTrace()
+            Timber.e(e)
         }
         return stringBuilder.toString()
     }

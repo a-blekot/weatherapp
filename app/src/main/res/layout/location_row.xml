@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/location_row"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,20 +12,24 @@
 
     <TextView
         android:id="@+id/location_row_name"
-        style="@style/row_name" />
+        style="@style/row_name"
+        tools:text="Kiev, UA" />
 
     <ImageView
         android:id="@+id/location_row_icon"
         style="@style/row_info"
-        android:contentDescription="@string/weather_icon_description" />
+        android:contentDescription="@string/weather_icon_description"
+        tools:src="@drawable/s01d" />
 
     <TextView
         android:id="@+id/location_row_wind"
-        style="@style/row_info" />
+        style="@style/row_info"
+        tools:text="@string/wind_speed_ms_stub" />
 
     <TextView
         android:id="@+id/location_row_temp"
-        style="@style/row_info" />
+        style="@style/row_info"
+        tools:text="@string/temp_celsium_stub" />
 
 
 </LinearLayout>

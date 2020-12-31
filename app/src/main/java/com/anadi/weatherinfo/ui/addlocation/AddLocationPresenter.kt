@@ -1,10 +1,8 @@
 package com.anadi.weatherinfo.ui.addlocation
 
-import android.location.LocationProvider
 import android.os.Handler
 import android.text.TextUtils
 import com.anadi.weatherinfo.R
-import com.anadi.weatherinfo.repository.LocationsProvideImpl
 import com.anadi.weatherinfo.repository.LocationsCash
 import timber.log.Timber
 import java.util.concurrent.Executor
@@ -39,8 +37,7 @@ class AddLocationPresenter @Inject constructor(private val locationCash: Locatio
                     onError()
                 }
             } catch (e: Exception) {
-                System.err.println(e.message)
-                e.printStackTrace()
+                Timber.e(e)
             }
         }
     }

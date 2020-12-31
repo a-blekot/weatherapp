@@ -39,7 +39,7 @@ class MainPresenter @Inject constructor (private val locationsCash: LocationsCas
         return locationsCash.deleteLocation(locationInfo)
     }
 
-    override fun update(o: Observable, arg: Any) {
+    override fun update(o: Observable, arg: Any?) {
         Timber.d("1")
         handler.post { view.onUpdate() }
     }

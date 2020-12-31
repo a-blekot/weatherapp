@@ -4,16 +4,16 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import com.anadi.weatherinfo.ui.addlocation.AddLocationContract
 import com.anadi.weatherinfo.ui.addlocation.LocationsProvider
 import com.anadi.weatherinfo.repository.LocationsCash
-import com.anadi.weatherinfo.repository.LocationsProvideImpl
+import com.anadi.weatherinfo.repository.LocationsProviderImpl
+import timber.log.Timber
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class UpdateReceiver @Inject constructor(private val locationsCash: LocationsCash) : BroadcastReceiver() {
-    private val locationsProvider: LocationsProvider = LocationsProvideImpl()
+    private val locationsProvider: LocationsProvider = LocationsProviderImpl()
     private val exec: Executor = Executors.newSingleThreadExecutor()
     override fun onReceive(context: Context, intent: Intent) {
         //        String intentAction = intent.getAction();
@@ -27,8 +27,7 @@ class UpdateReceiver @Inject constructor(private val locationsCash: LocationsCas
                 try {
                     val result = locationsCash.add(cityName, name)
                 } catch (e: Exception) {
-                    System.err.println(e.message)
-                    e.printStackTrace()
+                    Timber.e(e)
                 }
             }
             return

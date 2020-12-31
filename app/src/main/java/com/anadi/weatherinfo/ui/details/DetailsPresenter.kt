@@ -29,8 +29,7 @@ class DetailsPresenter @Inject constructor(private val locationsCash: LocationsC
                     onError()
                 }
             } catch (e: Exception) {
-                System.err.println(e.message)
-                e.printStackTrace()
+                Timber.e(e)
             }
         }).start()
     }
@@ -47,7 +46,7 @@ class DetailsPresenter @Inject constructor(private val locationsCash: LocationsC
         return locationsCash.getInfo(id)
     }
 
-    override fun update(o: Observable, arg: Any) {
+    override fun update(o: Observable, arg: Any?) {
         if (arg is LocationInfo && arg.id == id) {
             onUpdated()
         }

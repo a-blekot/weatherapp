@@ -11,7 +11,20 @@ data class WeatherInfo(var coord: Coord, var weather: List<Weather>,
                        var timezone: Int = 0, // Shift in seconds from UTC. Devide in 3600 to get +/- hours
                        var id: Int = 0, // City ID
                        var name: String, // City Name
-                       var cod: Int = 0)
+                       var cod: Int = 0) {
+
+    companion object {
+        val EMPTY = WeatherInfo (Coord(0F, 0F),
+        listOf(Weather(main = "", description = "", icon = "")),
+        base = "",
+        main = Main(),
+        wind = Wind(),
+        clouds = Clouds(),
+        dt = 0,
+        sys = Sys(country = ""),
+        name = "")
+    }
+}
 
 
 //enum class State(val id: Int, val mainDescription: String, val detailedDescription: String, val iconId: Int) {

@@ -6,43 +6,42 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 import java.io.IOException
+import kotlin.jvm.Throws
 
 class InfoLoader {
     private val mLang = "en"
     private val mRetrofit: Retrofit
-    fun load(cityName: String?, country: Country?): WeatherInfo? {
-        return try {
-            val location = cityName + "," + country!!.code.toLowerCase()
-            Timber.d("Trying to load weather info for: %s", location)
-            Timber.d("TEST = %s", TEST)
-            val apiService = mRetrofit.create(OpenWeatherMapInterface::class.java)
-            val call = apiService.getWeather(location, API_KEY, mUnits, mLang)
-            val response = call!!.execute()
-            val statusCode = response.code()
-            val weatherInfo = response.body()
-            Timber.d("Call (%s) statusCode = %d", location, statusCode)
-            // код 200
-            if (response.isSuccessful) {
-                Timber.d("Yeah baby!!!")
-            } else {
-                when (statusCode) {
-                    404 -> {
-                    }
-                    500 -> {
-                    }
+
+    @Throws(IOException::class)
+    fun load(cityName: String, country: Country): WeatherInfo  {
+
+        val location = cityName + "," + country.code.toLowerCase()
+        Timber.d("Trying to load weather info for: %s", location)
+        Timber.d("TEST = %s", TEST)
+        val apiService = mRetrofit.create(OpenWeatherMapInterface::class.java)
+        val call = apiService.getWeather(location, API_KEY, mUnits, mLang)
+        val response = call!!.execute()
+        val statusCode = response.code()
+        val weatherInfo = response.body() ?: WeatherInfo.EMPTY
+
+        Timber.d("Call (%s) statusCode = %d", location, statusCode)
+        // код 200
+        if (response.isSuccessful) {
+            Timber.d("Yeah baby!!!")
+        } else {
+            when (statusCode) {
+                404 -> {
                 }
-                val errorBody = response.errorBody()
-                if (errorBody != null) {
-                    Timber.d("Error message: %s", errorBody.string())
+                500 -> {
                 }
             }
-            Timber.d("Call (%s) statusCode = %d", location, statusCode)
-            weatherInfo
-        } catch (e: IOException) {
-            System.err.println(e.message)
-            e.printStackTrace()
-            null
+            val errorBody = response.errorBody()
+            if (errorBody != null) {
+                Timber.d("Error message: %s", errorBody.string())
+            }
         }
+        Timber.d("Call (%s) statusCode = %d", location, statusCode)
+        return weatherInfo
     }
 
     companion object {

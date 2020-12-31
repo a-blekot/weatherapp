@@ -1,6 +1,7 @@
 package com.anadi.weatherinfo.repository
 
 import android.content.Context
+import android.util.Log
 import com.anadi.weatherinfo.repository.data.WeatherInfo
 import com.anadi.weatherinfo.ui.addlocation.AddLocationContract
 import com.anadi.weatherinfo.ui.addlocation.LocationsProvider
@@ -33,6 +34,7 @@ class LocationsCash @Inject constructor (private val locationsProvider: Location
     }
 
     override fun loadLocations(context: Context) {
+        Timber.i("loadLocations called")
         locationsProvider.loadLocations(context)
     }
 
@@ -53,7 +55,7 @@ class LocationsCash @Inject constructor (private val locationsProvider: Location
                 }
             } catch (e: IOException) {
                 Timber.d("Failed to create app db file!")
-                e.printStackTrace()
+                Timber.e(e)
                 return
             }
         }
@@ -65,7 +67,7 @@ class LocationsCash @Inject constructor (private val locationsProvider: Location
                 }
             }
         } catch (e: IOException) {
-            e.printStackTrace()
+            Timber.e(e)
         }
     }
 
@@ -83,9 +85,9 @@ class LocationsCash @Inject constructor (private val locationsProvider: Location
         try {
             FileInputStream(file).use { fis -> ObjectInputStream(fis).use { ois -> locations = ois.readObject() as ArrayList<LocationInfo> } }
         } catch (e: ClassNotFoundException) {
-            e.printStackTrace()
+            Timber.e(e)
         } catch (e: IOException) {
-            e.printStackTrace()
+            Timber.e(e)
         }
     }
 
@@ -110,18 +112,24 @@ class LocationsCash @Inject constructor (private val locationsProvider: Location
     override fun update(id: Int): Boolean {
         for (locationInfo in locations) {
             if (locationInfo.id == id) {
-                val weatherInfo = infoLoader.load(locationInfo.cityName, locationInfo.country)
-                if (weatherInfo == null) {
-                    Timber.d("No info loaded for location: $locationInfo")
-                    return false
-                }
-                locationInfo.info = weatherInfo
-                setChanged()
-                notifyObservers(locationInfo)
-                return true
+                return tryUpdate(locationInfo)
             }
         }
         return false
+    }
+
+    private fun tryUpdate(locationInfo: LocationInfo): Boolean {
+        return try {
+            val weatherInfo = infoLoader.load(locationInfo.cityName, locationInfo.country)
+            locationInfo.info = weatherInfo
+            setChanged()
+            notifyObservers(locationInfo)
+            true
+        } catch (e: IOException) {
+            Timber.e(e)
+            Timber.e("COULD NOT UPDATE $locationInfo")
+            false
+        }
     }
 
     override fun needUpdate(id: Int): Boolean {
@@ -134,18 +142,20 @@ class LocationsCash @Inject constructor (private val locationsProvider: Location
         return false
     }
 
-    private fun load(cityName: String?, country: Country): Boolean {
-        val weatherInfo = infoLoader.load(cityName, country)
-        if (weatherInfo == null) {
-            Timber.d("No info loaded for location: %s, %s", cityName, country)
-            return false
+    private fun load(cityName: String, country: Country): Boolean {
+        return try {
+            val weatherInfo = infoLoader.load(cityName, country)
+            val locationInfo = LocationInfo(cityName, country)
+            locationInfo.info = weatherInfo
+            locations.add(locationInfo)
+            setChanged()
+            notifyObservers()
+            true
+        } catch (e: IOException) {
+            Timber.e(e)
+            Timber.e("COULD NOT LOAD $cityName $country")
+            false
         }
-        val locationInfo = LocationInfo(cityName, country)
-        locationInfo.info = weatherInfo
-        locations.add(locationInfo)
-        setChanged()
-        notifyObservers()
-        return true
     }
 
     private fun getCashedInfo(cityName: String?, country: Country): LocationInfo? {
