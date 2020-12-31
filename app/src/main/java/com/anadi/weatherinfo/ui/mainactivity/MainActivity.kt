@@ -9,8 +9,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.WeatherApplication
@@ -20,6 +18,7 @@ import com.anadi.weatherinfo.ui.details.DetailsActivity
 import com.anadi.weatherinfo.ui.mainactivity.LocationAdapter.OnLocationSelectedListener
 import com.anadi.weatherinfo.repository.IconMap
 import com.anadi.weatherinfo.repository.LocationInfo
+import es.dmoral.toasty.Toasty
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), OnLocationSelect
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.action_order -> {
-                Toast.makeText(this, R.string.order_message, Toast.LENGTH_SHORT).show()
+                Toasty.info(this, R.string.order_message, Toast.LENGTH_SHORT).show()
                 return true
             }
             R.id.action_night_mode -> {
@@ -112,8 +111,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), OnLocationSelect
 
         binding.recyclerView.adapter = adapter
 
-        Timber.d("onCreate")
-        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show()
         presenter.loadData(this)
         presenter.subscribe()
         adapter.updateLocations()
@@ -121,15 +118,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), OnLocationSelect
         //        registerReceiver();
     }
 
-    override fun onResume() {
-        super.onResume()
-        Timber.d("onResume")
-        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show()
-    }
 
     override fun onDestroy() {
-        Timber.d("onDestroy")
-        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show()
         presenter.saveData(this)
         presenter.unsubscribe()
         //        unregisterReceiver(mReceiver);

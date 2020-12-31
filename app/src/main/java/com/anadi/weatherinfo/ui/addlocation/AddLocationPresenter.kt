@@ -2,8 +2,10 @@ package com.anadi.weatherinfo.ui.addlocation
 
 import android.os.Handler
 import android.text.TextUtils
+import androidx.annotation.StringRes
 import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.repository.LocationsCash
+import com.anadi.weatherinfo.utils.WeatherException
 import timber.log.Timber
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -30,14 +32,11 @@ class AddLocationPresenter @Inject constructor(private val locationCash: Locatio
         }
         exec.execute {
             try {
-                val result = locationCash.add(cityName, countryName)
-                if (result) {
-                    onCityAdded()
-                } else {
-                    onError()
-                }
-            } catch (e: Exception) {
+                locationCash.add(cityName, countryName)
+                onCityAdded()
+            } catch (e: WeatherException) {
                 Timber.e(e)
+                onError(R.string.on_error_load_location)
             }
         }
     }
@@ -53,8 +52,8 @@ class AddLocationPresenter @Inject constructor(private val locationCash: Locatio
         handler.post { view.onAddedSuccess() }
     }
 
-    private fun onError() {
-        handler.post { view.onError(R.string.on_error_select_city) }
+    private fun onError(@StringRes id: Int) {
+        handler.post { view.onError(id) }
     }
 
     init {

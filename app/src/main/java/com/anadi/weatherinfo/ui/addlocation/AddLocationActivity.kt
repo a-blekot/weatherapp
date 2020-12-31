@@ -3,13 +3,16 @@ package com.anadi.weatherinfo.ui.addlocation
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.WeatherApplication
 import com.anadi.weatherinfo.databinding.ActivityAddLocationBinding
+import es.dmoral.toasty.Toasty
 import javax.inject.Inject
 
 class AddLocationActivity : AppCompatActivity(R.layout.activity_add_location), OnItemSelectedListener, AddLocationContract.View {
@@ -28,7 +31,7 @@ class AddLocationActivity : AppCompatActivity(R.layout.activity_add_location), O
 
     override fun onError(resId: Int) {
         binding.progress.visibility = View.GONE
-        Toast.makeText(applicationContext, getText(resId), Toast.LENGTH_LONG).show()
+        Toasty.error(this, getText(resId), Toast.LENGTH_LONG).show()
     }
 
     override fun onAddedSuccess() {

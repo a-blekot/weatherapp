@@ -7,6 +7,8 @@ import android.widget.Toast
 import com.anadi.weatherinfo.ui.addlocation.LocationsProvider
 import com.anadi.weatherinfo.repository.LocationsCash
 import com.anadi.weatherinfo.repository.LocationsProviderImpl
+import com.anadi.weatherinfo.utils.WeatherException
+import es.dmoral.toasty.Toasty
 import timber.log.Timber
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -19,14 +21,13 @@ class UpdateReceiver @Inject constructor(private val locationsCash: LocationsCas
         //        String intentAction = intent.getAction();
         val id = intent.getIntExtra(NOTIFICATION_ID, 0)
         if (id == 0) {
-            val toastMessage = "add random location"
-            Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+            Toasty.info(context, "Add random location", Toast.LENGTH_SHORT).show()
             val (name) = locationsProvider.randomCountry
             val cityName = locationsProvider.getRandomCity(name)
             exec.execute {
                 try {
-                    val result = locationsCash.add(cityName, name)
-                } catch (e: Exception) {
+                    locationsCash.add(cityName, name)
+                } catch (e: WeatherException) {
                     Timber.e(e)
                 }
             }

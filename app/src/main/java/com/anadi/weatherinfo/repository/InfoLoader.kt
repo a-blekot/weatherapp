@@ -2,6 +2,7 @@ package com.anadi.weatherinfo.repository
 
 import com.anadi.weatherinfo.repository.data.OpenWeatherMapInterface
 import com.anadi.weatherinfo.repository.data.WeatherInfo
+import com.anadi.weatherinfo.utils.WeatherException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
@@ -12,36 +13,41 @@ class InfoLoader {
     private val mLang = "en"
     private val mRetrofit: Retrofit
 
-    @Throws(IOException::class)
-    fun load(cityName: String, country: Country): WeatherInfo  {
+    @Throws(WeatherException::class)
+    fun load(cityName: String, country: Country): WeatherInfo {
 
         val location = cityName + "," + country.code.toLowerCase()
-        Timber.d("Trying to load weather info for: %s", location)
-        Timber.d("TEST = %s", TEST)
-        val apiService = mRetrofit.create(OpenWeatherMapInterface::class.java)
-        val call = apiService.getWeather(location, API_KEY, mUnits, mLang)
-        val response = call!!.execute()
-        val statusCode = response.code()
-        val weatherInfo = response.body() ?: WeatherInfo.EMPTY
 
-        Timber.d("Call (%s) statusCode = %d", location, statusCode)
-        // код 200
-        if (response.isSuccessful) {
-            Timber.d("Yeah baby!!!")
-        } else {
-            when (statusCode) {
-                404 -> {
+        try {
+            Timber.d("Trying to load weather info for: %s", location)
+            Timber.d("TEST = %s", TEST)
+            val apiService = mRetrofit.create(OpenWeatherMapInterface::class.java)
+            val call = apiService.getWeather(location, API_KEY, mUnits, mLang)
+            val response = call!!.execute()
+            val statusCode = response.code()
+            val weatherInfo = response.body() ?: throw WeatherException("response body is empty for $location")
+
+            Timber.d("Call (%s) statusCode = %d", location, statusCode)
+            // код 200
+            if (response.isSuccessful) {
+                Timber.d("Yeah baby!!!")
+            } else {
+                when (statusCode) {
+                    404 -> {
+                    }
+                    500 -> {
+                    }
                 }
-                500 -> {
+                val errorBody = response.errorBody()
+                if (errorBody != null) {
+                    Timber.d("Error message: %s", errorBody.string())
                 }
             }
-            val errorBody = response.errorBody()
-            if (errorBody != null) {
-                Timber.d("Error message: %s", errorBody.string())
-            }
+            Timber.d("Call (%s) statusCode = %d", location, statusCode)
+            return weatherInfo
+        } catch (e: IOException) {
+            throw WeatherException("can't load $location", e)
         }
-        Timber.d("Call (%s) statusCode = %d", location, statusCode)
-        return weatherInfo
     }
 
     companion object {

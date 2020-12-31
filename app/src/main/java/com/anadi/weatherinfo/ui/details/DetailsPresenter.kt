@@ -5,6 +5,7 @@ import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.repository.LocationInfo
 import com.anadi.weatherinfo.repository.LocationsCash
 import com.anadi.weatherinfo.repository.data.WeatherInfo
+import com.anadi.weatherinfo.utils.WeatherException
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -22,14 +23,11 @@ class DetailsPresenter @Inject constructor(private val locationsCash: LocationsC
         view.loading()
         Thread(Runnable {
             try {
-                val result = locationsCash.update(id)
-                if (result) {
-                    onUpdated()
-                } else {
-                    onError()
-                }
-            } catch (e: Exception) {
+                locationsCash.update(id)
+                onUpdated()
+            } catch (e: WeatherException) {
                 Timber.e(e)
+                onError()
             }
         }).start()
     }

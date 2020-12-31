@@ -18,6 +18,6 @@ interface AddLocationContract {
     }
 
     interface Model {
-        fun add(cityName: String, countryName: String): Boolean
+        fun add(cityName: String, countryName: String)
     }
 }

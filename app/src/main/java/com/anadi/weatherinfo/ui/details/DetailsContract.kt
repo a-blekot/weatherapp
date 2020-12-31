@@ -23,7 +23,7 @@ interface DetailsContract {
 
     interface Model {
         fun getInfo(id: Int): WeatherInfo?
-        fun update(id: Int): Boolean
+        fun update(id: Int)
         fun needUpdate(id: Int): Boolean
     }
 }

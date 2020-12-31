@@ -1,16 +1,17 @@
 package com.anadi.weatherinfo.repository
 
 import android.content.Context
-import android.util.Log
 import com.anadi.weatherinfo.repository.data.WeatherInfo
 import com.anadi.weatherinfo.ui.addlocation.AddLocationContract
 import com.anadi.weatherinfo.ui.addlocation.LocationsProvider
 import com.anadi.weatherinfo.ui.details.DetailsContract
 import com.anadi.weatherinfo.ui.mainactivity.MainActivityContract
+import com.anadi.weatherinfo.utils.WeatherException
 import timber.log.Timber
 import java.io.*
 import java.util.*
 import javax.inject.Inject
+import kotlin.jvm.Throws
 
 class LocationsCash @Inject constructor (private val locationsProvider: LocationsProvider,
                                          private val infoLoader: InfoLoader) :
@@ -22,15 +23,26 @@ class LocationsCash @Inject constructor (private val locationsProvider: Location
     override var locations = ArrayList<LocationInfo>()
         private set
 
-    override fun add(cityName: String, countryName: String): Boolean {
+    override fun add(cityName: String, countryName: String) {
         val country = locationsProvider.getCountryByName(countryName)
 
         val locationInfo = getCashedInfo(cityName, country)
         if (locationInfo != null) {
             Timber.d("City already loaded: %s", cityName)
-            return true
+            return
         }
-        return load(cityName, country)
+
+        load(cityName, country)
+    }
+
+    @Throws(WeatherException::class)
+    private fun load(cityName: String, country: Country) {
+        val weatherInfo = infoLoader.load(cityName, country)
+        val locationInfo = LocationInfo(cityName, country)
+        locationInfo.info = weatherInfo
+        locations.add(locationInfo)
+        setChanged()
+        notifyObservers()
     }
 
     override fun loadLocations(context: Context) {
@@ -109,27 +121,20 @@ class LocationsCash @Inject constructor (private val locationsProvider: Location
         return null
     }
 
-    override fun update(id: Int): Boolean {
+    override fun update(id: Int) {
         for (locationInfo in locations) {
             if (locationInfo.id == id) {
-                return tryUpdate(locationInfo)
+                tryUpdate(locationInfo)
             }
         }
-        return false
     }
 
-    private fun tryUpdate(locationInfo: LocationInfo): Boolean {
-        return try {
-            val weatherInfo = infoLoader.load(locationInfo.cityName, locationInfo.country)
-            locationInfo.info = weatherInfo
-            setChanged()
-            notifyObservers(locationInfo)
-            true
-        } catch (e: IOException) {
-            Timber.e(e)
-            Timber.e("COULD NOT UPDATE $locationInfo")
-            false
-        }
+    @Throws(WeatherException::class)
+    private fun tryUpdate(locationInfo: LocationInfo) {
+        val weatherInfo = infoLoader.load(locationInfo.cityName, locationInfo.country)
+        locationInfo.info = weatherInfo
+        setChanged()
+        notifyObservers(locationInfo)
     }
 
     override fun needUpdate(id: Int): Boolean {
@@ -140,22 +145,6 @@ class LocationsCash @Inject constructor (private val locationsProvider: Location
         }
         Timber.d("There is no data at all for id = %d", id)
         return false
-    }
-
-    private fun load(cityName: String, country: Country): Boolean {
-        return try {
-            val weatherInfo = infoLoader.load(cityName, country)
-            val locationInfo = LocationInfo(cityName, country)
-            locationInfo.info = weatherInfo
-            locations.add(locationInfo)
-            setChanged()
-            notifyObservers()
-            true
-        } catch (e: IOException) {
-            Timber.e(e)
-            Timber.e("COULD NOT LOAD $cityName $country")
-            false
-        }
     }
 
     private fun getCashedInfo(cityName: String?, country: Country): LocationInfo? {

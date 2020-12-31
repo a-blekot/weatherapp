@@ -10,6 +10,7 @@
     <string name="feels_like_celsium">Ощущается %1$.1f\u2103</string>
     <string name="feels_like_fahrenheit">Ощущается %1$.1f\u2109</string>
     <string name="on_error_select_city">Неверный город, пожалуйста выберите еще раз</string>
+    <string name="on_error_load_location">Ошибка при загрузке города, пожалуйста выберите еще раз</string>
     <string name="pressure">Давление:   %1$d hPa</string>
     <string name="humidity">Влажность: %1$d%%</string>
     <string name="sunrise">Восход: %1$s</string>

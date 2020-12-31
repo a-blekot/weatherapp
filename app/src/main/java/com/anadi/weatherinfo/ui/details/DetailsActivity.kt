@@ -13,6 +13,7 @@ import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.WeatherApplication
 import com.anadi.weatherinfo.databinding.ActivityDetailsBinding
 import com.anadi.weatherinfo.repository.IconMap
+import es.dmoral.toasty.Toasty
 import timber.log.Timber
 import java.text.DateFormat
 import java.util.*
@@ -32,7 +33,7 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details), DetailsCon
 
     override fun onError(resId: Int) {
         binding.progress.visibility = View.GONE
-        Toast.makeText(applicationContext, getText(resId), Toast.LENGTH_LONG).show()
+        Toasty.error(this, getText(resId), Toast.LENGTH_LONG).show()
     }
 
     override fun onUpdateSuccess() {

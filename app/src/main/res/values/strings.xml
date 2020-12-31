@@ -2,7 +2,8 @@
     <string name="app_name">WeatherInfo</string>
     <string name="country_spinner_title">Select country…</string>
     <string name="city_spiner_title">Select city…</string>
-    <string name="on_error_select_city">Wrong city, please select again</string>
+    <string name="on_error_select_city">Wrong location, please select again</string>
+    <string name="on_error_load_location">Error occurred while loading location, please select again</string>
     <string name="on_error_update">Can\'t update. Please check internet connection.</string>
     <string name="wind_speed_ms">%1$.1f m/s</string>
     <string name="wind_speed_ms_stub" translatable="false">2.5 m/s</string>
