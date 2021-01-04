@@ -1,4 +1,4 @@
-package com.anadi.weatherinfo.ui.mainactivity
+package com.anadi.weatherinfo.ui.locations
 
 import android.content.Context
 import android.content.res.Resources
@@ -11,22 +11,25 @@ import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.anadi.weatherinfo.R
-import com.anadi.weatherinfo.ui.mainactivity.LocationAdapter.LocationHolder
 import com.anadi.weatherinfo.repository.IconMap
 import com.anadi.weatherinfo.repository.LocationInfo
-import timber.log.Timber
+import com.anadi.weatherinfo.ui.locations.LocationAdapter.LocationHolder
 
-class LocationAdapter(context: Context, private val listener: OnLocationSelectedListener,
-                      private val presenter: MainActivityContract.Presenter) : RecyclerView.Adapter<LocationHolder>() {
+class LocationAdapter(context: Context, private val listener: OnLocationSelectedListener) : RecyclerView.Adapter<LocationHolder>() {
     interface OnLocationSelectedListener {
         fun onSelected(locationInfo: LocationInfo)
         fun onMenuAction(locationInfo: LocationInfo, item: MenuItem)
     }
 
     private val res: Resources
-    private var locations = emptyList<LocationInfo>()
+    var locations = emptyList<LocationInfo>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.location_row, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.location_row_view, parent, false)
         return LocationHolder(view)
     }
 
@@ -41,12 +44,6 @@ class LocationAdapter(context: Context, private val listener: OnLocationSelected
         holder.wind.text = res.getString(R.string.wind_speed_ms, current.info.wind.speed)
         holder.temp.text = res.getString(R.string.temp_celsium, current.info.main.temp)
         holder.containerView.tag = current
-    }
-
-    fun updateLocations() {
-        locations = presenter.locations
-        Timber.d("cities = %s", locations)
-        notifyDataSetChanged()
     }
 
     inner class LocationHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, OnCreateContextMenuListener, PopupMenu.OnMenuItemClickListener {
@@ -85,6 +82,5 @@ class LocationAdapter(context: Context, private val listener: OnLocationSelected
 
     init {
         res = context.resources
-        updateLocations()
     }
 }

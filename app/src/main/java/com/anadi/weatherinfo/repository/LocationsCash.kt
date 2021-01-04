@@ -2,28 +2,21 @@ package com.anadi.weatherinfo.repository
 
 import android.content.Context
 import com.anadi.weatherinfo.repository.data.WeatherInfo
-import com.anadi.weatherinfo.ui.addlocation.AddLocationContract
 import com.anadi.weatherinfo.ui.addlocation.LocationsProvider
-import com.anadi.weatherinfo.ui.details.DetailsContract
-import com.anadi.weatherinfo.ui.mainactivity.MainActivityContract
 import com.anadi.weatherinfo.utils.WeatherException
 import timber.log.Timber
-import java.io.*
 import java.util.*
 import javax.inject.Inject
 import kotlin.jvm.Throws
 
-class LocationsCash @Inject constructor (private val locationsProvider: LocationsProvider,
-                                         private val infoLoader: InfoLoader) :
-        Observable(),
-        AddLocationContract.Model,
-        MainActivityContract.Model,
-        DetailsContract.Model {
+class LocationsCash @Inject constructor(private val locationsProvider: LocationsProvider,
+                                        private val infoLoader: InfoLoader) :
+        Observable() {
 
-    override var locations = ArrayList<LocationInfo>()
+    var locations = ArrayList<LocationInfo>()
         private set
 
-    override fun add(cityName: String, countryName: String) {
+    fun add(cityName: String, countryName: String) {
         val country = locationsProvider.getCountryByName(countryName)
 
         val locationInfo = getCashedInfo(cityName, country)
@@ -45,74 +38,20 @@ class LocationsCash @Inject constructor (private val locationsProvider: Location
         notifyObservers()
     }
 
-    override fun loadLocations(context: Context) {
+    fun loadLocations(context: Context) {
         Timber.i("loadLocations called")
         locationsProvider.loadLocations(context)
     }
 
-    override fun saveData(context: Context) {
-        val path = File(context.filesDir, APP_DATA_DIR)
-        if (!path.exists()) {
-            if (!path.mkdirs()) {
-                Timber.d("Failed to create app db dir!")
-                return
-            }
-        }
-        val file = File(path, APP_DATA_FILE)
-        if (!file.exists()) {
-            try {
-                if (!file.createNewFile()) {
-                    Timber.d("Failed to create app db file!")
-                    return
-                }
-            } catch (e: IOException) {
-                Timber.d("Failed to create app db file!")
-                Timber.e(e)
-                return
-            }
-        }
-        try {
-            FileOutputStream(file).use { fos ->
-                ObjectOutputStream(fos).use { oos ->
-                    oos.writeObject(locations)
-                    oos.flush()
-                }
-            }
-        } catch (e: IOException) {
-            Timber.e(e)
-        }
-    }
-
-    override fun loadData(context: Context) {
-        val path = File(context.filesDir, APP_DATA_DIR)
-        if (!path.exists()) {
-            Timber.d("No db dir!")
-            return
-        }
-        val file = File(path, APP_DATA_FILE)
-        if (!file.exists()) {
-            Timber.d("No db file!")
-            return
-        }
-        try {
-            FileInputStream(file).use { fis -> ObjectInputStream(fis).use { ois -> locations = ois.readObject() as ArrayList<LocationInfo> } }
-        } catch (e: ClassNotFoundException) {
-            Timber.e(e)
-        } catch (e: IOException) {
-            Timber.e(e)
-        }
-    }
-
-    override fun deleteLocation(locationInfo: LocationInfo): Boolean {
-        val result = locations.remove(locationInfo)
-        if (result) {
+    fun deleteLocation(locationInfo: LocationInfo) {
+        val removed = locations.remove(locationInfo)
+        if (removed) {
             setChanged()
             notifyObservers()
         }
-        return result
     }
 
-    override fun getInfo(id: Int): WeatherInfo? {
+    fun getInfo(id: Int): WeatherInfo? {
         for (locationInfo in locations) {
             if (locationInfo.id == id) {
                 return locationInfo.info
@@ -121,7 +60,7 @@ class LocationsCash @Inject constructor (private val locationsProvider: Location
         return null
     }
 
-    override fun update(id: Int) {
+    fun update(id: Int) {
         for (locationInfo in locations) {
             if (locationInfo.id == id) {
                 tryUpdate(locationInfo)
@@ -137,7 +76,7 @@ class LocationsCash @Inject constructor (private val locationsProvider: Location
         notifyObservers(locationInfo)
     }
 
-    override fun needUpdate(id: Int): Boolean {
+    fun needUpdate(id: Int): Boolean {
         for (locationInfo in locations) {
             if (locationInfo.id == id) {
                 return dataIsOld(locationInfo.info.dt)

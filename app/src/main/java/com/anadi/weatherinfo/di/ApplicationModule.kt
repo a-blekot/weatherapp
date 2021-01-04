@@ -1,25 +1,20 @@
 package com.anadi.weatherinfo.di
 
-import android.app.Application
 import android.content.Context
-import android.location.LocationManager
+import com.anadi.weatherinfo.WeatherApplication
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
-class AndroidModule(private val application: Application) {
+class ApplicationModule {
 
     @Provides
     @Singleton
-    @ForApplication
-    fun provideApplicationContext(): Context = application
-
-    @Provides
-    @Singleton
-    fun provideLocationManager(): LocationManager =
-            application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    fun provideApplicationContext(application: WeatherApplication): Context {
+        return application
+    }
 
     @Provides
     @Singleton

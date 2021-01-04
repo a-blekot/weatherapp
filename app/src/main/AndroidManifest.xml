@@ -16,19 +16,16 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name="com.anadi.weatherinfo.ui.addlocation.AddLocationActivity" />
-        <activity android:name="com.anadi.weatherinfo.ui.details.DetailsActivity" />
         <activity
             android:name="com.anadi.weatherinfo.ui.mainactivity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".UpdateReceiver" />
+<!--        <receiver android:name=".UpdateReceiver" />-->
     </application>
 
 </manifest>

@@ -4,9 +4,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import com.anadi.weatherinfo.ui.addlocation.LocationsProvider
 import com.anadi.weatherinfo.repository.LocationsCash
 import com.anadi.weatherinfo.repository.LocationsProviderImpl
+import com.anadi.weatherinfo.ui.addlocation.LocationsProvider
 import com.anadi.weatherinfo.utils.WeatherException
 import es.dmoral.toasty.Toasty
 import timber.log.Timber

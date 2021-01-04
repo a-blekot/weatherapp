@@ -14,15 +14,15 @@ data class WeatherInfo(var coord: Coord, var weather: List<Weather>,
                        var cod: Int = 0) {
 
     companion object {
-        val EMPTY = WeatherInfo (Coord(0F, 0F),
-        listOf(Weather(main = "", description = "", icon = "")),
-        base = "",
-        main = Main(),
-        wind = Wind(),
-        clouds = Clouds(),
-        dt = 0,
-        sys = Sys(country = ""),
-        name = "")
+        val EMPTY = WeatherInfo(Coord(0F, 0F),
+                listOf(Weather(main = "", description = "", icon = "")),
+                base = "",
+                main = Main(),
+                wind = Wind(),
+                clouds = Clouds(),
+                dt = 0,
+                sys = Sys(country = ""),
+                name = "")
     }
 }
 

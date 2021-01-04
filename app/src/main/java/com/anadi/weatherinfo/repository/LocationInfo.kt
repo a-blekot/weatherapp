@@ -12,14 +12,10 @@ class LocationInfo(var cityName: String, var country: Country) : Serializable {
         private set
     lateinit var info: WeatherInfo
 
-    override fun equals(obj: Any?): Boolean {
-        if (obj == null) {
+    override fun equals(other: Any?): Boolean {
+        if (other !is LocationInfo) {
             return false
         }
-        if (obj !is LocationInfo) {
-            return false
-        }
-        val other = obj
         return other.cityName == cityName && other.country == country && other.info == info
     }
 

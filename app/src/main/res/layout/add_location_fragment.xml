@@ -5,7 +5,7 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.addlocation.AddLocationActivity">
+    tools:context=".ui.addlocation.AddLocationFragment">
 
     <ImageView
         android:id="@+id/add_location_background"
@@ -18,17 +18,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
 
     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
         android:id="@+id/country_spinner"
@@ -54,10 +43,13 @@
         app:layout_constraintStart_toStartOf="@+id/country_spinner"
         app:layout_constraintTop_toBottomOf="@+id/country_spinner" />
 
+    <include
+        android:id="@+id/progress_bar"
+        layout="@layout/progress_bar_default" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_location_button"
+        android:id="@+id/confirm_button"
         style="@style/fab"
-        android:onClick="addLocation"
         app:srcCompat="@drawable/ic_check"
         tools:ignore="MissingConstraints" />
 

@@ -19,10 +19,14 @@ class LocationsProviderImpl : LocationsProvider {
     private val cities: MutableMap<String, ArrayList<String>> = HashMap()
 
     override fun loadLocations(context: Context) {
+        if (cities.isNotEmpty()) {
+            return
+        }
+
         var jsonString = convert(context.resources.openRawResource(R.raw.countries_codes))
-        Timber.d(jsonString);
+        Timber.d(jsonString)
         try {
-            Timber.d("I`.m here!");
+            Timber.d("I`.m here!")
             val array = JSONArray(jsonString)
             var obj: JSONObject
             for (i in 0 until array.length()) {
@@ -30,7 +34,7 @@ class LocationsProviderImpl : LocationsProvider {
                 countries.add(Country(obj.getString("name"), obj.getString("code")))
             }
 
-            Timber.d(countries.toString());
+            Timber.d(countries.toString())
         } catch (e: JSONException) {
             Timber.e(e)
         }

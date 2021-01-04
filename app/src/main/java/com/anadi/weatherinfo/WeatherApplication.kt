@@ -2,16 +2,19 @@ package com.anadi.weatherinfo
 
 import android.app.Application
 import androidx.work.*
-import com.anadi.weatherinfo.di.AndroidModule
-import com.anadi.weatherinfo.di.AppComponent
-import com.anadi.weatherinfo.di.DaggerAppComponent
+import com.anadi.weatherinfo.di.Injector
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class WeatherApplication : Application() {
-    // Called when the application is starting, before any other application objects have been created.
-    // Overriding this method is totally optional!
+class WeatherApplication : Application(), HasAndroidInjector {
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
+
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
@@ -25,11 +28,10 @@ class WeatherApplication : Application() {
         WorkManager.getInstance(this)
                 .enqueueUniquePeriodicWork("com.anadi.weatherinfo.update_request9", ExistingPeriodicWorkPolicy.KEEP, updateRequest)
 
-        graph = DaggerAppComponent.builder().androidModule(AndroidModule(this)).build();
-        graph.inject(this)
+        Injector.INSTANCE.initialise(this)
     }
 
-    companion object {
-        lateinit var graph: AppComponent
+    override fun androidInjector(): AndroidInjector<Any> {
+        return dispatchingAndroidInjector
     }
 }
