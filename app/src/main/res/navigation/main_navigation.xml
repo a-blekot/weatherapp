@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/locations_destination"
-        android:name="com.anadi.weatherinfo.ui.locations.LocationsFragment"
+        android:name="com.anadi.weatherinfo.view.ui.locations.LocationsFragment"
         android:label="title_fragment"
         tools:layout="@layout/locations_fragment">
         <action
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/details_destination"
-        android:name="com.anadi.weatherinfo.ui.details.DetailsFragment"
+        android:name="com.anadi.weatherinfo.view.ui.details.DetailsFragment"
         android:label="details_fragment"
         tools:layout="@layout/details_fragment">
         <argument
@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/add_location_destination"
-        android:name="com.anadi.weatherinfo.ui.addlocation.AddLocationFragment"
+        android:name="com.anadi.weatherinfo.view.ui.addlocation.AddLocationFragment"
         android:label="add_location_fragment"
         tools:layout="@layout/add_location_fragment">
     </fragment>

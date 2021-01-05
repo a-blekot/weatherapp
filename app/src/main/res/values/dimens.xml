@@ -37,6 +37,7 @@
     <dimen name="details_margin">@dimen/margin_small</dimen>
 
     <dimen name="progress_bar_size">100dp</dimen>
+    <dimen name="wind_degree_size">40dp</dimen>
 
     <dimen name="fab_elevation">4dp</dimen>
 

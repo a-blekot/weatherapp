@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/location_row"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground"
     android:orientation="horizontal"
     android:padding="@dimen/row_padding">
 
     <TextView
-        android:id="@+id/location_row_name"
+        android:id="@+id/name"
         style="@style/row_name"
         tools:text="Kiev, UA" />
 
     <ImageView
-        android:id="@+id/location_row_icon"
+        android:id="@+id/icon"
         style="@style/row_info"
         android:contentDescription="@string/weather_icon_description"
         tools:src="@drawable/s01d" />
 
     <TextView
-        android:id="@+id/location_row_wind"
-        style="@style/row_info"
-        tools:text="@string/wind_speed_ms_stub" />
-
-    <TextView
-        android:id="@+id/location_row_temp"
+        android:id="@+id/temp"
         style="@style/row_info"
         tools:text="@string/temp_celsium_stub" />
 
+    <TextView
+        android:id="@+id/wind"
+        style="@style/row_info"
+        tools:text="@string/wind_speed_ms_stub" />
 
 </LinearLayout>

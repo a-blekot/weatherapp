@@ -2,7 +2,7 @@ package com.anadi.weatherinfo
 
 import android.app.Application
 import androidx.work.*
-import com.anadi.weatherinfo.di.Injector
+import com.anadi.weatherinfo.view.di.Injector
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector

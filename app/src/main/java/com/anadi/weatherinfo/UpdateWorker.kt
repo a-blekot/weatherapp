@@ -21,7 +21,7 @@ class UpdateWorker(context: Context, workerParams: WorkerParameters) : Worker(co
 
     private fun sendNotification(id: Int) {
         val intent = Intent(applicationContext, UpdateReceiver::class.java)
-        //        Intent intent = new Intent(getApplicationContext(), com.anadi.weatherinfo.ui.details.DetailsActivity
+        //        Intent intent = new Intent(getApplicationContext(), com.anadi.weatherinfo.view.ui.details.DetailsActivity
         //        .class);
         intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         intent.putExtra(UpdateReceiver.Companion.NOTIFICATION_ID, id)

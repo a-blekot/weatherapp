@@ -5,7 +5,7 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.addlocation.AddLocationFragment">
+    tools:context=".view.ui.addlocation.AddLocationFragment">
 
     <ImageView
         android:id="@+id/add_location_background"
