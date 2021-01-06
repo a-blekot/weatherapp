@@ -4,18 +4,19 @@ import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.anadi.weatherinfo.R
-import com.anadi.weatherinfo.data.LocationsCash
+import com.anadi.weatherinfo.domain.location.AddLocationUseCase
+import com.anadi.weatherinfo.domain.location.LocationRepository
 import com.anadi.weatherinfo.utils.Resource
 import com.anadi.weatherinfo.utils.WeatherException
+import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.concurrent.Executors
 import javax.inject.Inject
 
-class AddLocationViewModel @Inject constructor(private val locationCash: LocationsCash,
+class AddLocationViewModel @Inject constructor(private val addLocationUseCase: AddLocationUseCase,
+                                               private val locationRepository: LocationRepository,
                                                private val locationsProvider: LocationsProvider) : ViewModel() {
-    private val exec = Executors.newSingleThreadExecutor()
-
     private val status: MutableLiveData<Resource<Any>> = MutableLiveData()
     val statusNotifier: LiveData<Resource<Any>>
         get() = status
@@ -24,27 +25,36 @@ class AddLocationViewModel @Inject constructor(private val locationCash: Locatio
     val citiesNotifier: LiveData<List<String>>
         get() = cities
 
-    fun addLocation(cityName: String, countryName: String) {
-        Timber.i("addLocation $cityName $countryName")
+    fun addLocation(city: String, country: String) {
+        Timber.d("addLocation $city $country")
         status.value = Resource.loading()
 
-        if (TextUtils.isEmpty(cityName) || TextUtils.isEmpty(countryName) || cityName.equals(
-                        "Select Item", ignoreCase = true) || countryName
-                        .equals("Select Item", ignoreCase = true)) {
-            Timber.d("selectedCity: " + cityName + "selectedCountry: " + countryName)
+        if (wrongSelection(city) || wrongSelection(country)) {
             status.value = Resource.error(R.string.on_error_select_city)
             return
         }
 
-        exec.execute {
+        viewModelScope.launch {
             try {
-                locationCash.add(cityName, countryName)
-                status.postValue(Resource.success(null))
+                if (alreadyAdded(city, country)) {
+                    status.postValue(Resource.success(R.string.add_location_already_added, null))
+                } else {
+                    addLocationUseCase.build(AddLocationUseCase.Params(city, country))
+                    status.postValue(Resource.success(data = null))
+                }
             } catch (e: WeatherException) {
                 Timber.e(e)
                 status.postValue(Resource.error(R.string.on_error_load_location))
             }
         }
+    }
+
+    private suspend fun alreadyAdded(city: String, country: String): Boolean {
+        return locationRepository.fetch(city, country) != null
+    }
+
+    private fun wrongSelection(selection: String): Boolean {
+        return TextUtils.isEmpty(selection) || selection.equals("Select Item", ignoreCase = true)
     }
 
     fun onCountrySelected(countryName: String) {
@@ -53,4 +63,9 @@ class AddLocationViewModel @Inject constructor(private val locationCash: Locatio
 
     val countryNames: List<String>
         get() = locationsProvider.countryNames
+
+    override fun onCleared() {
+        super.onCleared()
+        Timber.i("AddLocationViewModel destroyed!")
+    }
 }

@@ -9,9 +9,8 @@ enum class Injector {
     lateinit var applicationComponent: ApplicationComponent
 
     fun initialise(application: WeatherApplication) {
-        applicationComponent = DaggerApplicationComponent.builder()
-                .application(application)
-                .build()
+        applicationComponent = DaggerApplicationComponent.factory()
+                                                         .create(application)
         applicationComponent.inject(application)
     }
 }

@@ -4,14 +4,15 @@
     <string name="city_spiner_title">Select city…</string>
     <string name="on_error_select_city">Wrong location, please select again</string>
     <string name="on_error_load_location">Error occurred while loading location, please select again</string>
+    <string name="add_location_already_added">Location already added!</string>
     <string name="on_error_update">Can\'t update. Please check internet connection.</string>
-    <string name="wind_speed_ms">Wind: %1$.1f m/s</string>
-    <string name="wind_speed_short_ms">%1$.1f m/s</string>
+    <string name="wind_speed_ms">Wind: %1$d m/s</string>
+    <string name="wind_speed_short_ms">%1$d m/s</string>
     <string name="wind_speed_ms_stub" translatable="false">2.5 m/s</string>
-    <string name="temp_celsium">Temp: %1$.1f\u2103</string>
-    <string name="temp_short_celsium">%1$.1f\u2103</string>
+    <string name="temp_celsium">Temp: %1$d\u2103</string>
+    <string name="temp_short_celsium">%1$d\u2103</string>
     <string name="temp_celsium_stub" translatable="false">8.0\u2103</string>
-    <string name="temp_fahrenheit">Temp: %1$.1f\u2109</string>
+    <string name="temp_fahrenheit">Temp: %1$d\u2109</string>
     <string name="pressure">Pressure: %1$d hPa</string>
     <string name="humidity">Humidity: %1$d%%</string>
     <string name="sunrise">Sunrise: %1$s</string>
@@ -22,7 +23,6 @@
     <string name="weather_icon_description">Weather icon</string>
     <string name="wind_degree_description">Wind degree</string>
     <string name="timezone" translatable="false">GMT %1$s%2$02d:%3$02d</string>
-    <string name="coordinates">Lat: %1$.4f, Lon: %2$.4f</string>
     <string name="bacground_picture">Bacground picture</string>
     <string name="action_settings">Settings</string>
     <string name="action_order">Order</string>

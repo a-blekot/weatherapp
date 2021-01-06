@@ -8,17 +8,19 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.data.IconMap
-import com.anadi.weatherinfo.data.LocationInfo
+import com.anadi.weatherinfo.data.db.location.Location
+import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
+import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.databinding.LocationRowViewBinding
 import com.anadi.weatherinfo.view.ui.locations.LocationAdapter.LocationHolder
 
 class LocationAdapter(private val listener: OnLocationSelectedListener) : RecyclerView.Adapter<LocationHolder>() {
     interface OnLocationSelectedListener {
-        fun onSelected(locationInfo: LocationInfo)
-        fun onMenuAction(locationInfo: LocationInfo, item: MenuItem)
+        fun onSelected(location: Location)
+        fun onMenuAction(location: Location, item: MenuItem)
     }
 
-    var locations = emptyList<LocationInfo>()
+    var dataset = emptyList<LocationWithWeathers>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -32,35 +34,36 @@ class LocationAdapter(private val listener: OnLocationSelectedListener) : Recycl
     }
 
     override fun getItemCount(): Int {
-        return locations.size
+        return dataset.size
     }
 
     override fun onBindViewHolder(holder: LocationHolder, position: Int) {
-        holder.bind(locations[position])
+        holder.bind(dataset[position])
     }
 
     class LocationHolder(private val binding: LocationRowViewBinding, private val listener: OnLocationSelectedListener) : RecyclerView.ViewHolder(binding.root), View.OnClickListener, OnCreateContextMenuListener, PopupMenu.OnMenuItemClickListener {
-        private lateinit var locationInfo: LocationInfo
-
         init {
             binding.layout.setOnClickListener(this)
             binding.layout.setOnCreateContextMenuListener(this)
         }
 
-        fun bind(locationInfo: LocationInfo) {
-            this.locationInfo = locationInfo
-            binding.icon.setImageResource(IconMap.getIconId(locationInfo.info.weather[0].icon))
-            binding.name.text = locationInfo.cityName
-            binding.wind.text = context.getString(R.string.wind_speed_short_ms, locationInfo.info.wind.speed)
-            binding.temp.text = context.getString(R.string.temp_short_celsium, locationInfo.info.main.temp)
-            binding.layout.tag = locationInfo
+        fun bind(data: LocationWithWeathers) {
+            val location = data.location
+            val weather = data.weathers[0]
+
+            binding.icon.setImageResource(IconMap.getIconId(weather.icon ?: "01d"))
+            binding.name.text = context.getString(R.string.location_name, location.city, location.country.code)
+
+            binding.temp.text = context.getString(R.string.temp_short_celsium, weather.temp)
+            binding.wind.text = context.getString(R.string.wind_speed_short_ms, weather.windSpeed)
+            binding.layout.tag = location
         }
 
         private val context: Context
             get() = binding.root.context
 
         override fun onClick(v: View) {
-            listener.onSelected(locationInfo)
+            listener.onSelected(binding.layout.tag as Location)
         }
 
         override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenuInfo) {
@@ -71,7 +74,7 @@ class LocationAdapter(private val listener: OnLocationSelectedListener) : Recycl
         }
 
         override fun onMenuItemClick(item: MenuItem): Boolean {
-            listener.onMenuAction(locationInfo, item)
+            listener.onMenuAction(binding.layout.tag as Location, item)
             return false
         }
     }

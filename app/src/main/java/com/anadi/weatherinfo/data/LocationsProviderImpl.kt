@@ -2,6 +2,7 @@ package com.anadi.weatherinfo.data
 
 import android.content.Context
 import com.anadi.weatherinfo.R
+import com.anadi.weatherinfo.data.db.location.Country
 import com.anadi.weatherinfo.view.ui.addlocation.LocationsProvider
 import org.json.JSONArray
 import org.json.JSONException
@@ -12,21 +13,25 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.*
+import javax.inject.Inject
 
-class LocationsProviderImpl : LocationsProvider {
+class LocationsProviderImpl @Inject constructor(private val context: Context) : LocationsProvider {
     private val random = Random(System.currentTimeMillis())
     private val countries = ArrayList<Country>()
     private val cities: MutableMap<String, ArrayList<String>> = HashMap()
 
-    override fun loadLocations(context: Context) {
+    init {
+        Timber.i("LOAD locations from resources")
+        loadLocations()
+    }
+
+    override fun loadLocations() {
         if (cities.isNotEmpty()) {
             return
         }
 
         var jsonString = convert(context.resources.openRawResource(R.raw.countries_codes))
-        Timber.d(jsonString)
         try {
-            Timber.d("I`.m here!")
             val array = JSONArray(jsonString)
             var obj: JSONObject
             for (i in 0 until array.length()) {
@@ -41,7 +46,7 @@ class LocationsProviderImpl : LocationsProvider {
 
         try {
             for (country in countries) {
-                val resourceName = country.name.toLowerCase().replace(" ", "_")
+                val resourceName = country.name.toLowerCase(Locale.ROOT).replace(" ", "_")
                 jsonString = convert(context.resources
                         .openRawResource(context.resources
                                 .getIdentifier(resourceName, "raw",

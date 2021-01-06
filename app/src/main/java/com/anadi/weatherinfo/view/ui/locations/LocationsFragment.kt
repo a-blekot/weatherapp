@@ -10,7 +10,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.databinding.LocationsFragmentBinding
 import com.anadi.weatherinfo.data.IconMap
-import com.anadi.weatherinfo.data.LocationInfo
+import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.view.ui.BaseFragment
 import javax.inject.Inject
 
@@ -29,30 +29,33 @@ class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAda
 
         // Get the viewModel
         viewModel = ViewModelProvider(this, viewModelFactory).get(LocationsViewModel::class.java)
-
         IconMap.init(requireContext())
-        viewModel.loadLocations(requireContext())
+
         adapter = LocationAdapter(this)
         binding.recyclerView.adapter = adapter
 
-        viewModel.subscribe()
-        viewModel.locationsNotifier.observe(viewLifecycleOwner, Observer { adapter.locations = it })
+        viewModel.locationsNotifier.observe(viewLifecycleOwner, Observer { adapter.dataset = it })
 
         binding.addLocationButton.setOnClickListener {
             findNavController().navigate(LocationsFragmentDirections.actionLocationsToAddLocation())
         }
     }
 
-    override fun onSelected(locationInfo: LocationInfo) {
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadLocations()
+    }
+
+    override fun onSelected(location: Location) {
         val action = LocationsFragmentDirections.actionLocationsToDetails()
-        action.locationId = locationInfo.id
+        action.locationId = location.locationId!!
         findNavController().navigate(action)
     }
 
-    override fun onMenuAction(locationInfo: LocationInfo, item: MenuItem) {
+    override fun onMenuAction(location: Location, item: MenuItem) {
         when (item.itemId) {
             R.id.menu_context_delete -> {
-                viewModel.deleteLocation(locationInfo)
+                viewModel.deleteLocation(location)
             }
             R.id.menu_context_favorite -> {
             }

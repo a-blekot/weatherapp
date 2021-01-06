@@ -1,39 +1,39 @@
 package com.anadi.weatherinfo.view.ui.locations
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.anadi.weatherinfo.data.LocationInfo
-import com.anadi.weatherinfo.data.LocationsCash
+import androidx.lifecycle.viewModelScope
+import com.anadi.weatherinfo.data.db.location.Location
+import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
+import com.anadi.weatherinfo.domain.location.LocationRepository
+import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 
-class LocationsViewModel @Inject constructor(private val locationsCash: LocationsCash) : ViewModel(), Observer {
-    private val locations: MutableLiveData<ArrayList<LocationInfo>> = MutableLiveData(arrayListOf())
+class LocationsViewModel @Inject constructor(private val locationRepository: LocationRepository) : ViewModel() {
 
-    val locationsNotifier: LiveData<ArrayList<LocationInfo>>
+    private val locations: MutableLiveData<List<LocationWithWeathers>> = MutableLiveData(arrayListOf())
+    val locationsNotifier: LiveData<List<LocationWithWeathers>>
         get() = locations
 
-    fun loadLocations(context: Context) {
-        locationsCash.loadLocations(context)
+    fun loadLocations() {
+        viewModelScope.launch {
+            val data = locationRepository.fetchAllWithWeathers()
+            locations.postValue(data)
+        }
     }
 
-    fun subscribe() {
-        locationsCash.addObserver(this)
-    }
+    fun deleteLocation(location: Location) {
+        viewModelScope.launch {
+            locationRepository.delete(location)
 
-    fun deleteLocation(locationInfo: LocationInfo) {
-        locationsCash.deleteLocation(locationInfo)
-    }
-
-    override fun update(o: Observable, arg: Any?) {
-        locations.postValue(locationsCash.locations)
+            val data = locationRepository.fetchAllWithWeathers()
+            locations.postValue(data)
+        }
     }
 
     override fun onCleared() {
-        locationsCash.deleteObserver(this)
         super.onCleared()
         Timber.i("LocationsViewModel destroyed!")
     }

@@ -11,8 +11,8 @@ data class Resource<out T>(val status: Status, val data: T?, @StringRes val mess
     }
 
     companion object {
-        fun <T> success(data: T?): Resource<T> {
-            return Resource(Status.SUCCESS, data, null, null)
+        fun <T> success(@StringRes messageId: Int? = null, data: T?): Resource<T> {
+            return Resource(Status.SUCCESS, data, messageId, null)
         }
 
         fun <T> error(@StringRes messageId: Int, data: T? = null): Resource<T> {

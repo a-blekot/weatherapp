@@ -11,14 +11,13 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.databinding.DetailsFragmentBinding
 import com.anadi.weatherinfo.data.IconMap
-import com.anadi.weatherinfo.data.data.WeatherInfo
+import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
+import com.anadi.weatherinfo.data.network.WeatherResponse
 import com.anadi.weatherinfo.view.ui.BaseFragment
 import com.anadi.weatherinfo.utils.Resource
 import com.anadi.weatherinfo.utils.Status
 import es.dmoral.toasty.Toasty
 import timber.log.Timber
-import java.text.DateFormat
-import java.util.*
 import javax.inject.Inject
 
 class DetailsFragment : BaseFragment(R.layout.details_fragment) {
@@ -40,23 +39,26 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(DetailsViewModel::class.java)
         viewModel.id = DetailsFragmentArgs.fromBundle(requireArguments()).locationId
-        viewModel.subscribe()
 
         viewModel.detailsNotifier.observe(viewLifecycleOwner, Observer { update(it) })
-
-        binding.updateButton.setOnClickListener { viewModel.update() }
+        binding.updateButton.setOnClickListener { viewModel.fetch() }
     }
 
-    fun loading() {
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetch()
+    }
+
+    private fun loading() {
         binding.progressBar.root.visibility = View.VISIBLE
     }
 
-    fun error(message: String?) {
+    private fun error(message: String?) {
         binding.progressBar.root.visibility = View.GONE
         message?.let { Toasty.error(requireContext(), it, Toast.LENGTH_LONG).show() }
     }
 
-    fun update(resource: Resource<WeatherInfo>) {
+    private fun update(resource: Resource<LocationWithWeathers>) {
         when (resource.status) {
             Status.SUCCESS -> update(resource.data)
             Status.LOADING -> loading()
@@ -64,21 +66,25 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
         }
     }
 
-    fun update(info: WeatherInfo?) {
+    private fun update(data: LocationWithWeathers?) {
         binding.progressBar.root.visibility = View.GONE
 
-        if (info == null) {
-            Timber.d("WeatherInfo is null!")
+        if (data == null) {
+            Timber.d("LocationWithWeathers is null!")
             return
         }
 
-        binding.weatherIcon.setImageResource(IconMap.getIconId(info.weather[0].icon))
-        binding.windIcon.rotation = info.wind.deg.toFloat()
-        binding.locationName.text = getString(R.string.location_name, info.name, info.sys.country)
-        binding.temp.text = getString(R.string.temp_celsium, info.main.temp)
-        binding.wind.text = getString(R.string.wind_speed_ms, info.wind.speed)
-        binding.pressure.text = getString(R.string.pressure, info.main.pressure)
-        binding.humidity.text = getString(R.string.humidity, info.main.humidity)
+
+        val location = data.location
+        val weather = data.weathers[0]
+
+        binding.weatherIcon.setImageResource(IconMap.getIconId(weather.icon ?: "01d"))
+        binding.windIcon.rotation = weather.windDegree.toFloat()
+        binding.locationName.text = getString(R.string.location_name, location.city, location.country.name)
+        binding.temp.text = getString(R.string.temp_celsium, weather.temp)
+        binding.wind.text = getString(R.string.wind_speed_ms, weather.windSpeed)
+        binding.pressure.text = getString(R.string.pressure, weather.pressure)
+        binding.humidity.text = getString(R.string.humidity, weather.humidity)
     }
 
 }

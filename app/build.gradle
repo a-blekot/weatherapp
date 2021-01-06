@@ -50,8 +50,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.jakewharton.timber:timber:4.7.1'
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1'
     implementation 'androidx.work:work-runtime:2.4.0'
@@ -61,6 +59,17 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // OK_HTTP
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // Stetho
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
 
     //ViewBindingDelegate
     implementation 'com.kirich1409.viewbindingpropertydelegate:viewbindingpropertydelegate:1.4.0'
@@ -83,9 +92,11 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     // Room
-    implementation "androidx.room:room-runtime:2.3.0-alpha04"
-    kapt "androidx.room:room-compiler:2.3.0-alpha04"
-    implementation "androidx.room:room-coroutines:2.1.0-alpha04"
+    def room_version = "2.2.6"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+//    implementation "androidx.room:room-coroutines:2.1.0-alpha04"
+    implementation "androidx.room:room-ktx:$room_version"
 
     implementation 'com.github.GrenderG:Toasty:1.5.0'
 }

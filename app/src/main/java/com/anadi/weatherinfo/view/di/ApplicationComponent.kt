@@ -11,19 +11,18 @@ import javax.inject.Singleton
 
 @Component(modules = [
     ApplicationModule::class,
+    DataModule::class,
+    ApiModule::class,
+    NetworkModule::class,
     ViewModelModule::class,
     AndroidInjectionModule::class,
-    ActivityBuilder::class,
-    LocationProviderModule::class])
+    ActivityBuilder::class])
 @Singleton
 interface ApplicationComponent {
 
-    @Component.Builder
-    interface Builder {
-        @BindsInstance
-        fun application(application: WeatherApplication): Builder
-
-        fun build(): ApplicationComponent
+    @Component.Factory
+    interface Factory {
+        fun create(@BindsInstance application: WeatherApplication): ApplicationComponent
     }
 
     fun inject(application: WeatherApplication)
