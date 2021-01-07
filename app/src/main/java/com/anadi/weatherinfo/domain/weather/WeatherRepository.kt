@@ -1,5 +1,6 @@
 package com.anadi.weatherinfo.domain.weather
 
+import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.data.db.weather.Weather
 
 interface WeatherRepository {
@@ -11,6 +12,8 @@ interface WeatherRepository {
     suspend fun fetchAllForLocation(id: Long): List<Weather>
 
     suspend fun fetchAllForProvider(id: Long): List<Weather>
+
+    suspend fun update(location: Location)
 
     suspend fun delete(weather: Weather)
 }

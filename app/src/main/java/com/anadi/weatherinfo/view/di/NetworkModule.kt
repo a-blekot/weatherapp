@@ -25,30 +25,28 @@ abstract class NetworkModule {
 
         @Provides
         @Singleton
-        @Named("Weather")
-        fun provideOkHttpClientWeather(interceptor: HttpLoggingInterceptor): OkHttpClient {
+        @Named("OpenWeather")
+        fun provideOkHttpClientOpenWeather(interceptor: HttpLoggingInterceptor): OkHttpClient {
             return OkHttpClient.Builder()
                 .addInterceptor(interceptor)
                 .addNetworkInterceptor(StethoInterceptor())
                 .build()
         }
 
-//        @Provides
-//        @JvmStatic
-//        @Singleton
-//        @Named("Stocks")
-//        fun provideOkHttpClientStocks(interceptor: HttpLoggingInterceptor): OkHttpClient {
-//            return OkHttpClient.Builder()
-//                .addInterceptor(interceptor)
-//                .addNetworkInterceptor(StethoInterceptor())
-//                .addInterceptor(StockApiInterceptor())
-//                .build()
-//        }
+        @Provides
+        @Singleton
+        @Named("Weatherbit")
+        fun provideOkHttpClientWeatherbit(interceptor: HttpLoggingInterceptor): OkHttpClient {
+            return OkHttpClient.Builder()
+                    .addInterceptor(interceptor)
+                    .addNetworkInterceptor(StethoInterceptor())
+                    .build()
+        }
 
         @Provides
         @Singleton
-        @Named("Weather")
-        fun provideRetrofitWeather(@Named("Weather") client: OkHttpClient): Retrofit {
+        @Named("OpenWeather")
+        fun provideRetrofitOpenWeather(@Named("OpenWeather") client: OkHttpClient): Retrofit {
             return Retrofit.Builder()
                 .baseUrl("http://api.openweathermap.org/data/2.5/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -56,16 +54,15 @@ abstract class NetworkModule {
                 .build()
         }
 
-//        @Provides
-//        @JvmStatic
-//        @Singleton
-//        @Named("Stocks")
-//        fun provideRetrofitStocks(@Named("Stocks") client: OkHttpClient): Retrofit {
-//            return Retrofit.Builder()
-//                .baseUrl("http://api.marketstack.com/v1/")
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .client(client)
-//                .build()
-//        }
+        @Provides
+        @Singleton
+        @Named("Weatherbit")
+        fun provideRetrofitWeatherbit(@Named("Weatherbit") client: OkHttpClient): Retrofit {
+            return Retrofit.Builder()
+                    .baseUrl("https://api.weatherbit.io/v2.0/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client)
+                    .build()
+        }
     }
 }

@@ -9,10 +9,13 @@ import com.anadi.weatherinfo.data.location.LocationRepositoryImpl
 import com.anadi.weatherinfo.data.network.WeatherApi
 import com.anadi.weatherinfo.data.weather.WeatherRepositoryImpl
 import com.anadi.weatherinfo.domain.location.LocationRepository
+import com.anadi.weatherinfo.domain.weather.WeatherRepositories
+import com.anadi.weatherinfo.domain.weather.WeatherRepositoriesImpl
 import com.anadi.weatherinfo.domain.weather.WeatherRepository
 import com.anadi.weatherinfo.view.ui.addlocation.LocationsProvider
 import dagger.Module
 import dagger.Provides
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -46,9 +49,25 @@ abstract class DataModule {
 
         @Provides
         @Singleton
-        fun provideWeatherRepository(weatherApi: WeatherApi, weatherDao: WeatherDao, locationRepository: LocationRepository): WeatherRepository {
+        @Named("OpenWeather")
+        fun provideOpenWeatherRepository(@Named("OpenWeather") weatherApi: WeatherApi, weatherDao: WeatherDao, locationRepository: LocationRepository): WeatherRepository {
             return WeatherRepositoryImpl(weatherApi, weatherDao, locationRepository)
         }
+
+        @Provides
+        @Singleton
+        @Named("Weatherbit")
+        fun provideWeatherbitRepository(@Named("Weatherbit") weatherApi: WeatherApi, weatherDao: WeatherDao, locationRepository: LocationRepository): WeatherRepository {
+            return WeatherRepositoryImpl(weatherApi, weatherDao, locationRepository)
+        }
+
+        @Provides
+        @Singleton
+        fun provideWeatherRepositories(@Named("OpenWeather") weatherbit: WeatherRepository,
+                                       @Named("Weatherbit") openweather: WeatherRepository): WeatherRepositories {
+            return WeatherRepositoriesImpl(weatherbit, openweather)
+        }
+
 
         @Provides
         @Singleton

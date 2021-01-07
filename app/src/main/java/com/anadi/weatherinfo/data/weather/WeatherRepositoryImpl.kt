@@ -1,9 +1,13 @@
 package com.anadi.weatherinfo.data.weather
 
-import com.anadi.weatherinfo.data.db.location.LocationDao
+import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.data.db.weather.WeatherDao
 import com.anadi.weatherinfo.data.network.WeatherApi
+import com.anadi.weatherinfo.data.network.WeatherResponse
+import com.anadi.weatherinfo.data.network.openweather.OpenWeatherApi
+import com.anadi.weatherinfo.data.network.openweather.OpenWeatherResponse
+import com.anadi.weatherinfo.data.network.weatherbit.WeatherbitApi
 import com.anadi.weatherinfo.domain.location.LocationRepository
 import com.anadi.weatherinfo.domain.weather.WeatherRepository
 import java.util.*
@@ -20,29 +24,13 @@ class WeatherRepositoryImpl @Inject constructor(
 
     override suspend fun fetch(city: String, country: String): Weather? {
         val location = locationRepository.fetch(city, country) ?: return null
+        val weather = weatherDao.fetchAllForLocation(location.locationId!!).getOrNull(0)
 
-        var weather = weatherDao.fetchAllForLocation(location.locationId!!).getOrNull(0)
-        if (weather != null && dataIsFresh(weather.lastUpdate)) {
+        if (weather != null && dataIsFresh(weather.downloadTimestamp)) {
             return weather
         }
 
-        val locationName = "${location.city},${location.country.code.toLowerCase(Locale.ROOT)}"
-
-//        Locale.ENGLISH.displayName.toLowerCase(Locale.ROOT)
-        val weatherResponse = weatherApi.getWeather(locationName, API_KEY, UNITS_METRIC, LANG_EN)
-
-        if (weather == null) {
-            weather = WeatherMapper.convert(weatherResponse)
-            weatherDao.insert(weather)
-        } else {
-            weather = WeatherMapper.update(weather, weatherResponse)
-            weatherDao.update(weather)
-        }
-
-        weather = WeatherMapper.convert(weatherResponse)
-
-        weatherDao.update(weather)
-        return weather
+        return update(location, weather)
     }
 
     override suspend fun fetchAllForLocation(id: Long): List<Weather> {
@@ -53,6 +41,16 @@ class WeatherRepositoryImpl @Inject constructor(
         return weatherDao.fetchAllForProvider(id)
     }
 
+    override suspend fun update(location: Location) {
+        val weather = weatherDao.fetchAllForLocation(location.locationId!!).getOrNull(0)
+        update(location, weather)
+    }
+
+    private suspend fun update(location: Location, weather: Weather?): Weather {
+        val response = getWeatherResponse(location)
+        return addOrUpdate(location.locationId!!, weather, response)
+    }
+
     override suspend fun delete(weather: Weather) {
         weatherDao.delete(weather)
     }
@@ -61,10 +59,24 @@ class WeatherRepositoryImpl @Inject constructor(
         return timestamp.compareTo(System.currentTimeMillis() - ONE_HOUR) > 0
     }
 
+    private suspend fun getWeatherResponse(location: Location): WeatherResponse {
+        return weatherApi.getWeather(location)
+    }
+
+    private suspend fun addOrUpdate(locationId: Long, weather: Weather?, weatherResponse: WeatherResponse): Weather {
+        val result: Weather
+        if (weather == null) {
+            result = WeatherMapper.convert(locationId, weatherResponse)
+            weatherDao.insert(result)
+        } else {
+            result = WeatherMapper.update(weather, weatherResponse)
+            weatherDao.update(result)
+        }
+
+        return result
+    }
+
     companion object {
         private const val ONE_HOUR: Long = 1000 * 60 * 60
-        private const val API_KEY = "f9dee5683fdf51c7b611df7f57f26926"
-        private const val UNITS_METRIC = "metric"
-        private const val LANG_EN = "en"
     }
 }

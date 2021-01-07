@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.anadi.weatherinfo.domain.location.AddLocationUseCase
 import com.anadi.weatherinfo.domain.location.LocationRepository
+import com.anadi.weatherinfo.domain.location.UpdateLocationUseCase
 import com.anadi.weatherinfo.view.ui.addlocation.AddLocationViewModel
 import com.anadi.weatherinfo.view.ui.addlocation.LocationsProvider
 import com.anadi.weatherinfo.view.ui.details.DetailsViewModel
@@ -61,8 +62,8 @@ class ViewModelModule {
     @Provides
     @IntoMap
     @ViewModelKey(DetailsViewModel::class)
-    fun detailsViewModel(locationRepository: LocationRepository): ViewModel {
-        return DetailsViewModel(locationRepository)
+    fun detailsViewModel(updateLocationUseCase: UpdateLocationUseCase, locationRepository: LocationRepository): ViewModel {
+        return DetailsViewModel(updateLocationUseCase, locationRepository)
     }
 
     @Provides

@@ -2,13 +2,13 @@ package com.anadi.weatherinfo.domain.location
 
 import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.domain.UseCase
-import com.anadi.weatherinfo.domain.weather.WeatherRepository
+import com.anadi.weatherinfo.domain.weather.WeatherRepositories
 import com.anadi.weatherinfo.view.ui.addlocation.LocationsProvider
 import javax.inject.Inject
 
 class AddLocationUseCase @Inject constructor(
         private val locationRepository: LocationRepository,
-        private val weatherRepository: WeatherRepository,
+        private val weatherRepositories: WeatherRepositories,
         private val locationsProvider: LocationsProvider
 ): UseCase<Unit, AddLocationUseCase.Params>() {
 
@@ -19,7 +19,7 @@ class AddLocationUseCase @Inject constructor(
         }
 
         locationRepository.add(location)
-        weatherRepository.fetch(params.city, params.country)
+        weatherRepositories.fetch(params.city, params.country)
     }
 
     class Params(val city: String, val country: String)

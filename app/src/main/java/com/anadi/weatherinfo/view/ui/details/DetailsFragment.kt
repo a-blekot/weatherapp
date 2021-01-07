@@ -12,7 +12,6 @@ import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.databinding.DetailsFragmentBinding
 import com.anadi.weatherinfo.data.IconMap
 import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
-import com.anadi.weatherinfo.data.network.WeatherResponse
 import com.anadi.weatherinfo.view.ui.BaseFragment
 import com.anadi.weatherinfo.utils.Resource
 import com.anadi.weatherinfo.utils.Status
@@ -41,7 +40,7 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
         viewModel.id = DetailsFragmentArgs.fromBundle(requireArguments()).locationId
 
         viewModel.detailsNotifier.observe(viewLifecycleOwner, Observer { update(it) })
-        binding.updateButton.setOnClickListener { viewModel.fetch() }
+        binding.updateButton.setOnClickListener { viewModel.update() }
     }
 
     override fun onResume() {
@@ -74,17 +73,16 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
             return
         }
 
-
         val location = data.location
-        val weather = data.weathers[0]
+        val weather = data.weathers.getOrNull(0)
 
-        binding.weatherIcon.setImageResource(IconMap.getIconId(weather.icon ?: "01d"))
-        binding.windIcon.rotation = weather.windDegree.toFloat()
+        binding.weatherIcon.setImageResource(IconMap.getIconId( "01d"))
+        binding.windIcon.rotation = weather?.windDegree?.toFloat() ?: 0F
         binding.locationName.text = getString(R.string.location_name, location.city, location.country.name)
-        binding.temp.text = getString(R.string.temp_celsium, weather.temp)
-        binding.wind.text = getString(R.string.wind_speed_ms, weather.windSpeed)
-        binding.pressure.text = getString(R.string.pressure, weather.pressure)
-        binding.humidity.text = getString(R.string.humidity, weather.humidity)
+        binding.temp.text = getString(R.string.temp_celsium, weather?.temp ?: 0)
+        binding.wind.text = getString(R.string.wind_speed_ms, weather?.windSpeed ?: 0)
+        binding.pressure.text = getString(R.string.pressure, weather?.pressure ?: 0)
+        binding.humidity.text = getString(R.string.humidity, weather?.humidity ?: 0)
     }
 
 }

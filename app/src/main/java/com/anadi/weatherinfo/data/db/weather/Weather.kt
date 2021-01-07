@@ -6,9 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Weather(
-
         @PrimaryKey(autoGenerate = true)
-        var weatherId: Long,
+        val weatherId: Long,
 
         @ColumnInfo(name = "locationId")
         val locationId: Long,
@@ -17,22 +16,19 @@ data class Weather(
         val providerId: Int,
 
         @ColumnInfo(name = "lon")
-        val lon: Long,
+        val lon: Float,
 
         @ColumnInfo(name = "lat")
-        val lat: Long,
+        val lat: Float,
 
-        @ColumnInfo(name = "icon")
-        val icon: String?,
+        @ColumnInfo(name = "code")
+        val code: Int,
 
         @ColumnInfo(name = "temp")
         val temp: Int,
 
-        @ColumnInfo(name = "pressure")
-        val pressure: Int,
-
-        @ColumnInfo(name = "humidity")
-        val humidity: Int,
+        @ColumnInfo(name = "temp_feels_like")
+        val tempFeelsLike: Int,
 
         @ColumnInfo(name = "wind_speed")
         val windSpeed: Int,
@@ -40,9 +36,18 @@ data class Weather(
         @ColumnInfo(name = "wind_degree")
         val windDegree: Int,
 
-        @ColumnInfo(name = "cloudiness")
-        val cloudiness: Int,
+        @ColumnInfo(name = "pressure")
+        val pressure: Int,
 
-        @ColumnInfo(name = "lastUpdate")
-        val lastUpdate: Long
+        @ColumnInfo(name = "humidity")
+        val humidity: Int,
+
+        @ColumnInfo(name = "clouds")
+        val clouds: Int,
+
+        @ColumnInfo(name = "data_calc_timestamp")
+        val dataCalcTimestamp: Long,
+
+        @ColumnInfo(name = "download_timestamp")
+        val downloadTimestamp: Long
 )
