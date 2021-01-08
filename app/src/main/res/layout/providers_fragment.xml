@@ -11,9 +11,26 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/location_name"
+        app:layout_constraintBottom_toTopOf="@id/merged"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/provider_view" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@id/merged"
+        app:layout_constraintTop_toBottomOf="@id/recycler_view"
+        />
+
+    <include
+        android:id="@+id/merged"
+        layout="@layout/provider_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/location_name"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
 
     <TextView
         android:id="@+id/location_name"
@@ -22,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_small"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recycler_view"
+        app:layout_constraintTop_toBottomOf="@id/merged"
         tools:text="Sun Francisco, USA" />
 
     <include

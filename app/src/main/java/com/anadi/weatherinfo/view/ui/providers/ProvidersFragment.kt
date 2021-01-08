@@ -1,9 +1,7 @@
 package com.anadi.weatherinfo.view.ui.providers
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,12 +11,12 @@ import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.data.IconMap
 import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
 import com.anadi.weatherinfo.data.db.weather.Weather
+import com.anadi.weatherinfo.data.network.WeatherProvider
 import com.anadi.weatherinfo.databinding.ProvidersFragmentBinding
 import com.anadi.weatherinfo.view.ui.BaseFragment
 import com.anadi.weatherinfo.utils.Resource
 import com.anadi.weatherinfo.utils.Status
 import com.anadi.weatherinfo.view.ui.details.DetailsFragmentArgs
-import com.anadi.weatherinfo.view.ui.locations.LocationsFragmentDirections
 import es.dmoral.toasty.Toasty
 import timber.log.Timber
 import javax.inject.Inject
@@ -43,7 +41,8 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
         adapter = ProvidersAdapter(this)
         binding.recyclerView.adapter = adapter
 
-        viewModel.detailsNotifier.observe(viewLifecycleOwner, Observer { update(it) })
+        viewModel.details.observe(viewLifecycleOwner, Observer { update(it) })
+        viewModel.mergedWeather.observe(viewLifecycleOwner, Observer { updateMerged(it) })
 
         viewModel.fetch()
     }
@@ -78,6 +77,24 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
 
         adapter.dataset = data.weathers
         binding.locationName.text = getString(R.string.location_name, data.location.city, data.location.country.name)
+    }
+
+    private fun updateMerged(weather: Weather) {
+
+        with(binding.merged) {
+            providerName.text = WeatherProvider.fromCode(weather.providerId).providerName
+            lastUpdateTime.text = weather.dataCalcTimestamp.toString() // TODO timestamp convert to date
+
+            icon.setImageResource(IconMap.getIconId("01d"))
+            description.text = weather.code.toString() // TODO convert weather code to string
+
+            temp.text = requireContext().getString(R.string.temp_short_celsium, weather.temp)
+            windSpeed.text = requireContext().getString(R.string.wind_speed_short_ms, weather.windSpeed)
+            windDir.rotation = weather.windDegree.toFloat()
+
+            pressure.text = requireContext().getString(R.string.pressure_short, weather.pressure)
+            humidity.text = requireContext().getString(R.string.humidity_short, weather.humidity)
+        }
     }
 
     override fun onSelected(weather: Weather) {
