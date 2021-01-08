@@ -25,8 +25,8 @@
         android:label="title_fragment"
         tools:layout="@layout/locations_fragment">
         <action
-            android:id="@+id/action_locations_to_details"
-            app:destination="@id/details_destination"
+            android:id="@+id/action_locations_to_providers"
+            app:destination="@id/providers_destination"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_right"
             app:launchSingleTop="true"
@@ -42,14 +42,36 @@
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
+        android:id="@+id/providers_destination"
+        android:name="com.anadi.weatherinfo.view.ui.providers.ProvidersFragment"
+        android:label="providers_fragment"
+        tools:layout="@layout/providers_fragment">
+        <action
+            android:id="@+id/action_providers_to_details"
+            app:destination="@id/details_destination"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_right"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="location_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+    <fragment
         android:id="@+id/details_destination"
         android:name="com.anadi.weatherinfo.view.ui.details.DetailsFragment"
         android:label="details_fragment"
         tools:layout="@layout/details_fragment">
         <argument
             android:name="location_id"
-            android:defaultValue="0L"
-            app:argType="long" />
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="provider_id"
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/add_location_destination"

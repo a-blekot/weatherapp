@@ -14,7 +14,9 @@
     <string name="temp_celsium_stub" translatable="false">8.0\u2103</string>
     <string name="temp_fahrenheit">Temp: %1$d\u2109</string>
     <string name="pressure">Pressure: %1$d hPa</string>
+    <string name="pressure_short">%1$d hPa</string>
     <string name="humidity">Humidity: %1$d%%</string>
+    <string name="humidity_short">\u9748 %1$d%%</string>
     <string name="sunrise">Sunrise: %1$s</string>
     <string name="sunset">Sunset: %1$s</string>
     <string name="details_temp_label">Current \ntemp</string>
@@ -33,4 +35,8 @@
     <string name="day_mode">Day mode</string>
     <string name="channel_name" translatable="false">update channel</string>
     <string name="channel_description" translatable="false">Description of Update-channel</string>
+
+
+    <string name="no_data">No data …</string>
+
 </resources>

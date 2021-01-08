@@ -10,7 +10,7 @@ import com.anadi.weatherinfo.data.network.WeatherApi
 import com.anadi.weatherinfo.data.weather.WeatherRepositoryImpl
 import com.anadi.weatherinfo.domain.location.LocationRepository
 import com.anadi.weatherinfo.domain.weather.WeatherRepositories
-import com.anadi.weatherinfo.domain.weather.WeatherRepositoriesImpl
+import com.anadi.weatherinfo.data.weather.WeatherRepositoriesImpl
 import com.anadi.weatherinfo.domain.weather.WeatherRepository
 import com.anadi.weatherinfo.view.ui.addlocation.LocationsProvider
 import dagger.Module

@@ -9,5 +9,5 @@ interface LocationRepository: BaseRepository<Location> {
 
     suspend fun fetchAllWithWeathers(): List<LocationWithWeathers>
 
-    suspend fun fetchWithWeathers(id: Long): LocationWithWeathers?
+    suspend fun fetchWithWeathers(id: Int): LocationWithWeathers?
 }

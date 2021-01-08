@@ -2,15 +2,18 @@ package com.anadi.weatherinfo.data.db.weather
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.anadi.weatherinfo.data.db.location.Location
 
-@Entity
+@Entity(tableName = "weather")
 data class Weather(
         @PrimaryKey(autoGenerate = true)
-        val weatherId: Long,
+        val weatherId: Int,
 
+        @ForeignKey(entity = Location::class, parentColumns = ["id"], childColumns = ["locationId"], onDelete = ForeignKey.CASCADE)
         @ColumnInfo(name = "locationId")
-        val locationId: Long,
+        val locationId: Int,
 
         @ColumnInfo(name = "providerId")
         val providerId: Int,

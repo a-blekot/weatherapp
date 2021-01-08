@@ -47,8 +47,8 @@ class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAda
     }
 
     override fun onSelected(location: Location) {
-        val action = LocationsFragmentDirections.actionLocationsToDetails()
-        action.locationId = location.locationId!!
+        val action = LocationsFragmentDirections.actionLocationsToProviders()
+        action.locationId = location.id
         findNavController().navigate(action)
     }
 

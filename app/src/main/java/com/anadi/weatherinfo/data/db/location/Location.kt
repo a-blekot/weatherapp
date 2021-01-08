@@ -5,11 +5,11 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "location")
 data class Location(
 
         @PrimaryKey(autoGenerate = true)
-        var locationId: Long? = null,
+        var id: Int = 0,
 
         @ColumnInfo(name = "city")
         var city: String = "",

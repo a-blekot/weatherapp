@@ -25,7 +25,7 @@ object WeatherMapper {
         )
     }
 
-    fun convert(locationId: Long, response: WeatherResponse): Weather {
+    fun convert(locationId: Int, response: WeatherResponse): Weather {
         return Weather(
                 weatherId = 0,
                 locationId = locationId,

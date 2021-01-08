@@ -3,7 +3,7 @@ package com.anadi.weatherinfo.domain
 interface BaseRepository<T> {
     suspend fun fetchAll(): List<T>
 
-    suspend fun fetch(id: Long): T?
+    suspend fun fetch(id: Int): T?
 
     suspend fun add(obj: T)
 

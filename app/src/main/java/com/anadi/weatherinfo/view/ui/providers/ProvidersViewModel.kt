@@ -1,4 +1,4 @@
-package com.anadi.weatherinfo.view.ui.details
+package com.anadi.weatherinfo.view.ui.providers
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -15,10 +15,8 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlin.system.measureTimeMillis
 
-class DetailsViewModel @Inject constructor(private val updateLocationUseCase: UpdateLocationUseCase,
-                                           private val locationRepository: LocationRepository) : ViewModel() {
-    var locationId: Int = 0
-    var providerId: Int = 0
+class ProvidersViewModel @Inject constructor(private val locationRepository: LocationRepository) : ViewModel() {
+    var id: Int = 0
 
     private val details: MutableLiveData<Resource<LocationWithWeathers>> = MutableLiveData()
     val detailsNotifier: LiveData<Resource<LocationWithWeathers>>
@@ -29,31 +27,8 @@ class DetailsViewModel @Inject constructor(private val updateLocationUseCase: Up
             details.value = Resource.loading()
 
             try {
-                val data = locationRepository.fetchWithWeathers(locationId)
+                val data = locationRepository.fetchWithWeathers(id)
                 details.postValue(Resource.success(data = data))
-            } catch (e: WeatherException) {
-                Timber.e(e)
-                details.postValue(Resource.error(R.string.on_error_update))
-            }
-        }
-    }
-
-    fun update() {
-        viewModelScope.launch {
-            details.value = Resource.loading()
-
-            try {
-
-                val time = measureTimeMillis {
-                    updateLocationUseCase.build(UpdateLocationUseCase.Params(locationId))
-                }
-
-                Timber.d("Update took $time ms")
-
-                val data = locationRepository.fetchWithWeathers(locationId)
-
-                details.postValue(Resource.success(data = data))
-
             } catch (e: WeatherException) {
                 Timber.e(e)
                 details.postValue(Resource.error(R.string.on_error_update))

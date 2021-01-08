@@ -11,7 +11,7 @@ import com.anadi.weatherinfo.data.db.weather.WeatherDao
 
 @Database(
         entities = [Location::class, Weather::class],
-        version = 1,
+        version = 2,
         exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

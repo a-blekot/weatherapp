@@ -7,6 +7,6 @@ import com.anadi.weatherinfo.data.db.weather.Weather
 data class LocationWithWeathers(
         @Embedded val location: Location,
 
-        @Relation(parentColumn = "locationId", entityColumn = "weatherId")
+        @Relation(parentColumn = "id", entityColumn = "locationId", entity = Weather::class)
         val weathers: List<Weather>
 )

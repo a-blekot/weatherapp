@@ -5,12 +5,8 @@ import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.data.db.weather.WeatherDao
 import com.anadi.weatherinfo.data.network.WeatherApi
 import com.anadi.weatherinfo.data.network.WeatherResponse
-import com.anadi.weatherinfo.data.network.openweather.OpenWeatherApi
-import com.anadi.weatherinfo.data.network.openweather.OpenWeatherResponse
-import com.anadi.weatherinfo.data.network.weatherbit.WeatherbitApi
 import com.anadi.weatherinfo.domain.location.LocationRepository
 import com.anadi.weatherinfo.domain.weather.WeatherRepository
-import java.util.*
 import javax.inject.Inject
 
 class WeatherRepositoryImpl @Inject constructor(
@@ -24,7 +20,7 @@ class WeatherRepositoryImpl @Inject constructor(
 
     override suspend fun fetch(city: String, country: String): Weather? {
         val location = locationRepository.fetch(city, country) ?: return null
-        val weather = weatherDao.fetchAllForLocation(location.locationId!!).getOrNull(0)
+        val weather = weatherDao.fetch(location.id, weatherApi.provider.code)
 
         if (weather != null && dataIsFresh(weather.downloadTimestamp)) {
             return weather
@@ -33,22 +29,26 @@ class WeatherRepositoryImpl @Inject constructor(
         return update(location, weather)
     }
 
-    override suspend fun fetchAllForLocation(id: Long): List<Weather> {
+    override suspend fun fetch(locationId: Int, providerId: Int): Weather? {
+        return weatherDao.fetch(locationId, providerId)
+    }
+
+    override suspend fun fetchAllForLocation(id: Int): List<Weather> {
         return weatherDao.fetchAllForLocation(id)
     }
 
-    override suspend fun fetchAllForProvider(id: Long): List<Weather> {
+    override suspend fun fetchAllForProvider(id: Int): List<Weather> {
         return weatherDao.fetchAllForProvider(id)
     }
 
     override suspend fun update(location: Location) {
-        val weather = weatherDao.fetchAllForLocation(location.locationId!!).getOrNull(0)
+        val weather = weatherDao.fetch(location.id, weatherApi.provider.code)
         update(location, weather)
     }
 
     private suspend fun update(location: Location, weather: Weather?): Weather {
         val response = getWeatherResponse(location)
-        return addOrUpdate(location.locationId!!, weather, response)
+        return addOrUpdate(location.id, weather, response)
     }
 
     override suspend fun delete(weather: Weather) {
@@ -63,7 +63,7 @@ class WeatherRepositoryImpl @Inject constructor(
         return weatherApi.getWeather(location)
     }
 
-    private suspend fun addOrUpdate(locationId: Long, weather: Weather?, weatherResponse: WeatherResponse): Weather {
+    private suspend fun addOrUpdate(locationId: Int, weather: Weather?, weatherResponse: WeatherResponse): Weather {
         val result: Weather
         if (weather == null) {
             result = WeatherMapper.convert(locationId, weatherResponse)

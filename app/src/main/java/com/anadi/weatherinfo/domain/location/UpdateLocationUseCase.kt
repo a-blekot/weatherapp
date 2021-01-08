@@ -14,5 +14,5 @@ class UpdateLocationUseCase @Inject constructor(
         location?.let { weatherRepositories.update(it) }
     }
 
-    class Params(val locationId: Long)
+    class Params(val locationId: Int)
 }

@@ -25,6 +25,7 @@ import com.anadi.weatherinfo.view.ui.addlocation.AddLocationViewModel
 import com.anadi.weatherinfo.view.ui.addlocation.LocationsProvider
 import com.anadi.weatherinfo.view.ui.details.DetailsViewModel
 import com.anadi.weatherinfo.view.ui.locations.LocationsViewModel
+import com.anadi.weatherinfo.view.ui.providers.ProvidersViewModel
 import dagger.MapKey
 import dagger.Module
 import dagger.Provides
@@ -57,6 +58,13 @@ class ViewModelModule {
     @ViewModelKey(LocationsViewModel::class)
     fun locationsViewModel(locationRepository: LocationRepository): ViewModel {
         return LocationsViewModel(locationRepository)
+    }
+
+    @Provides
+    @IntoMap
+    @ViewModelKey(ProvidersViewModel::class)
+    fun providersViewModel(locationRepository: LocationRepository): ViewModel {
+        return ProvidersViewModel(locationRepository)
     }
 
     @Provides

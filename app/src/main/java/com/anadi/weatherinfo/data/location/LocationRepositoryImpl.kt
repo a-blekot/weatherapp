@@ -13,7 +13,7 @@ class LocationRepositoryImpl @Inject constructor(
         return locationDao.fetchAll()
     }
 
-    override suspend fun fetch(id: Long): Location? {
+    override suspend fun fetch(id: Int): Location? {
         return locationDao.fetch(id)
     }
 
@@ -25,7 +25,7 @@ class LocationRepositoryImpl @Inject constructor(
         return locationDao.getLocationsWithWeathers()
     }
 
-    override suspend fun fetchWithWeathers(id: Long): LocationWithWeathers? {
+    override suspend fun fetchWithWeathers(id: Int): LocationWithWeathers? {
         return locationDao.getLocationWithWeathers(id)
     }
 

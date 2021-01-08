@@ -1,8 +1,8 @@
 package com.anadi.weatherinfo.data.network
 
-enum class WeatherProvider constructor(val code: Int) {
-    OPEN_WEATHER(1),
-    WEATHER_BIT(2);
+enum class WeatherProvider constructor(val code: Int, val providerName: String) {
+    OPEN_WEATHER(1, "OpenWeather"),
+    WEATHER_BIT(2, "Weatherbit");
 
     companion object {
         fun fromCode(code: Int): WeatherProvider {
