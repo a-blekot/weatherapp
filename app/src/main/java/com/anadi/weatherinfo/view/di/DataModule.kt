@@ -1,7 +1,6 @@
 package com.anadi.weatherinfo.view.di
 
 import android.content.Context
-import com.anadi.weatherinfo.data.LocationsProviderImpl
 import com.anadi.weatherinfo.data.db.AppDatabase
 import com.anadi.weatherinfo.data.db.location.LocationDao
 import com.anadi.weatherinfo.data.db.weather.WeatherDao
@@ -11,8 +10,9 @@ import com.anadi.weatherinfo.data.weather.WeatherRepositoryImpl
 import com.anadi.weatherinfo.domain.location.LocationRepository
 import com.anadi.weatherinfo.domain.weather.WeatherRepositories
 import com.anadi.weatherinfo.data.weather.WeatherRepositoriesImpl
+import com.anadi.weatherinfo.domain.places.PlacesWrapper
+import com.anadi.weatherinfo.domain.places.PlacesWrapperImpl
 import com.anadi.weatherinfo.domain.weather.WeatherRepository
-import com.anadi.weatherinfo.view.ui.addlocation.LocationsProvider
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -43,6 +43,12 @@ abstract class DataModule {
 
         @Provides
         @Singleton
+        fun providePlacesWrapper(context: Context): PlacesWrapper {
+            return PlacesWrapperImpl(context)
+        }
+
+        @Provides
+        @Singleton
         fun provideLocationRepository(locationDao: LocationDao): LocationRepository {
             return LocationRepositoryImpl(locationDao)
         }
@@ -67,10 +73,5 @@ abstract class DataModule {
                                        @Named("Weatherbit") openweather: WeatherRepository): WeatherRepositories {
             return WeatherRepositoriesImpl(weatherbit, openweather)
         }
-
-
-        @Provides
-        @Singleton
-        fun createLocationsProvider(context: Context): LocationsProvider = LocationsProviderImpl(context)
     }
 }

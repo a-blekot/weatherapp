@@ -76,7 +76,7 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
         }
 
         adapter.dataset = data.weathers
-        binding.locationName.text = getString(R.string.location_name, data.location.city, data.location.country.name)
+        binding.locationName.text = data.location.name
     }
 
     private fun updateMerged(weather: Weather) {

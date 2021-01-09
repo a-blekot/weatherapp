@@ -17,8 +17,8 @@ class LocationRepositoryImpl @Inject constructor(
         return locationDao.fetch(id)
     }
 
-    override suspend fun fetch(city: String, country: String): Location? {
-        return locationDao.fetch(city, country)
+    override suspend fun fetch(name: String): Location? {
+        return locationDao.fetch(name)
     }
 
     override suspend fun fetchAllWithWeathers(): List<LocationWithWeathers> {
@@ -29,16 +29,15 @@ class LocationRepositoryImpl @Inject constructor(
         return locationDao.getLocationWithWeathers(id)
     }
 
-    override suspend fun add(obj: Location) {
-        locationDao.insert(obj)
+    override suspend fun add(obj: Location): Int {
+        return locationDao.insert(obj).toInt()
     }
 
     override suspend fun delete(obj: Location) {
         locationDao.delete(obj)
     }
     
-    override suspend fun update(obj: Location): Location {
-        locationDao.insert(obj)
-        return obj
+    override suspend fun update(obj: Location) {
+        locationDao.update(obj)
     }
 }

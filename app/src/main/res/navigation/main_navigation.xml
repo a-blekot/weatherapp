@@ -40,6 +40,15 @@
             app:launchSingleTop="true"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+
+<!--        <action-->
+<!--            android:id="@+id/action_locations_to_search_places"-->
+<!--            app:destination="@id/search_places_destination"-->
+<!--            app:enterAnim="@anim/slide_in_right"-->
+<!--            app:exitAnim="@anim/slide_out_right"-->
+<!--            app:launchSingleTop="true"-->
+<!--            app:popEnterAnim="@anim/slide_in_right"-->
+<!--            app:popExitAnim="@anim/slide_out_right" />-->
     </fragment>
     <fragment
         android:id="@+id/providers_destination"
@@ -77,6 +86,10 @@
         android:id="@+id/add_location_destination"
         android:name="com.anadi.weatherinfo.view.ui.addlocation.AddLocationFragment"
         android:label="add_location_fragment"
-        tools:layout="@layout/add_location_fragment">
-    </fragment>
+        tools:layout="@layout/add_location_fragment" />
+
+<!--    <fragment-->
+<!--        android:id="@+id/search_places_destination"-->
+<!--        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"-->
+<!--        android:label="search_places_fragment" />-->
 </navigation>

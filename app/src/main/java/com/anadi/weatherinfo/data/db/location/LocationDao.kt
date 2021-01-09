@@ -11,8 +11,8 @@ abstract class LocationDao : BaseDao<Location> {
     @Query("SELECT * FROM location WHERE id = :id")
     abstract suspend fun fetch(id: Int): Location?
 
-    @Query("SELECT * FROM location WHERE city = :city AND country_name = :country")
-    abstract suspend fun fetch(city: String, country: String): Location?
+    @Query("SELECT * FROM location WHERE name = :name")
+    abstract suspend fun fetch(name: String): Location?
 
     @Transaction
     @Query("SELECT * FROM location")

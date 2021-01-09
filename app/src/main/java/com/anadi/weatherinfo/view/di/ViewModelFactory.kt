@@ -21,8 +21,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.anadi.weatherinfo.domain.location.AddLocationUseCase
 import com.anadi.weatherinfo.domain.location.LocationRepository
 import com.anadi.weatherinfo.domain.location.UpdateLocationUseCase
+import com.anadi.weatherinfo.domain.places.PlacesWrapper
 import com.anadi.weatherinfo.view.ui.addlocation.AddLocationViewModel
-import com.anadi.weatherinfo.view.ui.addlocation.LocationsProvider
 import com.anadi.weatherinfo.view.ui.details.DetailsViewModel
 import com.anadi.weatherinfo.view.ui.locations.LocationsViewModel
 import com.anadi.weatherinfo.view.ui.providers.ProvidersViewModel
@@ -56,8 +56,8 @@ class ViewModelModule {
     @Provides
     @IntoMap
     @ViewModelKey(LocationsViewModel::class)
-    fun locationsViewModel(locationRepository: LocationRepository): ViewModel {
-        return LocationsViewModel(locationRepository)
+    fun locationsViewModel(addLocationUseCase: AddLocationUseCase, placesWrapper: PlacesWrapper, locationRepository: LocationRepository): ViewModel {
+        return LocationsViewModel(addLocationUseCase, placesWrapper, locationRepository)
     }
 
     @Provides
@@ -77,7 +77,7 @@ class ViewModelModule {
     @Provides
     @IntoMap
     @ViewModelKey(AddLocationViewModel::class)
-    fun addLocationViewModel(addLocationUseCase: AddLocationUseCase, locationRepository: LocationRepository, locationsProvider: LocationsProvider): ViewModel {
-        return AddLocationViewModel(addLocationUseCase, locationRepository, locationsProvider)
+    fun addLocationViewModel(addLocationUseCase: AddLocationUseCase, locationRepository: LocationRepository): ViewModel {
+        return AddLocationViewModel(addLocationUseCase, locationRepository)
     }
 }

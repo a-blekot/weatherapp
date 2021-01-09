@@ -96,8 +96,10 @@ dependencies {
     def room_version = "2.2.6"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
-//    implementation "androidx.room:room-coroutines:2.1.0-alpha04"
     implementation "androidx.room:room-ktx:$room_version"
+
+    // Geo location
+    implementation 'com.google.android.libraries.places:places:2.4.0'
 
     implementation 'com.github.GrenderG:Toasty:1.5.0'
 }

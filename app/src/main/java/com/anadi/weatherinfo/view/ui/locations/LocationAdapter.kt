@@ -52,7 +52,7 @@ class LocationAdapter(private val listener: OnLocationSelectedListener) : Recycl
             val weather = data.weathers.getOrNull(0)
 
             binding.icon.setImageResource(IconMap.getIconId("01d"))
-            binding.name.text = context.getString(R.string.location_name, location.city, location.country.code)
+            binding.name.text = location.name
 
             binding.temp.text = context.getString(R.string.temp_short_celsium, weather?.temp ?: 0)
             binding.wind.text = context.getString(R.string.wind_speed_short_ms, weather?.windSpeed ?: 0)

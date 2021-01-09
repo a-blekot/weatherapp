@@ -12,9 +12,9 @@ class WeatherRepositoriesImpl @Inject constructor(
 ) : WeatherRepositories {
     private val repositories = listOf(openweather, weatherbit)
 
-    override suspend fun fetch(city: String, country: String) {
+    override suspend fun fetch(locationId: Int) {
         for (repository in repositories) {
-            repository.fetch(city, country)
+            repository.fetch(locationId)
         }
     }
 

@@ -18,12 +18,6 @@ data class Weather(
         @ColumnInfo(name = "providerId")
         val providerId: Int,
 
-        @ColumnInfo(name = "lon")
-        val lon: Float,
-
-        @ColumnInfo(name = "lat")
-        val lat: Float,
-
         @ColumnInfo(name = "code")
         val code: Int,
 

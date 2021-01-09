@@ -11,8 +11,6 @@ object WeatherMapper {
                 weatherId = oldEntity.weatherId,
                 locationId = oldEntity.locationId,
                 providerId = response.provider.code,
-                lon = response.lon,
-                lat = response.lat,
                 code = response.code,
                 temp = response.temp,
                 tempFeelsLike = response.tempFeelsLike,
@@ -31,8 +29,6 @@ object WeatherMapper {
                 weatherId = 0,
                 locationId = locationId,
                 providerId = response.provider.code,
-                lon = response.lon,
-                lat = response.lat,
                 code = response.code,
                 temp = response.temp,
                 tempFeelsLike = response.tempFeelsLike,
@@ -51,11 +47,9 @@ object WeatherMapper {
             return null
         }
 
-        var weatherId = weathers[0].weatherId
-        var locationId = weathers[0].locationId
-        var providerId = WeatherProvider.MERGED.code
-        var lon = 0F
-        var lat = 0F
+        val weatherId = weathers[0].weatherId
+        val locationId = weathers[0].locationId
+        val providerId = WeatherProvider.MERGED.code
         var code = 0
         var temp = 0
         var tempFeelsLike = 0
@@ -64,12 +58,10 @@ object WeatherMapper {
         var pressure = 0
         var humidity = 0
         var clouds = 0
-        var dataCalcTimestamp = weathers[0].dataCalcTimestamp
-        var downloadTimestamp = weathers[0].downloadTimestamp
+        val dataCalcTimestamp = weathers[0].dataCalcTimestamp
+        val downloadTimestamp = weathers[0].downloadTimestamp
 
         for (weather in weathers) {
-            lon += weather.lon
-            lat += weather.lat
             code += weather.code
             temp += weather.temp
             tempFeelsLike += weather.tempFeelsLike
@@ -81,10 +73,6 @@ object WeatherMapper {
         }
 
         val count = weathers.size
-
-        lon /= count
-        lon /= count
-        lat /= count
         code /= count
         temp /= count
         tempFeelsLike /= count
@@ -98,8 +86,6 @@ object WeatherMapper {
                 weatherId,
                 locationId,
                 providerId,
-                lon,
-                lat,
                 code,
                 temp,
                 tempFeelsLike,

@@ -1,5 +1,6 @@
 package com.anadi.weatherinfo.data.weather
 
+import com.anadi.weatherinfo.data.db.location.Coord
 import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.data.db.weather.WeatherDao
@@ -18,8 +19,8 @@ class WeatherRepositoryImpl @Inject constructor(
         return weatherDao.fetchAll()
     }
 
-    override suspend fun fetch(city: String, country: String): Weather? {
-        val location = locationRepository.fetch(city, country) ?: return null
+    override suspend fun fetch(locationId: Int): Weather? {
+        val location = locationRepository.fetch(locationId) ?: return null
         val weather = weatherDao.fetch(location.id, weatherApi.provider.code)
 
         if (weather != null && dataIsFresh(weather.downloadTimestamp)) {
@@ -27,10 +28,6 @@ class WeatherRepositoryImpl @Inject constructor(
         }
 
         return update(location, weather)
-    }
-
-    override suspend fun fetch(locationId: Int, providerId: Int): Weather? {
-        return weatherDao.fetch(locationId, providerId)
     }
 
     override suspend fun fetchAllForLocation(id: Int): List<Weather> {
@@ -47,7 +44,7 @@ class WeatherRepositoryImpl @Inject constructor(
     }
 
     private suspend fun update(location: Location, weather: Weather?): Weather {
-        val response = getWeatherResponse(location)
+        val response = getWeatherResponse(location.coord)
         return addOrUpdate(location.id, weather, response)
     }
 
@@ -59,8 +56,8 @@ class WeatherRepositoryImpl @Inject constructor(
         return timestamp.compareTo(System.currentTimeMillis() - ONE_HOUR) > 0
     }
 
-    private suspend fun getWeatherResponse(location: Location): WeatherResponse {
-        return weatherApi.getWeather(location)
+    private suspend fun getWeatherResponse(coord: Coord): WeatherResponse {
+        return weatherApi.getWeather(coord)
     }
 
     private suspend fun addOrUpdate(locationId: Int, weather: Weather?, weatherResponse: WeatherResponse): Weather {

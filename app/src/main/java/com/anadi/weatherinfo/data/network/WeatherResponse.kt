@@ -3,9 +3,6 @@ package com.anadi.weatherinfo.data.network
 data class WeatherResponse(
         val provider: WeatherProvider,
 
-        val lon: Float,
-        val lat: Float,
-
         val code: Int,
 
         val temp: Int,

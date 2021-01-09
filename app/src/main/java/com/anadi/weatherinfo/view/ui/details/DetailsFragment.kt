@@ -74,7 +74,7 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
 
         binding.weatherIcon.setImageResource(IconMap.getIconId("01d"))
         binding.windIcon.rotation = weather?.windDegree?.toFloat() ?: 0F
-        binding.locationName.text = getString(R.string.location_name, location.city, location.country.name)
+        binding.locationName.text = location.name
         binding.temp.text = getString(R.string.temp_celsium, weather?.temp ?: 0)
         binding.wind.text = getString(R.string.wind_speed_ms, weather?.windSpeed ?: 0)
         binding.pressure.text = getString(R.string.pressure, weather?.pressure ?: 0)

@@ -11,8 +11,6 @@ object ResponseMapper {
 
         return WeatherResponse(
                 provider = WeatherProvider.OPEN_WEATHER,
-                lon = response.coord.lon,
-                lat = response.coord.lat,
                 code = response.weather[0].code,
                 temp = response.main.temp.toInt(),
                 tempFeelsLike = response.main.tempFeelsLike.toInt(),
@@ -34,8 +32,6 @@ object ResponseMapper {
 
         return WeatherResponse(
                 provider = WeatherProvider.WEATHER_BIT,
-                lon = weatherbit.lon,
-                lat = weatherbit.lat,
                 code = weatherbit.weather.code,
                 temp = weatherbit.temp.toInt(),
                 tempFeelsLike = weatherbit.tempFeelsLike.toInt(),

@@ -7,9 +7,7 @@ interface WeatherRepository {
 
     suspend fun fetchAll(): List<Weather>
 
-    suspend fun fetch(city: String, country: String): Weather?
-
-    suspend fun fetch(locationId: Int, providerId: Int): Weather?
+    suspend fun fetch(locationId: Int): Weather?
 
     suspend fun fetchAllForLocation(id: Int): List<Weather>
 

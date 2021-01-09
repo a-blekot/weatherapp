@@ -1,21 +1,18 @@
 package com.anadi.weatherinfo.data.network.weatherbit
 
-import com.anadi.weatherinfo.data.db.location.Location
+import com.anadi.weatherinfo.data.db.location.Coord
 import com.anadi.weatherinfo.data.network.ResponseMapper
 import com.anadi.weatherinfo.data.network.WeatherApi
 import com.anadi.weatherinfo.data.network.WeatherProvider
 import com.anadi.weatherinfo.data.network.WeatherResponse
-import java.util.*
 import javax.inject.Inject
 
 class WeatherbitApiFacade @Inject constructor(private val weatherbitApi: WeatherbitApi) : WeatherApi {
 
     override val provider = WeatherProvider.WEATHER_BIT
 
-    override suspend fun getWeather(location: Location): WeatherResponse {
-        val locationName = "${location.city},${location.country.code.toLowerCase(Locale.ROOT)}"
-
-        val response = weatherbitApi.getWeather(locationName, API_KEY, LANG_EN)
+    override suspend fun getWeather(coord: Coord): WeatherResponse {
+        val response = weatherbitApi.getWeather(coord.lat, coord.lon, API_KEY, LANG_EN)
         return ResponseMapper.convert(response)
     }
 

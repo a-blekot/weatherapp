@@ -1,18 +1,30 @@
 package com.anadi.weatherinfo.view.ui.locations
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
-import com.anadi.weatherinfo.databinding.LocationsFragmentBinding
 import com.anadi.weatherinfo.data.IconMap
 import com.anadi.weatherinfo.data.db.location.Location
+import com.anadi.weatherinfo.databinding.LocationsFragmentBinding
 import com.anadi.weatherinfo.view.ui.BaseFragment
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.TypeFilter
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import es.dmoral.toasty.Toasty
+import timber.log.Timber
 import javax.inject.Inject
+
 
 class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAdapter.OnLocationSelectedListener {
     private val binding: LocationsFragmentBinding by viewBinding()
@@ -37,7 +49,30 @@ class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAda
         viewModel.locationsNotifier.observe(viewLifecycleOwner, Observer { adapter.dataset = it })
 
         binding.addLocationButton.setOnClickListener {
-            findNavController().navigate(LocationsFragmentDirections.actionLocationsToAddLocation())
+            startActivityForResult(viewModel.placesIntent, AUTOCOMPLETE_REQUEST_CODE)
+            // findNavController().navigate(LocationsFragmentDirections.actionLocationsToAddLocation())
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+
+            val place = Autocomplete.getPlaceFromIntent(data)
+
+            place.utcOffsetMinutes
+
+            val coord = place.latLng!!
+
+            Toasty.success(requireContext(), "Coordinates: $coord", Toast.LENGTH_LONG).show()
+            Timber.i("Coordinates: $coord")
+
+            viewModel.addLocation(place)
+
+        } else if (resultCode == AutocompleteActivity.RESULT_ERROR && data != null) {
+            val status = Autocomplete.getStatusFromIntent(data)
+            Toasty.error(requireContext(), "Error: " + status.statusMessage, Toast.LENGTH_LONG).show()
+            Timber.e(status.statusMessage)
         }
     }
 
@@ -60,5 +95,9 @@ class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAda
             R.id.menu_context_favorite -> {
             }
         }
+    }
+
+    companion object {
+        const val AUTOCOMPLETE_REQUEST_CODE = 4576
     }
 }

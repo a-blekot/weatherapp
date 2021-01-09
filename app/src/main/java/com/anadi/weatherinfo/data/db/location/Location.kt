@@ -9,11 +9,23 @@ import androidx.room.PrimaryKey
 data class Location(
 
         @PrimaryKey(autoGenerate = true)
-        var id: Int = 0,
+        val id: Int,
 
-        @ColumnInfo(name = "city")
-        var city: String = "",
+        @ColumnInfo(name = "name")
+        val name: String,
 
-        @Embedded(prefix = "country_")
-        var country: Country = Country.EMPTY
+        @ColumnInfo(name = "address")
+        val address: String,
+
+        @Embedded(prefix = "coord_")
+        val coord: Coord,
+
+        @ColumnInfo(name = "utc_offset_minutes")
+        val utcOffsetMinutes: Int,
+
+        @ColumnInfo(name = "sunrise")
+        val sunrise: Long = 0,
+
+        @ColumnInfo(name = "sunset")
+        val sunset: Long = 0
 )

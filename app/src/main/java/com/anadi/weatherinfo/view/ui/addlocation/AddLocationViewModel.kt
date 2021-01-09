@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anadi.weatherinfo.R
+import com.anadi.weatherinfo.data.db.location.Coord
 import com.anadi.weatherinfo.domain.location.AddLocationUseCase
 import com.anadi.weatherinfo.domain.location.LocationRepository
 import com.anadi.weatherinfo.utils.Resource
@@ -15,8 +16,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class AddLocationViewModel @Inject constructor(private val addLocationUseCase: AddLocationUseCase,
-                                               private val locationRepository: LocationRepository,
-                                               private val locationsProvider: LocationsProvider) : ViewModel() {
+                                               private val locationRepository: LocationRepository) : ViewModel() {
     private val status: MutableLiveData<Resource<Any>> = MutableLiveData()
     val statusNotifier: LiveData<Resource<Any>>
         get() = status
@@ -36,10 +36,10 @@ class AddLocationViewModel @Inject constructor(private val addLocationUseCase: A
 
         viewModelScope.launch {
             try {
-                if (alreadyAdded(city, country)) {
+                if (alreadyAdded(city)) {
                     status.postValue(Resource.success(R.string.add_location_already_added, null))
                 } else {
-                    addLocationUseCase.build(AddLocationUseCase.Params(city, country))
+                    addLocationUseCase.build(AddLocationUseCase.Params(city, city, Coord(40.0, 12.0), 60))
                     status.postValue(Resource.success(data = null))
                 }
             } catch (e: WeatherException) {
@@ -49,20 +49,13 @@ class AddLocationViewModel @Inject constructor(private val addLocationUseCase: A
         }
     }
 
-    private suspend fun alreadyAdded(city: String, country: String): Boolean {
-        return locationRepository.fetch(city, country) != null
+    private suspend fun alreadyAdded(name: String): Boolean {
+        return locationRepository.fetch(name) != null
     }
 
     private fun wrongSelection(selection: String): Boolean {
         return TextUtils.isEmpty(selection) || selection.equals("Select Item", ignoreCase = true)
     }
-
-    fun onCountrySelected(countryName: String) {
-        cities.value = locationsProvider.getCityNames(countryName)
-    }
-
-    val countryNames: List<String>
-        get() = locationsProvider.countryNames
 
     override fun onCleared() {
         super.onCleared()

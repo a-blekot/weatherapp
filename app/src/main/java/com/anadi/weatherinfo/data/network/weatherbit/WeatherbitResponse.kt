@@ -10,10 +10,6 @@ data class WeatherbitResponse(
 )
 
 data class WeatherbitData(
-        @SerializedName("lon")
-        val lon: Float,
-        @SerializedName("lat")
-        val lat: Float,
 
         @SerializedName("weather")
         val weather: Weather,

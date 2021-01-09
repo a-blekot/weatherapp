@@ -1,7 +1,6 @@
 package com.anadi.weatherinfo.view.ui.addlocation
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -43,8 +42,6 @@ class AddLocationFragment : BaseFragment(R.layout.add_location_fragment), OnItem
 
         binding.countrySpinner.onItemSelectedListener = this
         binding.citySpinner.onItemSelectedListener = this
-        binding.countrySpinner.adapter = ArrayAdapter(requireContext(), R.layout.spinner_dropdown_item,
-                viewModel.countryNames)
     }
 
     private fun updateCities(cities: List<String>) {
@@ -83,12 +80,6 @@ class AddLocationFragment : BaseFragment(R.layout.add_location_fragment), OnItem
     }
 
     override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-        if (parent.id == R.id.country_spinner) {
-            selectedCountry = binding.countrySpinner.getItemAtPosition(position).toString()
-            if (!TextUtils.isEmpty(selectedCountry) && !selectedCountry.equals("Select Item", ignoreCase = true)) {
-                viewModel.onCountrySelected(selectedCountry)
-            }
-        }
         if (parent.id == R.id.city_spinner) {
             selectedCity = binding.citySpinner.getItemAtPosition(position).toString()
         }
