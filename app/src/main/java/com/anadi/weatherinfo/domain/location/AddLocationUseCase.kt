@@ -1,5 +1,6 @@
 package com.anadi.weatherinfo.domain.location
 
+import com.anadi.weatherinfo.data.db.BaseDao.Companion.NO_ID
 import com.anadi.weatherinfo.data.db.location.Coord
 import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.domain.UseCase
@@ -13,7 +14,7 @@ class AddLocationUseCase @Inject constructor(
 ) : UseCase<Unit, AddLocationUseCase.Params>() {
 
     override suspend fun build(params: Params) {
-        val location = Location(0, params.name, params.address, params.coord, params.utcOffsetMinutes)
+        val location = Location(NO_ID, params.name, params.address, params.coord, params.utcOffsetMinutes)
 
         val id = locationRepository.add(location)
         weatherRepositories.fetch(id)

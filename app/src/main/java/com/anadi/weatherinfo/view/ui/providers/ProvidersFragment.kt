@@ -35,6 +35,8 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Timber.i("onViewCreated")
+
         viewModel = ViewModelProvider(this, viewModelFactory).get(ProvidersViewModel::class.java)
         viewModel.id = DetailsFragmentArgs.fromBundle(requireArguments()).locationId
 
@@ -45,6 +47,41 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
         viewModel.mergedWeather.observe(viewLifecycleOwner, Observer { updateMerged(it) })
 
         viewModel.fetch()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Timber.i("onCreate")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.i("onResume")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Timber.i("onStart")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Timber.i("onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Timber.i("onStop")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Timber.i("onDetach")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.i("onDestroy")
     }
 
     private fun loading() {

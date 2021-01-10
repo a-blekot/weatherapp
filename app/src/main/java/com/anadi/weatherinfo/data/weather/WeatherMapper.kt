@@ -1,5 +1,7 @@
 package com.anadi.weatherinfo.data.weather
 
+import com.anadi.weatherinfo.data.db.BaseDao
+import com.anadi.weatherinfo.data.db.BaseDao.Companion.NO_ID
 import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.data.network.WeatherProvider
 import com.anadi.weatherinfo.data.network.WeatherResponse
@@ -26,7 +28,7 @@ object WeatherMapper {
 
     fun convert(locationId: Int, response: WeatherResponse): Weather {
         return Weather(
-                weatherId = 0,
+                weatherId = NO_ID,
                 locationId = locationId,
                 providerId = response.provider.code,
                 code = response.code,

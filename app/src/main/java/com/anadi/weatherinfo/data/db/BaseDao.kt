@@ -14,4 +14,8 @@ interface BaseDao<T> {
 
     @Update
     suspend fun update(t: T)
+
+    companion object {
+        const val NO_ID = 0
+    }
 }

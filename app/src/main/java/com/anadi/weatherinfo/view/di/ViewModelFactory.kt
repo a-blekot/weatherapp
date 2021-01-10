@@ -37,8 +37,11 @@ import kotlin.reflect.KClass
 class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T =
-            viewModels[modelClass]?.get() as T
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return viewModels[modelClass]?.get() as? T
+                ?: throw IllegalArgumentException("The requested ViewModel isn't bound: ${modelClass.simpleName}")
+    }
+
 }
 
 @Target(AnnotationTarget.FUNCTION)
