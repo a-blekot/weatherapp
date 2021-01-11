@@ -27,11 +27,11 @@ jobs:
           java-version: 1.8
 
       - name: Checkout keystore repo
-          uses: actions/checkout@v2
-          with:
-            repository: ${{ secrets.KEYSTORE_GIT_REPOSITORY }}
-            token: ${{ secrets.KEYSTORE_TOKEN }}
-            path: app/keystore
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ secrets.KEYSTORE_GIT_REPOSITORY }}
+          token: ${{ secrets.KEYSTORE_TOKEN }}
+          path: app/keystore
 
       - name: Build APK after test
         run: |
