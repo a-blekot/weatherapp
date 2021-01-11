@@ -31,9 +31,3 @@ jobs:
         with:
           name: test-results
           path: app/build/reports/tests/testDebugUnitTest/*
-
-      - name: Upload Debug APK
-        uses: actions/upload-artifact@v2
-        with:
-          name: app
-          path: app/build/outputs/apk/debug/app-debug.apk
