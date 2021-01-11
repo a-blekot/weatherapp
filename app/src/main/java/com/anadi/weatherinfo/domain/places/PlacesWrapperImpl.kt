@@ -11,11 +11,12 @@ import javax.inject.Inject
 
 class PlacesWrapperImpl @Inject constructor(val context: Context): PlacesWrapper {
 
-    init {
-        Places.initialize(context, PLACES_API_KEY)
-    }
-
     override fun createActivityIntent(): Intent {
+
+        if (!Places.isInitialized()) {
+            Places.initialize(context, GOOGLE_PLACES_API_KEY)
+        }
+
         val fields = listOf(
                 Place.Field.NAME,
                 Place.Field.ADDRESS,
@@ -27,6 +28,6 @@ class PlacesWrapperImpl @Inject constructor(val context: Context): PlacesWrapper
     }
 
     companion object {
-        const val PLACES_API_KEY = "AIzaSyBdtulnVPwSdaGhd2oYRtuUcw-Pjp7RYog"
+        const val GOOGLE_PLACES_API_KEY = "AIzaSyBdtulnVPwSdaGhd2oYRtuUcw-Pjp7RYog"
     }
 }

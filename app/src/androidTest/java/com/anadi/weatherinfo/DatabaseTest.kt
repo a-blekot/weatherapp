@@ -135,7 +135,7 @@ class DatabaseTest {
         assertEquals(locations.size, NUMBER_OF_LOCATIONS)
     }
 
-    private fun addMultipleKievLocations() = runBlocking {
+    private suspend fun addMultipleKievLocations() {
         val kiev = kievLocationEmptyId()
 
         for (i in 1..NUMBER_OF_LOCATIONS) {
@@ -143,7 +143,7 @@ class DatabaseTest {
         }
     }
 
-    private fun deleteFewKievLocations() = runBlocking{
+    private suspend fun deleteFewKievLocations() {
         for (i in 1..FEW_LOCATIONS) {
             val location = locationDao.fetch(i)
             locationDao.delete(location!!)
