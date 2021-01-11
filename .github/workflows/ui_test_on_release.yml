@@ -3,7 +3,7 @@ name: UI_tests_on_release
 on:
   pull_request:
     branches:
-      - 'main'
+      - 'master'
 
 jobs:
   assemble_ui_test_artifacts:
