@@ -8,6 +8,11 @@ on:
     branches:
       - 'master'
 
+env:
+  KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PSWD }}
+  RELEASE_SIGN_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+  RELEASE_SIGN_KEY_PASSWORD: ${{ secrets.KEY_PSWD }}
+
 jobs:
   build_apk_aab:
     if: startsWith(github.head_ref, 'release/') == true
@@ -21,6 +26,13 @@ jobs:
         with:
           java-version: 1.8
 
+      - name: Checkout keystore repo
+          uses: actions/checkout@v2
+          with:
+            repository: ${{ secrets.KEYSTORE_GIT_REPOSITORY }}
+            token: ${{ secrets.KEYSTORE_TOKEN }}
+            path: app/keystore
+
       - name: Build APK after test
         run: |
           ./gradlew test
@@ -33,11 +45,11 @@ jobs:
           name: test-results
           path: app/build/reports/tests/testDebugUnitTest/*
 
-      - name: Upload Release APK
+      - name: Upload signed Release APK
         uses: actions/upload-artifact@v2
         with:
           name: app-release.apk
-          path: app/build/outputs/apk/release/app-release-unsigned.apk
+          path: app/build/outputs/apk/release/app-release.apk
 
       - name: Upload Release AAB Bundle
         uses: actions/upload-artifact@v2
