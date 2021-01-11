@@ -101,7 +101,7 @@ class DatabaseTest {
         val location = locationDao.fetch(LAST_ID)
 
         assertEquals(location?.id, LAST_ID)
-        assertKievLocation(location)
+        assertLondonLocation(location)
 
         val empty = locationDao.fetch(FIRST_ID)
         assertEquals(empty, null)
@@ -110,7 +110,7 @@ class DatabaseTest {
         assertEquals(locations.size, NUMBER_OF_LOCATIONS - FEW_LOCATIONS)
 
         for (location in locations) {
-            assertKievLocation(location)
+            assertLondonLocation(location)
         }
     }
 
