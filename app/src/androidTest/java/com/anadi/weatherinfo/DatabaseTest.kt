@@ -98,10 +98,10 @@ class DatabaseTest {
         addMultipleKievLocations()
         deleteFewKievLocations()
 
-        val location = locationDao.fetch(LAST_ID)
+        val data = locationDao.fetch(LAST_ID)
 
-        assertEquals(location?.id, LAST_ID)
-        assertLondonLocation(location)
+        assertEquals(data?.id, LAST_ID)
+        assertKievLocation(data)
 
         val empty = locationDao.fetch(FIRST_ID)
         assertEquals(empty, null)
@@ -110,7 +110,7 @@ class DatabaseTest {
         assertEquals(locations.size, NUMBER_OF_LOCATIONS - FEW_LOCATIONS)
 
         for (location in locations) {
-            assertLondonLocation(location)
+            assertKievLocation(location)
         }
     }
 
