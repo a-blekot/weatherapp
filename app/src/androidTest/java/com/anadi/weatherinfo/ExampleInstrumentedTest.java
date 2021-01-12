@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.anadi.weatherinfo", appContext.getPackageName());
+        assertEquals("com.anadi.weatherinfo.debug", appContext.getPackageName());
     }
 }

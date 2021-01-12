@@ -7,11 +7,6 @@ apply plugin: 'com.noveogroup.android.check'
 android {
     signingConfigs {
         release {
-//            storeFile file('/Users/a-blekot/weather-info-keystore.jks')
-//            storePassword 'superPSWD123!'
-//            keyAlias 'key0'
-//            keyPassword 'super123'
-
             def keystoreProperties = new Properties()
             def keystorePropsFile = file("keystore/keystore_config")
             storeFile file('/Users/a-blekot/PROG/PET/weatherapp/app/keystore/weather-info-keystore.jks')
