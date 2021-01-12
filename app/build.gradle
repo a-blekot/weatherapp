@@ -84,8 +84,8 @@ android {
     detekt {
         input = files("src/main/java")                          // The directories where detekt looks for input files. Defaults to `files("src/main/java", "src/main/kotlin")`.
         parallel = true                                         // Builds the AST in parallel. Rules are always executed in parallel. Can lead to speedups in larger projects. `false` by default.
-        filters = ".*build.*,.*/resources/.*,.*/tmp/.*"         // Regular expression of paths that should be excluded separated by `;` or `,`.
-//        config = files("$rootDir/config/detekt-config.yml")     // Define the detekt configuration(s) you want to use. Defaults to the default detekt configuration.
+//        filters = ".*build.*,.*/resources/.*,.*/tmp/.*"         // Regular expression of paths that should be excluded separated by `;` or `,`.
+        config = files("$rootDir/config/detekt-config.yml")     // Define the detekt configuration(s) you want to use. Defaults to the default detekt configuration.
 //        baseline = file("$rootDir/config/baseline.xml")         // a way of suppressing issues before introducing detekt
         reports {
             xml {

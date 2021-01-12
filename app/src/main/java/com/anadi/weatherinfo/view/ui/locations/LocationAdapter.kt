@@ -1,7 +1,10 @@
 package com.anadi.weatherinfo.view.ui.locations
 
 import android.content.Context
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.data.IconMap
@@ -37,7 +40,9 @@ class LocationAdapter(private val listener: OnLocationSelectedListener) : Recycl
         holder.bind(dataset[position])
     }
 
-    class LocationHolder(private val binding: LocationRowViewBinding, private val listener: OnLocationSelectedListener) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    class LocationHolder(
+            private val binding: LocationRowViewBinding, private val listener: OnLocationSelectedListener
+    ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         init {
             binding.layout.setOnClickListener(this)
         }

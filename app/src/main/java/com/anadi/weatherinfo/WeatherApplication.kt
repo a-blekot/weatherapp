@@ -11,6 +11,9 @@ import timber.log.Timber.DebugTree
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+@Suppress("MagicNumber")
+private const val UPDATE_INTERVAL_IN_MINUTES = 15L
+
 class WeatherApplication : Application(), HasAndroidInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
@@ -21,12 +24,17 @@ class WeatherApplication : Application(), HasAndroidInjector {
             Timber.plant(DebugTree())
         }
         val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-        val updateRequest = PeriodicWorkRequest.Builder(UpdateWorker::class.java, 5, TimeUnit.SECONDS).setConstraints(constraints)
-                .setInitialDelay(5, TimeUnit.SECONDS)
-                .addTag("update_request9")
+        val updateRequest = PeriodicWorkRequest.Builder(
+                UpdateWorker::class.java, UPDATE_INTERVAL_IN_MINUTES,
+                TimeUnit.MINUTES
+        ).setConstraints(constraints)
+                .setInitialDelay(UPDATE_INTERVAL_IN_MINUTES, TimeUnit.SECONDS)
+                .addTag("update_request10")
                 .build()
         WorkManager.getInstance(this)
-                .enqueueUniquePeriodicWork("com.anadi.weatherinfo.update_request9", ExistingPeriodicWorkPolicy.KEEP, updateRequest)
+                .enqueueUniquePeriodicWork(
+                        "com.anadi.weatherinfo.update_request10",
+                        ExistingPeriodicWorkPolicy.KEEP, updateRequest)
 
         Injector.INSTANCE.initialise(this)
     }

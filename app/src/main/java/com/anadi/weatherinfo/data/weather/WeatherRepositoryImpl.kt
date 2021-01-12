@@ -23,11 +23,11 @@ class WeatherRepositoryImpl @Inject constructor(
         val location = locationRepository.fetch(locationId) ?: return null
         val weather = weatherDao.fetch(location.id, weatherApi.provider.code)
 
-        if (weather != null && dataIsFresh(weather.downloadTimestamp)) {
-            return weather
+        return if (weather != null && dataIsFresh(weather.downloadTimestamp)) {
+             weather
+        } else {
+            update(location, weather)
         }
-
-        return update(location, weather)
     }
 
     override suspend fun fetchAllForLocation(id: Int): List<Weather> {

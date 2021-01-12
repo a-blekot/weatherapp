@@ -17,17 +17,22 @@ data class Coord(
 
             val checkedLon: Double
             @Suppress("LiftReturnOrAssignment")
-            if (lon.compareTo(-180.0) > 0 && lon.compareTo(180.0) < 0) {
+            if (lon in -PI_RADIAN..PI_RADIAN) {
                 checkedLon = lon
             } else {
-                checkedLon = ((lon - 180.0) % 360.0 + 360.0) % 360.0 - 180.0
+                checkedLon = ((lon - PI_RADIAN) % PI2_RADIAN + PI2_RADIAN) % PI2_RADIAN - PI_RADIAN
             }
 
-            val checkedLat: Double = max(-90.0, min(90.0, lat))
+            val checkedLat: Double = max(MIN_LAT, min(MAX_LAT, lat))
 
             return Coord(checkedLat, checkedLon)
         }
 
         fun from(coord: LatLng) = Coord(coord.latitude, coord.longitude)
+
+        const val PI2_RADIAN = 360.0
+        const val PI_RADIAN = 180.0
+        const val MIN_LAT = -90.0
+        const val MAX_LAT = -90.0
     }
 }

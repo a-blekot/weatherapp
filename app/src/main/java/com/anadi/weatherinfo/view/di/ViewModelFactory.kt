@@ -33,7 +33,9 @@ import javax.inject.Inject
 import javax.inject.Provider
 import kotlin.reflect.KClass
 
-class ViewModelFactory @Inject constructor(private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>) : ViewModelProvider.Factory {
+class ViewModelFactory @Inject constructor(
+        private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>
+) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -51,14 +53,20 @@ internal annotation class ViewModelKey(val value: KClass<out ViewModel>)
 class ViewModelModule {
 
     @Provides
-    fun getViewModelFactory(viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>): ViewModelProvider.Factory {
+    fun getViewModelFactory(
+            viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>
+    ): ViewModelProvider.Factory {
         return ViewModelFactory(viewModels)
     }
 
     @Provides
     @IntoMap
     @ViewModelKey(LocationsViewModel::class)
-    fun locationsViewModel(addLocationUseCase: AddLocationUseCase, placesWrapper: PlacesWrapper, locationRepository: LocationRepository): ViewModel {
+    fun locationsViewModel(
+            addLocationUseCase: AddLocationUseCase,
+            placesWrapper: PlacesWrapper,
+            locationRepository: LocationRepository
+    ): ViewModel {
         return LocationsViewModel(addLocationUseCase, placesWrapper, locationRepository)
     }
 
@@ -72,7 +80,10 @@ class ViewModelModule {
     @Provides
     @IntoMap
     @ViewModelKey(DetailsViewModel::class)
-    fun detailsViewModel(updateLocationUseCase: UpdateLocationUseCase, locationRepository: LocationRepository): ViewModel {
+    fun detailsViewModel(
+            updateLocationUseCase: UpdateLocationUseCase,
+            locationRepository: LocationRepository
+    ): ViewModel {
         return DetailsViewModel(updateLocationUseCase, locationRepository)
     }
 }

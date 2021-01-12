@@ -12,6 +12,7 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
+@Suppress("UtilityClassWithPublicConstructor")
 abstract class ApiModule {
 
     companion object {

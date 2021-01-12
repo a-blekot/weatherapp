@@ -36,11 +36,13 @@ object ResponseMapper {
                 temp = weatherbit.temp.toInt(),
                 tempFeelsLike = weatherbit.tempFeelsLike.toInt(),
                 windSpeed = weatherbit.windSpeed.toInt(),
-                windDegree = 360 - weatherbit.windDegree,
+                windDegree = PI2_RADIAN - weatherbit.windDegree,
                 pressure = weatherbit.pressure.toInt(),
                 humidity = weatherbit.humidity.toInt(),
                 clouds = weatherbit.clouds,
                 dataCalcTimestamp = weatherbit.dataCalcTimestamp,
         )
     }
+
+    const val PI2_RADIAN = 360
 }

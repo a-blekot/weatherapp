@@ -6,12 +6,12 @@ import com.anadi.weatherinfo.data.db.location.LocationDao
 import com.anadi.weatherinfo.data.db.weather.WeatherDao
 import com.anadi.weatherinfo.data.location.LocationRepositoryImpl
 import com.anadi.weatherinfo.data.network.WeatherApi
+import com.anadi.weatherinfo.data.weather.WeatherRepositoriesImpl
 import com.anadi.weatherinfo.data.weather.WeatherRepositoryImpl
 import com.anadi.weatherinfo.domain.location.LocationRepository
-import com.anadi.weatherinfo.domain.weather.WeatherRepositories
-import com.anadi.weatherinfo.data.weather.WeatherRepositoriesImpl
 import com.anadi.weatherinfo.domain.places.PlacesWrapper
 import com.anadi.weatherinfo.domain.places.PlacesWrapperImpl
+import com.anadi.weatherinfo.domain.weather.WeatherRepositories
 import com.anadi.weatherinfo.domain.weather.WeatherRepository
 import dagger.Module
 import dagger.Provides
@@ -19,6 +19,7 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
+@Suppress("UtilityClassWithPublicConstructor")
 abstract class DataModule {
 
     companion object {
@@ -56,21 +57,31 @@ abstract class DataModule {
         @Provides
         @Singleton
         @Named("OpenWeather")
-        fun provideOpenWeatherRepository(@Named("OpenWeather") weatherApi: WeatherApi, weatherDao: WeatherDao, locationRepository: LocationRepository): WeatherRepository {
+        fun provideOpenWeatherRepository(
+                @Named("OpenWeather") weatherApi: WeatherApi,
+                weatherDao: WeatherDao,
+                locationRepository: LocationRepository
+        ): WeatherRepository {
             return WeatherRepositoryImpl(weatherApi, weatherDao, locationRepository)
         }
 
         @Provides
         @Singleton
         @Named("Weatherbit")
-        fun provideWeatherbitRepository(@Named("Weatherbit") weatherApi: WeatherApi, weatherDao: WeatherDao, locationRepository: LocationRepository): WeatherRepository {
+        fun provideWeatherbitRepository(
+                @Named("Weatherbit") weatherApi: WeatherApi,
+                weatherDao: WeatherDao,
+                locationRepository: LocationRepository
+        ): WeatherRepository {
             return WeatherRepositoryImpl(weatherApi, weatherDao, locationRepository)
         }
 
         @Provides
         @Singleton
-        fun provideWeatherRepositories(@Named("OpenWeather") weatherbit: WeatherRepository,
-                                       @Named("Weatherbit") openweather: WeatherRepository): WeatherRepositories {
+        fun provideWeatherRepositories(
+                @Named("OpenWeather") weatherbit: WeatherRepository,
+                @Named("Weatherbit") openweather: WeatherRepository
+        ): WeatherRepositories {
             return WeatherRepositoriesImpl(weatherbit, openweather)
         }
     }

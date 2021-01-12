@@ -7,7 +7,7 @@ import javax.inject.Inject
 class UpdateLocationUseCase @Inject constructor(
         private val locationRepository: LocationRepository,
         private val weatherRepositories: WeatherRepositories
-): UseCase<Unit, UpdateLocationUseCase.Params>() {
+): UseCase<Unit, UpdateLocationUseCase.Params> {
 
     override suspend fun build(params: Params) {
         val location = locationRepository.fetch(params.locationId)

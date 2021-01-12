@@ -80,5 +80,4 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
         binding.pressure.text = getString(R.string.pressure, weather?.pressure ?: 0)
         binding.humidity.text = getString(R.string.humidity, weather?.humidity ?: 0)
     }
-
 }

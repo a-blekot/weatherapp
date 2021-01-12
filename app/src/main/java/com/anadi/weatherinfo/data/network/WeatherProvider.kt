@@ -1,5 +1,6 @@
 package com.anadi.weatherinfo.data.network
 
+@Suppress("MagicNumber")
 enum class WeatherProvider constructor(val code: Int, val providerName: String) {
     OPEN_WEATHER(1, "OpenWeather"),
     WEATHER_BIT(2, "Weatherbit"),

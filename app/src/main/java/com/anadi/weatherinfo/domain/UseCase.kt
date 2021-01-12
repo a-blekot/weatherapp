@@ -6,7 +6,6 @@ package com.anadi.weatherinfo.domain
  * in the application should implement this contract).
  *
  */
-abstract class UseCase<out T, in Params> {
-
-    internal abstract suspend fun build(params: Params): T
+interface UseCase<out T, in Params> {
+    suspend fun build(params: Params): T
 }

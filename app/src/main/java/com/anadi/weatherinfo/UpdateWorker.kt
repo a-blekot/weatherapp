@@ -21,18 +21,13 @@ class UpdateWorker(context: Context, workerParams: WorkerParameters) : Worker(co
 
     private fun sendNotification(id: Int) {
         val intent = Intent(applicationContext, UpdateReceiver::class.java)
-        //        Intent intent = new Intent(getApplicationContext(), com.anadi.weatherinfo.view.ui.details.DetailsActivity
-        //        .class);
         intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         intent.putExtra(UpdateReceiver.NOTIFICATION_ID, id)
-        //        intent.putExtra("id", 1);
         intent.action = UpdateReceiver.NOTIFICATION
 
-        // Create the PendingIntent
         val pendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT)
-        //        PendingIntent pendingIntent = PendingIntent.getActivity(
-        //                getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID).setSmallIcon(R.drawable.ic_update)
                 .setContentTitle("Weather Info")
                 .setContentText("Do you  want to update info?")
@@ -40,15 +35,9 @@ class UpdateWorker(context: Context, workerParams: WorkerParameters) : Worker(co
                 .setContentIntent(pendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         NotificationManagerCompat.from(applicationContext).notify(id, builder.build())
-
-        //        NotificationManager notificationManager = (NotificationManager)getApplicationContext().
-        //                getSystemService(Context.NOTIFICATION_SERVICE);
-        //        notificationManager.notify(id, builder.build());
     }
 
     private fun createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name: CharSequence = applicationContext.getString(R.string.channel_name)
             val description = applicationContext.getString(R.string.channel_description)

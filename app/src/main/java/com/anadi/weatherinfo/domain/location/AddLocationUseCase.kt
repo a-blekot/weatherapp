@@ -11,7 +11,7 @@ import kotlin.random.Random
 class AddLocationUseCase @Inject constructor(
         private val locationRepository: LocationRepository,
         private val weatherRepositories: WeatherRepositories
-) : UseCase<Unit, AddLocationUseCase.Params>() {
+) : UseCase<Unit, AddLocationUseCase.Params> {
 
     override suspend fun build(params: Params) {
         val location = Location(NO_ID, params.name, params.address, params.coord, params.utcOffsetMinutes)
