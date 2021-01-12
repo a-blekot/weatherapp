@@ -39,7 +39,7 @@ data class WeatherbitData(
         val uv: Float, // UV Index (0-11+)
 
         @SerializedName("solar_rad")
-        val solar_rad: Float,
+        val solarRad: Float,
 
         @SerializedName("ts")
         val dataCalcTimestamp: Long, // Last observation time (Unix timestamp)

@@ -28,6 +28,12 @@ jobs:
           ./gradlew test
           ./gradlew assembleDebug
 
+      - name: Upload Detekt results
+        uses: actions/upload-artifact@v2
+        with:
+          name: detekt-results
+          path: app/build/reports/detekt/detekt.html
+
       - name: Upload test results
         uses: actions/upload-artifact@v2
         with:

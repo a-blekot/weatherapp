@@ -82,17 +82,23 @@ android {
     }
 
     detekt {
+        input = files("src/main/java")                          // The directories where detekt looks for input files. Defaults to `files("src/main/java", "src/main/kotlin")`.
+        parallel = true                                         // Builds the AST in parallel. Rules are always executed in parallel. Can lead to speedups in larger projects. `false` by default.
+        filters = ".*build.*,.*/resources/.*,.*/tmp/.*"         // Regular expression of paths that should be excluded separated by `;` or `,`.
+//        config = files("$rootDir/config/detekt-config.yml")     // Define the detekt configuration(s) you want to use. Defaults to the default detekt configuration.
+//        baseline = file("$rootDir/config/baseline.xml")         // a way of suppressing issues before introducing detekt
+        reports {
+            xml {
+                enabled = true                                  // Enable/Disable XML report (default: true)
+                destination = file("build/reports/detekt.xml")  // Path where XML report will be stored (default: `build/reports/detekt/detekt.xml`)
+            }
+            html {
+                enabled = true                                  // Enable/Disable HTML report (default: true)
+                destination = file("build/reports/detekt.html") // Path where HTML report will be stored (default: `build/reports/detekt/detekt.html`)
+            }
+        }
         failFast = true // fail build on any finding
         buildUponDefaultConfig = true // preconfigure defaults
-//        config = files("$projectDir/config/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
-//        baseline = file("$projectDir/config/baseline.xml") // a way of suppressing issues before introducing detekt
-
-        reports {
-            html.enabled = true // observe findings in your browser with structure and code snippets
-            xml.enabled = true // checkstyle like format mainly for integrations like Jenkins
-            txt.enabled = true // similar to the console output, contains issue signature to manually edit baseline files
-            sarif.enabled = true // SARIF integration (https://sarifweb.azurewebsites.net/) for integrations with Github
-        }
     }
 
     task("checkAll") {
@@ -119,6 +125,7 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.3.0'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
