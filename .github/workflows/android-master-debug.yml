@@ -23,6 +23,7 @@ jobs:
 
       - name: Test
         run: |
+          ./gradlew lintDebug
           ./gradlew test
           ./gradlew assembleDebug
 

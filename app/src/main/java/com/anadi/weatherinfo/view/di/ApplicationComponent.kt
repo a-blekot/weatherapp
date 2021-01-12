@@ -1,7 +1,6 @@
 package com.anadi.weatherinfo.view.di
 
 import com.anadi.weatherinfo.WeatherApplication
-import com.anadi.weatherinfo.view.ui.addlocation.AddLocationFragment
 import com.anadi.weatherinfo.view.ui.details.DetailsFragment
 import com.anadi.weatherinfo.view.ui.locations.LocationsFragment
 import dagger.BindsInstance
@@ -27,6 +26,5 @@ interface ApplicationComponent {
 
     fun inject(application: WeatherApplication)
     fun inject(locationsFragment: LocationsFragment)
-    fun inject(addLocationFragment: AddLocationFragment)
     fun inject(detailsFragment: DetailsFragment)
 }

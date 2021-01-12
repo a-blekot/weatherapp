@@ -1,6 +1,5 @@
 package com.anadi.weatherinfo.data.weather
 
-import com.anadi.weatherinfo.data.db.BaseDao
 import com.anadi.weatherinfo.data.db.BaseDao.Companion.NO_ID
 import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.data.network.WeatherProvider

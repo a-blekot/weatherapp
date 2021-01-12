@@ -22,7 +22,6 @@ import com.anadi.weatherinfo.domain.location.AddLocationUseCase
 import com.anadi.weatherinfo.domain.location.LocationRepository
 import com.anadi.weatherinfo.domain.location.UpdateLocationUseCase
 import com.anadi.weatherinfo.domain.places.PlacesWrapper
-import com.anadi.weatherinfo.view.ui.addlocation.AddLocationViewModel
 import com.anadi.weatherinfo.view.ui.details.DetailsViewModel
 import com.anadi.weatherinfo.view.ui.locations.LocationsViewModel
 import com.anadi.weatherinfo.view.ui.providers.ProvidersViewModel
@@ -75,12 +74,5 @@ class ViewModelModule {
     @ViewModelKey(DetailsViewModel::class)
     fun detailsViewModel(updateLocationUseCase: UpdateLocationUseCase, locationRepository: LocationRepository): ViewModel {
         return DetailsViewModel(updateLocationUseCase, locationRepository)
-    }
-
-    @Provides
-    @IntoMap
-    @ViewModelKey(AddLocationViewModel::class)
-    fun addLocationViewModel(addLocationUseCase: AddLocationUseCase, locationRepository: LocationRepository): ViewModel {
-        return AddLocationViewModel(addLocationUseCase, locationRepository)
     }
 }

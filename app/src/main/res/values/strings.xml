@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">WeatherApp</string>
-    <string name="country_spinner_title">Select country…</string>
-    <string name="city_spiner_title">Select city…</string>
     <string name="on_error_select_city">Wrong location, please select again</string>
     <string name="on_error_load_location">Error occurred while loading location, please select again</string>
     <string name="add_location_already_added">Location already added!</string>
@@ -24,7 +22,7 @@
     <string name="weather_icon_description">Weather icon</string>
     <string name="wind_degree_description">Wind degree</string>
     <string name="timezone" translatable="false">GMT %1$s%2$02d:%3$02d</string>
-    <string name="bacground_picture">Bacground picture</string>
+    <string name="background_picture">Background picture</string>
     <string name="action_settings">Settings</string>
     <string name="action_order">Order</string>
     <string name="order_message" translatable="false">You have ordered something</string>

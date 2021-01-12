@@ -15,12 +15,8 @@ import com.anadi.weatherinfo.data.IconMap
 import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.databinding.LocationsFragmentBinding
 import com.anadi.weatherinfo.view.ui.BaseFragment
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import es.dmoral.toasty.Toasty
 import timber.log.Timber
 import javax.inject.Inject

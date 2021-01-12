@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="IconMissingDensityFolder" severity="ignore" />
+
+    <issue id="HardcodedText" severity="error" />
+
+    <issue id="EnforceUTF8">
+        <ignore path="keystore/weather-info-keystore.jks" />
+    </issue>
+
+    <issue id="UnusedResources" severity="ignore" />
+
+</lint>
+
+<!--    @SuppressLint("ParserError")-->
+<!--    @SuppressLint("NewApi")-->
+<!--    @SuppressLint("all")-->
+
+<!--    tools:ignore="UnusedResources"-->
+<!--    tools:ignore="NewApi,StringFormatInvalid"-->
+<!--    tools:ignore="all"-->

@@ -16,6 +16,7 @@ data class Coord(
         operator fun invoke(lat: Double, lon: Double): Coord {
 
             val checkedLon: Double
+            @Suppress("LiftReturnOrAssignment")
             if (lon.compareTo(-180.0) > 0 && lon.compareTo(180.0) < 0) {
                 checkedLon = lon
             } else {

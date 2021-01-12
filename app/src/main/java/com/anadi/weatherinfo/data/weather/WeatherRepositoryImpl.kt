@@ -53,7 +53,7 @@ class WeatherRepositoryImpl @Inject constructor(
     }
 
     private fun dataIsFresh(timestamp: Long): Boolean {
-        return timestamp.compareTo(System.currentTimeMillis() - ONE_HOUR) > 0
+        return timestamp > System.currentTimeMillis() - ONE_HOUR
     }
 
     private suspend fun getWeatherResponse(coord: Coord): WeatherResponse {

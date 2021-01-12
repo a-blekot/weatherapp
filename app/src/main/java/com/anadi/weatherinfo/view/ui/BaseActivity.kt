@@ -3,8 +3,6 @@ package com.anadi.weatherinfo.view.ui
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import com.anadi.weatherinfo.R
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -23,13 +21,6 @@ abstract class BaseActivity : AppCompatActivity(), HasAndroidInjector {
 
     override fun androidInjector(): AndroidInjector<Any> {
         return androidInjector
-    }
-
-    protected fun setToolBar(toolBar: Toolbar, title: String) {
-        setSupportActionBar(toolBar)
-        supportActionBar?.title = title
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_check)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

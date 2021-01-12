@@ -152,7 +152,6 @@ class DatabaseTest {
 
     private fun kievLocationEmptyId() = Location(NO_ID, KIEV_NAME, KIEV_ADDRESS, KIEV_COORD, KIEV_UTC_OFFSET)
 
-    private fun londonLocationEmptyId() = londonLocationWithId(NO_ID)
     private fun londonLocationWithId(id: Int) = Location(id, LONDON_NAME, LONDON_ADDRESS, LONDON_COORD, LONDON_UTC_OFFSET)
 
     private fun assertKievLocation(location: Location?) {
