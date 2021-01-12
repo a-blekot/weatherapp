@@ -58,4 +58,9 @@ jobs:
       - name: Run Instrumentation Tests in Firebase Test Lab
         run: |
           gcloud firebase test android models list
-          gcloud firebase test android run --type instrumentation --use-orchestrator --app app-debug/app-debug.apk --test app-debug-androidTest/app-debug-androidTest.apk --device model=Pixel2,version=28,locale=en,orientation=portrait
+          gcloud firebase test android run --type instrumentation --use-orchestrator \
+          --app app-debug/app-debug.apk --test app-debug-androidTest/app-debug-androidTest.apk \
+          --device model=Pixel2,version=28,locale=en,orientation=portrait
+#          --device model=Nexus6P,version=25,orientation=portrait,locale=en_US \
+#          --device model=athene,version=23,orientation=portrait,locale=en_US \
+#          --device model=sailfish,version=26,orientation=portrait,locale=en_US

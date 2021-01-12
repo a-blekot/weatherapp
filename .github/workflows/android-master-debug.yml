@@ -21,8 +21,9 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Test
+      - name: Detekt, Lint, Test, build
         run: |
+          ./gradlew checkAll
           ./gradlew lintDebug
           ./gradlew test
           ./gradlew assembleDebug

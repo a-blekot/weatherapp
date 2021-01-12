@@ -1,8 +1,11 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'androidx.navigation.safeargs'
-apply plugin: 'com.noveogroup.android.check'
+plugins {
+    id("com.android.application")
+    id("kotlin-android")
+    id("kotlin-kapt")
+    id("androidx.navigation.safeargs")
+    id("com.noveogroup.android.check")
+    id("io.gitlab.arturbosch.detekt").version("1.15.0")
+}
 
 android {
     signingConfigs {
@@ -76,6 +79,26 @@ android {
         htmlOutput file("$project.buildDir/outputs/lint/lint.html")
         warningsAsErrors true
         xmlReport false
+    }
+
+    detekt {
+        failFast = true // fail build on any finding
+        buildUponDefaultConfig = true // preconfigure defaults
+//        config = files("$projectDir/config/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
+//        baseline = file("$projectDir/config/baseline.xml") // a way of suppressing issues before introducing detekt
+
+        reports {
+            html.enabled = true // observe findings in your browser with structure and code snippets
+            xml.enabled = true // checkstyle like format mainly for integrations like Jenkins
+            txt.enabled = true // similar to the console output, contains issue signature to manually edit baseline files
+            sarif.enabled = true // SARIF integration (https://sarifweb.azurewebsites.net/) for integrations with Github
+        }
+    }
+
+    task("checkAll") {
+        group "Verify"
+        description "Runs kotlin static checks on the build"
+        dependsOn "detekt"
     }
 }
 
