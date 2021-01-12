@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:targetApi="n">
+        tools:targetApi="n"
+        android:fullBackupContent="@xml/backup_descriptor">
 
         <activity
             android:name="com.anadi.weatherinfo.view.ui.mainactivity.MainActivity"

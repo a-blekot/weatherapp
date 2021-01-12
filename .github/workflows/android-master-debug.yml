@@ -32,7 +32,13 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: detekt-results
-          path: app/build/reports/detekt/detekt.html
+          path: app/build/reports/detekt.html
+
+      - name: Upload Lint results
+        uses: actions/upload-artifact@v2
+        with:
+          name: detekt-results
+          path: app/build/outputs/lint/lint.html
 
       - name: Upload test results
         uses: actions/upload-artifact@v2
