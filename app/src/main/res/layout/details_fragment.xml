@@ -9,15 +9,16 @@
 
     <ImageView
         android:id="@+id/weather_icon"
+        android:scaleType="fitCenter"
         android:layout_width="@dimen/adaptive"
         android:layout_height="@dimen/adaptive"
         android:layout_marginTop="@dimen/margin_small"
         android:contentDescription="@string/weather_icon_description"
-        android:src="@drawable/s01d"
         app:layout_constraintBottom_toTopOf="@+id/temp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/s01d" />
 
     <TextView
         android:id="@+id/temp"
@@ -40,9 +41,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small"
+        android:background="@drawable/round_frame"
         android:contentDescription="@string/wind_degree_description"
         android:rotation="45"
-        android:background="@drawable/round_frame"
         android:src="@drawable/wind_degree"
         app:layout_constraintBottom_toBottomOf="@+id/wind"
         app:layout_constraintStart_toEndOf="@+id/wind"
@@ -52,6 +53,7 @@
         android:id="@+id/pressure"
         style="@style/details_info"
         android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toTopOf="@id/humidity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wind"
         tools:text="Presure: 1020 hPa" />
@@ -59,6 +61,7 @@
     <TextView
         android:id="@+id/humidity"
         style="@style/details_info"
+        app:layout_constraintBottom_toTopOf="@id/location_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pressure"
         tools:text="Humidity: 52%" />
@@ -68,6 +71,7 @@
         style="@style/details_name"
         app:layout_constraintBottom_toTopOf="@id/update_button"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/humidity"
         tools:text="Sun Francisco, USA" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -20,15 +20,18 @@ class UpdateWorker(context: Context, workerParams: WorkerParameters) : Worker(co
     }
 
     private fun sendNotification(id: Int) {
-        val intent = Intent(applicationContext, UpdateReceiver::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
-        intent.putExtra(UpdateReceiver.NOTIFICATION_ID, id)
-        intent.action = UpdateReceiver.NOTIFICATION
+        val intent = Intent(applicationContext, UpdateReceiver::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            action = UpdateReceiver.NOTIFICATION
+            putExtra(UpdateReceiver.NOTIFICATION_ID, id)
+        }
 
-        val pendingIntent = PendingIntent.getBroadcast(applicationContext, 0, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getBroadcast(
+                applicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
-        val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID).setSmallIcon(R.drawable.ic_update)
+        val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_update)
                 .setContentTitle("Weather Info")
                 .setContentText("Do you  want to update info?")
                 .addAction(R.drawable.ic_update, "Ok", pendingIntent) // #0

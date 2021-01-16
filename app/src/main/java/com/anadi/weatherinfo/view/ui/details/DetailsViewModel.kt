@@ -15,8 +15,9 @@ import timber.log.Timber
 import javax.inject.Inject
 import kotlin.system.measureTimeMillis
 
-class DetailsViewModel @Inject constructor(private val updateLocationUseCase: UpdateLocationUseCase,
-                                           private val locationRepository: LocationRepository) : ViewModel() {
+class DetailsViewModel @Inject constructor(
+        private val updateLocationUseCase: UpdateLocationUseCase, private val locationRepository: LocationRepository
+) : ViewModel() {
     var locationId: Int = 0
     var providerId: Int = 0
 

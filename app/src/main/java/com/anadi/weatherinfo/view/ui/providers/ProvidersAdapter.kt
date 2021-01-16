@@ -1,12 +1,14 @@
 package com.anadi.weatherinfo.view.ui.providers
 
 import android.content.Context
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.anadi.weatherinfo.R
-import com.anadi.weatherinfo.data.IconMap
 import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.data.network.WeatherProvider
+import com.anadi.weatherinfo.data.weather.WeatherCodes
 import com.anadi.weatherinfo.databinding.ProviderViewBinding
 
 class ProvidersAdapter(private val listener: Listener) : RecyclerView.Adapter<ProvidersAdapter.ProviderHolder>() {
@@ -35,8 +37,10 @@ class ProvidersAdapter(private val listener: Listener) : RecyclerView.Adapter<Pr
         holder.bind(dataset[position])
     }
 
-    class ProviderHolder(private val binding: ProviderViewBinding, private val listener: Listener) :
-            RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    class ProviderHolder(
+            private val binding: ProviderViewBinding,
+            private val listener: Listener
+    ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
         private lateinit var weather: Weather
 
@@ -50,7 +54,7 @@ class ProvidersAdapter(private val listener: Listener) : RecyclerView.Adapter<Pr
             binding.providerName.text = WeatherProvider.fromCode(weather.providerId).providerName
             binding.lastUpdateTime.text = weather.dataCalcTimestamp.toString() // TODO timestamp convert to date
 
-            binding.icon.setImageResource(IconMap.getIconId("01d"))
+            binding.icon.setImageResource(WeatherCodes.fromCode(weather.code).iconDay)
             binding.description.text = weather.code.toString() // TODO convert weather code to string
 
             binding.temp.text = context.getString(R.string.temp_short_celsium, weather.temp)

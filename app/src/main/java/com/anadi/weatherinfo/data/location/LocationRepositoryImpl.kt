@@ -29,14 +29,15 @@ class LocationRepositoryImpl @Inject constructor(
         return locationDao.getLocationWithWeathers(id)
     }
 
-    override suspend fun add(obj: Location): Int {
-        return locationDao.insert(obj).toInt()
+    override suspend fun add(obj: Location): Location {
+        locationDao.insert(obj)
+        return locationDao.last()!!
     }
 
     override suspend fun delete(obj: Location) {
         locationDao.delete(obj)
     }
-    
+
     override suspend fun update(obj: Location) {
         locationDao.update(obj)
     }

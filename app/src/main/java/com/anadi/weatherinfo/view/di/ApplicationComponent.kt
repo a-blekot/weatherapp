@@ -8,20 +8,26 @@ import dagger.Component
 import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
-@Component(modules = [
-    ApplicationModule::class,
-    DataModule::class,
-    ApiModule::class,
-    NetworkModule::class,
-    ViewModelModule::class,
-    AndroidInjectionModule::class,
-    ActivityBuilder::class])
+@Component(
+        modules = [
+            ApplicationModule::class,
+            DataModule::class,
+            ApiModule::class,
+            NetworkModule::class,
+            ViewModelModule::class,
+            AndroidInjectionModule::class,
+            ActivityBuilder::class
+        ]
+)
 @Singleton
 interface ApplicationComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance application: WeatherApplication): ApplicationComponent
+        fun create(
+                @BindsInstance
+                application: WeatherApplication
+        ): ApplicationComponent
     }
 
     fun inject(application: WeatherApplication)

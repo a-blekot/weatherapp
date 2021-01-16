@@ -7,8 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
-import com.anadi.weatherinfo.data.IconMap
 import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
+import com.anadi.weatherinfo.data.weather.WeatherCodes
 import com.anadi.weatherinfo.databinding.DetailsFragmentBinding
 import com.anadi.weatherinfo.utils.Resource
 import com.anadi.weatherinfo.utils.Status
@@ -68,11 +68,9 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
         }
 
         val location = data.location
-        val weather = data.weathers
-                .filter { it.providerId == viewModel.providerId }
-                .getOrNull(0)
+        val weather = data.weathers.filter { it.providerId == viewModel.providerId }.getOrNull(0)
 
-        binding.weatherIcon.setImageResource(IconMap.getIconId("01d"))
+        binding.weatherIcon.setImageResource(WeatherCodes.fromCode(weather?.code ?: 0).iconDay)
         binding.windIcon.rotation = weather?.windDegree?.toFloat() ?: 0F
         binding.locationName.text = location.name
         binding.temp.text = getString(R.string.temp_celsium, weather?.temp ?: 0)

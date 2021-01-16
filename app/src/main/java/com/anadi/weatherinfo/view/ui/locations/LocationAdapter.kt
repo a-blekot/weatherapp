@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.anadi.weatherinfo.R
-import com.anadi.weatherinfo.data.IconMap
 import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
+import com.anadi.weatherinfo.data.weather.WeatherCodes
 import com.anadi.weatherinfo.databinding.LocationRowViewBinding
 import com.anadi.weatherinfo.view.ui.locations.LocationAdapter.LocationHolder
 
@@ -51,7 +51,7 @@ class LocationAdapter(private val listener: OnLocationSelectedListener) : Recycl
             val location = data.location
             val weather = data.weathers.getOrNull(0)
 
-            binding.icon.setImageResource(IconMap.getIconId("01d"))
+            binding.icon.setImageResource(WeatherCodes.fromCode(weather?.code ?: 0).iconDay)
             binding.name.text = location.name
 
             binding.temp.text = context.getString(R.string.temp_short_celsium, weather?.temp ?: 0)

@@ -10,14 +10,14 @@ data class Coord(
         val lat: Double,
 
         @ColumnInfo(name = "lon")
-        val lon: Double) {
+        val lon: Double
+) {
 
     companion object {
         operator fun invoke(lat: Double, lon: Double): Coord {
 
             val checkedLon: Double
-            @Suppress("LiftReturnOrAssignment")
-            if (lon in -PI_RADIAN..PI_RADIAN) {
+            @Suppress("LiftReturnOrAssignment") if (lon in -PI_RADIAN..PI_RADIAN) {
                 checkedLon = lon
             } else {
                 checkedLon = ((lon - PI_RADIAN) % PI2_RADIAN + PI2_RADIAN) % PI2_RADIAN - PI_RADIAN

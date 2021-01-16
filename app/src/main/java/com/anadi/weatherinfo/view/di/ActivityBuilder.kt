@@ -10,10 +10,10 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBuilder {
 
-    @ContributesAndroidInjector(modules = [
-        LocationsFragmentProvider::class,
-        ProvidersFragmentProvider::class,
-        DetailsFragmentProvider::class]
+    @ContributesAndroidInjector(
+            modules = [LocationsFragmentProvider::class,
+                ProvidersFragmentProvider::class,
+                DetailsFragmentProvider::class]
     )
     internal abstract fun bindMainActivity(): MainActivity
 }

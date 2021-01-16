@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import com.anadi.weatherinfo.domain.location.AddLocationUseCase
+import com.anadi.weatherinfo.domain.location.UpdateAllLocationsUseCase
 import com.anadi.weatherinfo.utils.WeatherException
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.GlobalScope
@@ -12,7 +12,9 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-class UpdateReceiver @Inject constructor(private val addLocationUseCase: AddLocationUseCase) : BroadcastReceiver() {
+class UpdateReceiver @Inject constructor(
+        private val updateAllLocationsUseCase: UpdateAllLocationsUseCase
+) : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         //        String intentAction = intent.getAction();
@@ -22,7 +24,18 @@ class UpdateReceiver @Inject constructor(private val addLocationUseCase: AddLoca
 
             GlobalScope.launch {
                 try {
-                    addLocationUseCase.build(AddLocationUseCase.Params.random())
+                    updateAllLocationsUseCase.build(null)
+
+                    val intent = Intent().apply {
+                        setClassName(
+                                "com.anadi.weatherinfo",
+                                "com.anadi.weatherinfo.view.ui.mainactivity.MainActivity"
+                        )
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+
+                    context.startActivity(intent)
+
                 } catch (e: WeatherException) {
                     Timber.e(e)
                 }

@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
-import com.anadi.weatherinfo.data.IconMap
 import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.databinding.LocationsFragmentBinding
 import com.anadi.weatherinfo.view.ui.BaseFragment
@@ -32,12 +31,16 @@ class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAda
 
     private lateinit var adapter: LocationAdapter
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         // Get the viewModel
         viewModel = ViewModelProvider(this, viewModelFactory).get(LocationsViewModel::class.java)
-        IconMap.init(requireContext())
+        viewModel.updateLocations()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         adapter = LocationAdapter(this)
         binding.recyclerView.adapter = adapter
@@ -48,6 +51,11 @@ class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAda
             startActivityForResult(viewModel.placesIntent, AUTOCOMPLETE_REQUEST_CODE)
             // findNavController().navigate(LocationsFragmentDirections.actionLocationsToAddLocation())
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadLocations()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -61,7 +69,6 @@ class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAda
             val coord = place.latLng!!
 
             Toasty.success(requireContext(), "Coordinates: $coord", Toast.LENGTH_LONG).show()
-            Timber.i("Coordinates: $coord")
 
             viewModel.addLocation(place)
 
@@ -70,11 +77,6 @@ class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAda
             Toasty.error(requireContext(), "Error: " + status.statusMessage, Toast.LENGTH_LONG).show()
             Timber.e(status.statusMessage)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadLocations()
     }
 
     override fun onSelected(location: Location) {

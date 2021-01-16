@@ -6,11 +6,10 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import javax.inject.Inject
 
-class PlacesWrapperImpl @Inject constructor(val context: Context): PlacesWrapper {
+class PlacesWrapperImpl @Inject constructor(val context: Context) : PlacesWrapper {
 
     override fun createActivityIntent(): Intent {
 
@@ -19,10 +18,8 @@ class PlacesWrapperImpl @Inject constructor(val context: Context): PlacesWrapper
         }
 
         val fields = listOf(
-                Place.Field.NAME,
-                Place.Field.ADDRESS,
-                Place.Field.LAT_LNG,
-                Place.Field.UTC_OFFSET,)
+                Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.UTC_OFFSET,
+        )
         return Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
                 .setTypeFilter(TypeFilter.CITIES)
                 .build(context)

@@ -58,29 +58,31 @@ abstract class DataModule {
         @Singleton
         @Named("OpenWeather")
         fun provideOpenWeatherRepository(
-                @Named("OpenWeather") weatherApi: WeatherApi,
-                weatherDao: WeatherDao,
-                locationRepository: LocationRepository
+                context: Context,
+                @Named("OpenWeather")
+                weatherApi: WeatherApi, weatherDao: WeatherDao
         ): WeatherRepository {
-            return WeatherRepositoryImpl(weatherApi, weatherDao, locationRepository)
+            return WeatherRepositoryImpl(context, weatherApi, weatherDao)
         }
 
         @Provides
         @Singleton
         @Named("Weatherbit")
         fun provideWeatherbitRepository(
-                @Named("Weatherbit") weatherApi: WeatherApi,
-                weatherDao: WeatherDao,
-                locationRepository: LocationRepository
+                context: Context,
+                @Named("Weatherbit")
+                weatherApi: WeatherApi, weatherDao: WeatherDao
         ): WeatherRepository {
-            return WeatherRepositoryImpl(weatherApi, weatherDao, locationRepository)
+            return WeatherRepositoryImpl(context, weatherApi, weatherDao)
         }
 
         @Provides
         @Singleton
         fun provideWeatherRepositories(
-                @Named("OpenWeather") weatherbit: WeatherRepository,
-                @Named("Weatherbit") openweather: WeatherRepository
+                @Named("OpenWeather")
+                weatherbit: WeatherRepository,
+                @Named("Weatherbit")
+                openweather: WeatherRepository
         ): WeatherRepositories {
             return WeatherRepositoriesImpl(weatherbit, openweather)
         }

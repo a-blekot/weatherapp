@@ -5,14 +5,9 @@ data class WeatherResponse(
 
         val code: Int,
 
-        val temp: Int,
-        val tempFeelsLike: Int,
+        val temp: Int, val tempFeelsLike: Int,
 
-        val windSpeed: Int,
-        val windDegree: Int,
+        val windSpeed: Int, val windDegree: Int,
 
-        val pressure: Int,
-        val humidity: Int,
-        val clouds: Int,
-        val dataCalcTimestamp: Long
+        val pressure: Int, val humidity: Int, val clouds: Int, val dataCalcTimestamp: Long
 )

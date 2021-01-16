@@ -5,7 +5,7 @@ interface BaseRepository<T> {
 
     suspend fun fetch(id: Int): T?
 
-    suspend fun add(obj: T): Int
+    suspend fun add(obj: T): T
 
     suspend fun delete(obj: T)
 

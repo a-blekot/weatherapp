@@ -16,8 +16,11 @@
 
     <ImageView
         android:id="@+id/icon"
-        style="@style/row_info"
+        android:layout_width="@dimen/weather_icon_small"
+        android:layout_height="@dimen/weather_icon_small"
+        android:layout_gravity="center_vertical"
         android:contentDescription="@string/weather_icon_description"
+        android:scaleType="centerCrop"
         tools:src="@drawable/s01d" />
 
     <TextView

@@ -1,30 +1,30 @@
 package com.anadi.weatherinfo.data.weather
 
+import android.content.Context
 import com.anadi.weatherinfo.data.db.location.Coord
 import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.data.db.weather.WeatherDao
 import com.anadi.weatherinfo.data.network.WeatherApi
 import com.anadi.weatherinfo.data.network.WeatherResponse
-import com.anadi.weatherinfo.domain.location.LocationRepository
 import com.anadi.weatherinfo.domain.weather.WeatherRepository
+import es.dmoral.toasty.Toasty
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions")
 class WeatherRepositoryImpl @Inject constructor(
-        private val weatherApi: WeatherApi,
-        private val weatherDao: WeatherDao,
-        private val locationRepository: LocationRepository) : WeatherRepository {
+        private val context: Context, private val weatherApi: WeatherApi, private val weatherDao: WeatherDao
+) : WeatherRepository {
 
     override suspend fun fetchAll(): List<Weather> {
         return weatherDao.fetchAll()
     }
 
-    override suspend fun fetch(locationId: Int): Weather? {
-        val location = locationRepository.fetch(locationId) ?: return null
+    override suspend fun fetch(location: Location): Weather? {
         val weather = weatherDao.fetch(location.id, weatherApi.provider.code)
 
         return if (weather != null && dataIsFresh(weather.downloadTimestamp)) {
-             weather
+            weather
         } else {
             update(location, weather)
         }
@@ -43,8 +43,16 @@ class WeatherRepositoryImpl @Inject constructor(
         update(location, weather)
     }
 
+    override suspend fun checkForUpdate() {
+        weatherDao.fetchAll()
+    }
+
     private suspend fun update(location: Location, weather: Weather?): Weather {
         val response = getWeatherResponse(location.coord)
+        Toasty.success(
+                context, "Weather loaded from ${weatherApi.provider.providerName}", Toasty.LENGTH_LONG
+        ).show()
+
         return addOrUpdate(location.id, weather, response)
     }
 
@@ -53,7 +61,8 @@ class WeatherRepositoryImpl @Inject constructor(
     }
 
     private fun dataIsFresh(timestamp: Long): Boolean {
-        return timestamp > System.currentTimeMillis() - ONE_HOUR
+        val current = System.currentTimeMillis()
+        return timestamp > current - ONE_HOUR
     }
 
     private suspend fun getWeatherResponse(coord: Coord): WeatherResponse {

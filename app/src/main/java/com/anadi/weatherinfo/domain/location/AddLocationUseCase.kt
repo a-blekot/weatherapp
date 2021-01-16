@@ -9,22 +9,20 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 class AddLocationUseCase @Inject constructor(
-        private val locationRepository: LocationRepository,
-        private val weatherRepositories: WeatherRepositories
+        private val locationRepository: LocationRepository, private val weatherRepositories: WeatherRepositories
 ) : UseCase<Unit, AddLocationUseCase.Params> {
 
     override suspend fun build(params: Params) {
-        val location = Location(NO_ID, params.name, params.address, params.coord, params.utcOffsetMinutes)
-
-        val id = locationRepository.add(location)
-        weatherRepositories.fetch(id)
+        val location = locationRepository.add(
+                Location(
+                        NO_ID, params.name, params.address, params.coord, params.utcOffsetMinutes
+                )
+        )
+        weatherRepositories.fetch(location)
     }
 
     class Params(
-            val name: String,
-            val address: String,
-            val coord: Coord,
-            val utcOffsetMinutes: Int
+            val name: String, val address: String, val coord: Coord, val utcOffsetMinutes: Int
     ) {
 
         companion object {
@@ -40,15 +38,11 @@ class AddLocationUseCase @Inject constructor(
             private val rand = Random(System.currentTimeMillis())
 
             fun random() = Params(
-                    name = "",
-                    address = "",
-                    coord = randomCoord(),
-                    utcOffsetMinutes = randomOffset()
+                    name = "", address = "", coord = randomCoord(), utcOffsetMinutes = randomOffset()
             )
 
             private fun randomCoord() = Coord(
-                    rand.nextInt(MIN_LAT, MAX_LAT).toDouble(),
-                    rand.nextInt(MIN_LON, MAX_LON).toDouble()
+                    rand.nextInt(MIN_LAT, MAX_LAT).toDouble(), rand.nextInt(MIN_LON, MAX_LON).toDouble()
             )
 
             private fun randomOffset() = MINUTES_IN_HOUR * rand.nextInt(MIN_UTC_OFFSET, MAX_UTC_OFFSET)

@@ -10,9 +10,7 @@ import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.data.db.weather.WeatherDao
 
 @Database(
-        entities = [Location::class, Weather::class],
-        version = 2,
-        exportSchema = false
+        entities = [Location::class, Weather::class], version = 2, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -22,16 +20,17 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
 
-        @Volatile private var INSTANCE: AppDatabase? = null
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context): AppDatabase =
-                INSTANCE ?: synchronized(this) {
-                    INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
-                }
+        fun getInstance(context: Context): AppDatabase = INSTANCE ?: synchronized(this) {
+            INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
+        }
 
-        private fun buildDatabase(context: Context) =
-                Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "Sample.db")
-                        .fallbackToDestructiveMigration()
-                        .build()
+        private fun buildDatabase(context: Context) = Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java,
+                "Sample.db"
+        ).fallbackToDestructiveMigration().build()
     }
 }

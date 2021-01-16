@@ -8,14 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
-import com.anadi.weatherinfo.data.IconMap
 import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
 import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.data.network.WeatherProvider
+import com.anadi.weatherinfo.data.weather.WeatherCodes
 import com.anadi.weatherinfo.databinding.ProvidersFragmentBinding
-import com.anadi.weatherinfo.view.ui.BaseFragment
 import com.anadi.weatherinfo.utils.Resource
 import com.anadi.weatherinfo.utils.Status
+import com.anadi.weatherinfo.view.ui.BaseFragment
 import com.anadi.weatherinfo.view.ui.details.DetailsFragmentArgs
 import es.dmoral.toasty.Toasty
 import timber.log.Timber
@@ -87,7 +87,7 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
             providerName.text = WeatherProvider.fromCode(weather.providerId).providerName
             lastUpdateTime.text = weather.dataCalcTimestamp.toString() // TODO timestamp convert to date
 
-            icon.setImageResource(IconMap.getIconId("01d"))
+            icon.setImageResource(WeatherCodes.fromCode(weather.code).iconDay)
             description.text = weather.code.toString() // TODO convert weather code to string
 
             temp.text = requireContext().getString(R.string.temp_short_celsium, weather.temp)

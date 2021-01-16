@@ -19,7 +19,7 @@ class ProvidersViewModel @Inject constructor(private val locationRepository: Loc
     var id: Int = 0
 
     private val _details: MutableLiveData<Resource<LocationWithWeathers>> = MutableLiveData()
-    val details : LiveData<Resource<LocationWithWeathers>>
+    val details: LiveData<Resource<LocationWithWeathers>>
         get() = _details
 
     private val _mergedWeather: MutableLiveData<Weather> = MutableLiveData()
@@ -47,7 +47,6 @@ class ProvidersViewModel @Inject constructor(private val locationRepository: Loc
             }
         }
     }
-
 
 
     override fun onCleared() {

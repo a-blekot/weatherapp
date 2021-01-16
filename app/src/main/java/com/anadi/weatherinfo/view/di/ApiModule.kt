@@ -19,27 +19,33 @@ abstract class ApiModule {
 
         @Provides
         @Singleton
-        fun provideOpenWeatherAPI(@Named("OpenWeather") retrofit: Retrofit): OpenWeatherApi {
+        fun provideOpenWeatherAPI(
+                @Named("OpenWeather")
+                retrofit: Retrofit
+        ): OpenWeatherApi {
             return retrofit.create(OpenWeatherApi::class.java)
         }
 
         @Provides
         @Singleton
-        fun provideWeatherbitAPI(@Named("Weatherbit") retrofit: Retrofit): WeatherbitApi {
+        fun provideWeatherbitAPI(
+                @Named("Weatherbit")
+                retrofit: Retrofit
+        ): WeatherbitApi {
             return retrofit.create(WeatherbitApi::class.java)
         }
 
         @Provides
         @Singleton
         @Named("OpenWeather")
-        fun provideOpenWeatherApiFacade(openWeatherApi: OpenWeatherApi): WeatherApi{
+        fun provideOpenWeatherApiFacade(openWeatherApi: OpenWeatherApi): WeatherApi {
             return OpenWeatherApiFacade(openWeatherApi)
         }
 
         @Provides
         @Singleton
         @Named("Weatherbit")
-        fun provideWeatherbitApiFacade(weatherbitApi: WeatherbitApi): WeatherApi{
+        fun provideWeatherbitApiFacade(weatherbitApi: WeatherbitApi): WeatherApi {
             return WeatherbitApiFacade(weatherbitApi)
         }
     }

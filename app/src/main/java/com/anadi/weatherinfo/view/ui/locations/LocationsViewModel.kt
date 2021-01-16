@@ -9,6 +9,7 @@ import com.anadi.weatherinfo.data.db.location.Coord
 import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
 import com.anadi.weatherinfo.domain.location.AddLocationUseCase
+import com.anadi.weatherinfo.domain.location.CheckUpdatesAllLocationsUseCase
 import com.anadi.weatherinfo.domain.location.LocationRepository
 import com.anadi.weatherinfo.domain.places.PlacesWrapper
 import com.google.android.libraries.places.api.model.Place
@@ -16,13 +17,22 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
-class LocationsViewModel @Inject constructor(private val addLocationUseCase: AddLocationUseCase,
-                                             private val placesWrapper: PlacesWrapper,
-                                             private val locationRepository: LocationRepository) : ViewModel() {
+class LocationsViewModel @Inject constructor(
+        private val addLocationUseCase: AddLocationUseCase,
+        private val placesWrapper: PlacesWrapper,
+        private val checkUpdatesAllLocationsUseCase: CheckUpdatesAllLocationsUseCase,
+        private val locationRepository: LocationRepository
+) : ViewModel() {
 
     private val locations: MutableLiveData<List<LocationWithWeathers>> = MutableLiveData(arrayListOf())
     val locationsNotifier: LiveData<List<LocationWithWeathers>>
         get() = locations
+
+    fun updateLocations() {
+        viewModelScope.launch {
+            checkUpdatesAllLocationsUseCase.build(null)
+        }
+    }
 
     fun loadLocations() {
         viewModelScope.launch {
@@ -36,12 +46,14 @@ class LocationsViewModel @Inject constructor(private val addLocationUseCase: Add
 
     fun addLocation(place: Place) {
         viewModelScope.launch {
-            addLocationUseCase.build(AddLocationUseCase.Params(
-                    name = place.name!!,
-                    address = place.address!!,
-                    coord = Coord.from(place.latLng!!),
-                    utcOffsetMinutes = place.utcOffsetMinutes!!
-            ))
+            addLocationUseCase.build(
+                    AddLocationUseCase.Params(
+                            name = place.name!!,
+                            address = place.address!!,
+                            coord = Coord.from(place.latLng!!),
+                            utcOffsetMinutes = place.utcOffsetMinutes!!
+                    )
+            )
             update()
         }
     }

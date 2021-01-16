@@ -4,7 +4,7 @@ import com.anadi.weatherinfo.data.network.openweather.OpenWeatherResponse
 import com.anadi.weatherinfo.data.network.weatherbit.WeatherbitResponse
 
 object ResponseMapper {
-    fun convert (response: OpenWeatherResponse): WeatherResponse {
+    fun convert(response: OpenWeatherResponse): WeatherResponse {
         require(response.weather.isNotEmpty()) {
             "OpenWeatherResponse -> weather: List<WeatherMain> is empty"
         }
@@ -23,7 +23,7 @@ object ResponseMapper {
         )
     }
 
-    fun convert (response: WeatherbitResponse): WeatherResponse {
+    fun convert(response: WeatherbitResponse): WeatherResponse {
         require(response.data.isNotEmpty()) {
             "WeatherbitResponse -> data: List<WeatherbitData> is empty"
         }

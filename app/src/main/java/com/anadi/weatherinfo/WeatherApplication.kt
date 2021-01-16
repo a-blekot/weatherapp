@@ -2,10 +2,14 @@ package com.anadi.weatherinfo
 
 import android.app.Application
 import androidx.work.*
+import com.anadi.weatherinfo.data.weather.WeatherCodes
 import com.anadi.weatherinfo.view.di.Injector
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.util.concurrent.TimeUnit
@@ -25,16 +29,19 @@ class WeatherApplication : Application(), HasAndroidInjector {
         }
         val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
         val updateRequest = PeriodicWorkRequest.Builder(
-                UpdateWorker::class.java, UPDATE_INTERVAL_IN_MINUTES,
-                TimeUnit.MINUTES
-        ).setConstraints(constraints)
+                UpdateWorker::class.java, UPDATE_INTERVAL_IN_MINUTES, TimeUnit.MINUTES
+        )
+                .setConstraints(constraints)
                 .setInitialDelay(UPDATE_INTERVAL_IN_MINUTES, TimeUnit.SECONDS)
                 .addTag("update_request10")
                 .build()
-        WorkManager.getInstance(this)
-                .enqueueUniquePeriodicWork(
-                        "com.anadi.weatherinfo.update_request10",
-                        ExistingPeriodicWorkPolicy.KEEP, updateRequest)
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                        "com.anadi.weatherinfo.update_request10", ExistingPeriodicWorkPolicy.KEEP, updateRequest
+                )
+
+        GlobalScope.launch(Dispatchers.Default) {
+            WeatherCodes.init(this@WeatherApplication)
+        }
 
         Injector.INSTANCE.initialise(this)
     }

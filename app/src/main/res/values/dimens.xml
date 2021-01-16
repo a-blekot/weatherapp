@@ -41,4 +41,7 @@
 
     <dimen name="fab_elevation">4dp</dimen>
 
+    <dimen name="weather_icon_small">48dp</dimen>
+    <dimen name="weather_icon_normal">96dp</dimen>
+
 </resources>
