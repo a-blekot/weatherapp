@@ -12,7 +12,7 @@ data class OpenWeatherResponse(
         @SerializedName("clouds")
         val clouds: Clouds,
         @SerializedName("dt")
-        val dataCalcTimestamp: Long, // Last observation time (Unix timestamp)
+        val dataCalcTimestamp: Long, // Last observation time (Unix timestamp in seconds)
 )
 
 data class WeatherMain(

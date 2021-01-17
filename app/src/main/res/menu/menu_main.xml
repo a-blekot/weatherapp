@@ -9,12 +9,6 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_order"
-        android:icon="@drawable/ic_shoping_cart_dark"
-        android:orderInCategory="200"
-        android:title="@string/action_order"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/action_night_mode"
         android:icon="@drawable/ic_night_mode"
         android:title="@string/night_mode"

@@ -6,6 +6,8 @@ import com.anadi.weatherinfo.data.db.location.LocationDao
 import com.anadi.weatherinfo.data.db.weather.WeatherDao
 import com.anadi.weatherinfo.data.location.LocationRepositoryImpl
 import com.anadi.weatherinfo.data.network.WeatherApi
+import com.anadi.weatherinfo.data.weather.WeatherCodes
+import com.anadi.weatherinfo.data.weather.WeatherCodesImpl
 import com.anadi.weatherinfo.data.weather.WeatherRepositoriesImpl
 import com.anadi.weatherinfo.data.weather.WeatherRepositoryImpl
 import com.anadi.weatherinfo.domain.location.LocationRepository
@@ -86,5 +88,9 @@ abstract class DataModule {
         ): WeatherRepositories {
             return WeatherRepositoriesImpl(weatherbit, openweather)
         }
+
+        @Provides
+        @Singleton
+        fun provideWeatherCodes(context: Context): WeatherCodes = WeatherCodesImpl(context)
     }
 }

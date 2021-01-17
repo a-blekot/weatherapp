@@ -37,45 +37,45 @@
     <string name="adds_location_to_the_list">Adds location to the list</string>
 
 
-    // WEATHER CODES
-    <string name="thunderstorm_200">Thunderstorm with light rain</string>
-    <string name="thunderstorm_201">Thunderstorm with rain</string>
-    <string name="thunderstorm_202">Thunderstorm with heavy rain</string>
-    <string name="thunderstorm_230">Thunderstorm with light drizzle</string>
-    <string name="thunderstorm_231">Thunderstorm with drizzle</string>
-    <string name="thunderstorm_232">Thunderstorm with heavy drizzle</string>
-    <string name="thunderstorm_233">Thunderstorm with Hail</string>
-    <string name="thunderstorm_300">Light Drizzle</string>
-    <string name="thunderstorm_301">Drizzle</string>
-    <string name="thunderstorm_302">Heavy Drizzle</string>
-    <string name="thunderstorm_500">Light Rain</string>
-    <string name="thunderstorm_501">Moderate Rain</string>
-    <string name="thunderstorm_502">Heavy Rain</string>
-    <string name="thunderstorm_511">Freezing rain</string>
-    <string name="thunderstorm_520">Light shower rain</string>
-    <string name="thunderstorm_521">Shower rain</string>
-    <string name="thunderstorm_522">Heavy shower rain</string>
-    <string name="thunderstorm_600">Light snow</string>
-    <string name="thunderstorm_601">Snow</string>
-    <string name="thunderstorm_602">Heavy Snow</string>
-    <string name="thunderstorm_610">Mix snow/rain</string>
-    <string name="thunderstorm_611">Sleet</string>
-    <string name="thunderstorm_612">Heavy sleet</string>
-    <string name="thunderstorm_621">Snow shower</string>
-    <string name="thunderstorm_622">Heavy snow shower</string>
-    <string name="thunderstorm_623">Flurries</string>
-    <string name="thunderstorm_700">Mist</string>
-    <string name="thunderstorm_711">Smoke</string>
-    <string name="thunderstorm_721">Haze</string>
-    <string name="thunderstorm_731">Sand/dust</string>
-    <string name="thunderstorm_741">Fog</string>
-    <string name="thunderstorm_751">Freezing Fog</string>
-    <string name="thunderstorm_800">Clear sky</string>
-    <string name="thunderstorm_801">Few clouds</string>
-    <string name="thunderstorm_802">Scattered clouds</string>
-    <string name="thunderstorm_803">Broken clouds</string>
-    <string name="thunderstorm_804">Overcast clouds</string>
-    <string name="thunderstorm_900">Unknown Precipitation</string>
+    // WEATHER DESCRIPTION
+    <string name="description_200">Thunderstorm with light rain</string>
+    <string name="description_201">Thunderstorm with rain</string>
+    <string name="description_202">Thunderstorm with heavy rain</string>
+    <string name="description_230">Thunderstorm with light drizzle</string>
+    <string name="description_231">Thunderstorm with drizzle</string>
+    <string name="description_232">Thunderstorm with heavy drizzle</string>
+    <string name="description_233">Thunderstorm with Hail</string>
+    <string name="description_300">Light Drizzle</string>
+    <string name="description_301">Drizzle</string>
+    <string name="description_302">Heavy Drizzle</string>
+    <string name="description_500">Light Rain</string>
+    <string name="description_501">Moderate Rain</string>
+    <string name="description_502">Heavy Rain</string>
+    <string name="description_511">Freezing rain</string>
+    <string name="description_520">Light shower rain</string>
+    <string name="description_521">Shower rain</string>
+    <string name="description_522">Heavy shower rain</string>
+    <string name="description_600">Light snow</string>
+    <string name="description_601">Snow</string>
+    <string name="description_602">Heavy Snow</string>
+    <string name="description_610">Mix snow/rain</string>
+    <string name="description_611">Sleet</string>
+    <string name="description_612">Heavy sleet</string>
+    <string name="description_621">Snow shower</string>
+    <string name="description_622">Heavy snow shower</string>
+    <string name="description_623">Flurries</string>
+    <string name="description_700">Mist</string>
+    <string name="description_711">Smoke</string>
+    <string name="description_721">Haze</string>
+    <string name="description_731">Sand/dust</string>
+    <string name="description_741">Fog</string>
+    <string name="description_751">Freezing Fog</string>
+    <string name="description_800">Clear sky</string>
+    <string name="description_801">Few clouds</string>
+    <string name="description_802">Scattered clouds</string>
+    <string name="description_803">Broken clouds</string>
+    <string name="description_804">Overcast clouds</string>
+    <string name="description_900">Unknown Precipitation</string>
 
 
 </resources>

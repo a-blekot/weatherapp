@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.data.db.location.Location
+import com.anadi.weatherinfo.data.weather.WeatherCodes
 import com.anadi.weatherinfo.databinding.LocationsFragmentBinding
 import com.anadi.weatherinfo.view.ui.BaseFragment
 import com.google.android.libraries.places.widget.Autocomplete
@@ -21,11 +22,14 @@ import timber.log.Timber
 import javax.inject.Inject
 
 
-class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAdapter.OnLocationSelectedListener {
+class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAdapter.Listener {
     private val binding: LocationsFragmentBinding by viewBinding()
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var weatherCodes: WeatherCodes
 
     private lateinit var viewModel: LocationsViewModel
 
@@ -42,7 +46,7 @@ class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAda
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = LocationAdapter(this)
+        adapter = LocationAdapter(this, weatherCodes)
         binding.recyclerView.adapter = adapter
 
         viewModel.locationsNotifier.observe(viewLifecycleOwner, Observer { adapter.dataset = it })

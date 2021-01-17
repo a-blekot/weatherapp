@@ -8,10 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.data.network.WeatherProvider
+import com.anadi.weatherinfo.data.weather.WeatherCode
 import com.anadi.weatherinfo.data.weather.WeatherCodes
 import com.anadi.weatherinfo.databinding.ProviderViewBinding
+import com.anadi.weatherinfo.utils.DateFormats
 
-class ProvidersAdapter(private val listener: Listener) : RecyclerView.Adapter<ProvidersAdapter.ProviderHolder>() {
+class ProvidersAdapter(private val listener: Listener, private val weatherCodes: WeatherCodes) :
+        RecyclerView.Adapter<ProvidersAdapter.ProviderHolder>() {
     interface Listener {
         fun onSelected(weather: Weather)
     }
@@ -34,7 +37,8 @@ class ProvidersAdapter(private val listener: Listener) : RecyclerView.Adapter<Pr
     }
 
     override fun onBindViewHolder(holder: ProviderHolder, position: Int) {
-        holder.bind(dataset[position])
+        val weather = dataset[position]
+        holder.bind(weather, weatherCodes.from(weather.code))
     }
 
     class ProviderHolder(
@@ -48,21 +52,23 @@ class ProvidersAdapter(private val listener: Listener) : RecyclerView.Adapter<Pr
             binding.layout.setOnClickListener(this)
         }
 
-        fun bind(weather: Weather) {
+        fun bind(weather: Weather, weatherCode: WeatherCode) {
             this.weather = weather
 
-            binding.providerName.text = WeatherProvider.fromCode(weather.providerId).providerName
-            binding.lastUpdateTime.text = weather.dataCalcTimestamp.toString() // TODO timestamp convert to date
+            with(binding) {
+                providerName.text = WeatherProvider.fromCode(weather.providerId).providerName
+                lastUpdateTime.text = DateFormats.defaultTime.print(weather.dataCalcTimestamp)
 
-            binding.icon.setImageResource(WeatherCodes.fromCode(weather.code).iconDay)
-            binding.description.text = weather.code.toString() // TODO convert weather code to string
+                icon.setImageResource(weatherCode.iconDay)
+                description.text = context.getString(weatherCode.description)
 
-            binding.temp.text = context.getString(R.string.temp_short_celsium, weather.temp)
-            binding.windSpeed.text = context.getString(R.string.wind_speed_short_ms, weather.windSpeed)
-            binding.windDir.rotation = weather.windDegree.toFloat()
+                temp.text = context.getString(R.string.temp_short_celsium, weather.temp)
+                windSpeed.text = context.getString(R.string.wind_speed_short_ms, weather.windSpeed)
+                windDirection.rotation = weather.windDegree.toFloat()
 
-            binding.pressure.text = context.getString(R.string.pressure_short, weather.pressure)
-            binding.humidity.text = context.getString(R.string.humidity_short, weather.humidity)
+                pressure.text = context.getString(R.string.pressure_short, weather.pressure)
+                humidity.text = context.getString(R.string.humidity_short, weather.humidity)
+            }
         }
 
         private val context: Context

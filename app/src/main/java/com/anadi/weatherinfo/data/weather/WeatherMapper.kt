@@ -51,7 +51,7 @@ object WeatherMapper {
         val weatherId = weathers[0].weatherId
         val locationId = weathers[0].locationId
         val providerId = WeatherProvider.MERGED.code
-        var code = 0
+        val codes = mutableListOf<Int>()
         var temp = 0
         var tempFeelsLike = 0
         var windSpeed = 0
@@ -59,11 +59,11 @@ object WeatherMapper {
         var pressure = 0
         var humidity = 0
         var clouds = 0
-        val dataCalcTimestamp = weathers[0].dataCalcTimestamp
+        var dataCalcTimestamp = 0L
         val downloadTimestamp = weathers[0].downloadTimestamp
 
         for (weather in weathers) {
-            code += weather.code
+            codes.add(weather.code)
             temp += weather.temp
             tempFeelsLike += weather.tempFeelsLike
             windSpeed += weather.windSpeed
@@ -71,10 +71,11 @@ object WeatherMapper {
             pressure += weather.pressure
             humidity += weather.humidity
             clouds += weather.clouds
+            dataCalcTimestamp += weather.dataCalcTimestamp
         }
 
         val count = weathers.size
-        code /= count
+        val code = codes.random()
         temp /= count
         tempFeelsLike /= count
         windSpeed /= count
@@ -82,6 +83,7 @@ object WeatherMapper {
         pressure /= count
         humidity /= count
         clouds /= count
+        dataCalcTimestamp /= count
 
         return Weather(
                 weatherId,

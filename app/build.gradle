@@ -32,7 +32,7 @@ android {
         }
     }
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.anadi.weatherinfo"
@@ -170,6 +170,9 @@ dependencies {
 
     // Geo location
     implementation 'com.google.android.libraries.places:places:2.4.0'
+
+    // Joda
+    implementation 'net.danlew:android.joda:2.10.6.1'
 
     implementation 'com.github.GrenderG:Toasty:1.5.0'
 }

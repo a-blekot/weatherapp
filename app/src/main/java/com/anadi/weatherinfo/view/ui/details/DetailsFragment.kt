@@ -24,6 +24,9 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    @Inject
+    lateinit var weatherCodes: WeatherCodes
+
     private lateinit var viewModel: DetailsViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,9 +71,9 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
         }
 
         val location = data.location
-        val weather = data.weathers.filter { it.providerId == viewModel.providerId }.getOrNull(0)
+        val weather = data.weathers.firstOrNull { it.providerId == viewModel.providerId }
 
-        binding.weatherIcon.setImageResource(WeatherCodes.fromCode(weather?.code ?: 0).iconDay)
+        binding.weatherIcon.setImageResource(weatherCodes.from(weather?.code ?: 0).iconDay)
         binding.windIcon.rotation = weather?.windDegree?.toFloat() ?: 0F
         binding.locationName.text = location.name
         binding.temp.text = getString(R.string.temp_celsium, weather?.temp ?: 0)

@@ -13,6 +13,7 @@ import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.data.network.WeatherProvider
 import com.anadi.weatherinfo.data.weather.WeatherCodes
 import com.anadi.weatherinfo.databinding.ProvidersFragmentBinding
+import com.anadi.weatherinfo.utils.DateFormats
 import com.anadi.weatherinfo.utils.Resource
 import com.anadi.weatherinfo.utils.Status
 import com.anadi.weatherinfo.view.ui.BaseFragment
@@ -28,6 +29,9 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    @Inject
+    lateinit var weatherCodes: WeatherCodes
+
     private lateinit var viewModel: ProvidersViewModel
 
     private lateinit var adapter: ProvidersAdapter
@@ -38,7 +42,7 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
         viewModel = ViewModelProvider(this, viewModelFactory).get(ProvidersViewModel::class.java)
         viewModel.id = DetailsFragmentArgs.fromBundle(requireArguments()).locationId
 
-        adapter = ProvidersAdapter(this)
+        adapter = ProvidersAdapter(this, weatherCodes)
         binding.recyclerView.adapter = adapter
 
         viewModel.details.observe(viewLifecycleOwner, Observer { update(it) })
@@ -83,19 +87,21 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
 
     private fun updateMerged(weather: Weather) {
 
+        val weatherCode = weatherCodes.from(weather.code)
+
         with(binding.merged) {
             providerName.text = WeatherProvider.fromCode(weather.providerId).providerName
-            lastUpdateTime.text = weather.dataCalcTimestamp.toString() // TODO timestamp convert to date
+            lastUpdateTime.text = DateFormats.defaultTime.print(weather.dataCalcTimestamp)
 
-            icon.setImageResource(WeatherCodes.fromCode(weather.code).iconDay)
-            description.text = weather.code.toString() // TODO convert weather code to string
+            icon.setImageResource(weatherCode.iconDay)
+            description.text = getString(weatherCode.description)
 
-            temp.text = requireContext().getString(R.string.temp_short_celsium, weather.temp)
-            windSpeed.text = requireContext().getString(R.string.wind_speed_short_ms, weather.windSpeed)
-            windDir.rotation = weather.windDegree.toFloat()
+            temp.text = getString(R.string.temp_short_celsium, weather.temp)
+            windSpeed.text = getString(R.string.wind_speed_short_ms, weather.windSpeed)
+            windDirection.rotation = weather.windDegree.toFloat()
 
-            pressure.text = requireContext().getString(R.string.pressure_short, weather.pressure)
-            humidity.text = requireContext().getString(R.string.humidity_short, weather.humidity)
+            pressure.text = getString(R.string.pressure_short, weather.pressure)
+            humidity.text = getString(R.string.humidity_short, weather.humidity)
         }
     }
 

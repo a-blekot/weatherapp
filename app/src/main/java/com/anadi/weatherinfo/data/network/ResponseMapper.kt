@@ -19,7 +19,7 @@ object ResponseMapper {
                 pressure = response.main.pressure,
                 humidity = response.main.humidity,
                 clouds = response.clouds.all,
-                dataCalcTimestamp = response.dataCalcTimestamp
+                dataCalcTimestamp = response.dataCalcTimestamp * MILLISECONDS
         )
     }
 
@@ -40,9 +40,10 @@ object ResponseMapper {
                 pressure = weatherbit.pressure.toInt(),
                 humidity = weatherbit.humidity.toInt(),
                 clouds = weatherbit.clouds,
-                dataCalcTimestamp = weatherbit.dataCalcTimestamp,
+                dataCalcTimestamp = weatherbit.dataCalcTimestamp * MILLISECONDS,
         )
     }
 
     const val PI2_RADIAN = 360
+    const val MILLISECONDS = 1000
 }

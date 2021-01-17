@@ -9,12 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
+import com.anadi.weatherinfo.data.weather.WeatherCode
 import com.anadi.weatherinfo.data.weather.WeatherCodes
 import com.anadi.weatherinfo.databinding.LocationRowViewBinding
 import com.anadi.weatherinfo.view.ui.locations.LocationAdapter.LocationHolder
 
-class LocationAdapter(private val listener: OnLocationSelectedListener) : RecyclerView.Adapter<LocationHolder>() {
-    interface OnLocationSelectedListener {
+class LocationAdapter(
+        private val listener: Listener,
+        private val weatherCodes: WeatherCodes
+) : RecyclerView.Adapter<LocationHolder>() {
+    interface Listener {
         fun onSelected(location: Location)
         fun onMenuAction(location: Location, item: MenuItem)
     }
@@ -37,21 +41,22 @@ class LocationAdapter(private val listener: OnLocationSelectedListener) : Recycl
     }
 
     override fun onBindViewHolder(holder: LocationHolder, position: Int) {
-        holder.bind(dataset[position])
+        val weatherCode = weatherCodes.from(dataset[position].weathers.getOrNull(0)?.code ?: 0)
+        holder.bind(dataset[position], weatherCode)
     }
 
     class LocationHolder(
-            private val binding: LocationRowViewBinding, private val listener: OnLocationSelectedListener
+            private val binding: LocationRowViewBinding, private val listener: Listener
     ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
         init {
             binding.layout.setOnClickListener(this)
         }
 
-        fun bind(data: LocationWithWeathers) {
+        fun bind(data: LocationWithWeathers, weatherCode: WeatherCode) {
             val location = data.location
             val weather = data.weathers.getOrNull(0)
 
-            binding.icon.setImageResource(WeatherCodes.fromCode(weather?.code ?: 0).iconDay)
+            binding.icon.setImageResource(weatherCode.iconDay)
             binding.name.text = location.name
 
             binding.temp.text = context.getString(R.string.temp_short_celsium, weather?.temp ?: 0)

@@ -42,7 +42,7 @@ data class WeatherbitData(
         val solarRad: Float,
 
         @SerializedName("ts")
-        val dataCalcTimestamp: Long, // Last observation time (Unix timestamp)
+        val dataCalcTimestamp: Long, // Last observation time (Unix timestamp in seconds)
 
         @SerializedName("ob_time")
         val dataCalcDateTime: String // Last observation time (YYYY-MM-DD HH:MM)

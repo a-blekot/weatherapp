@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout"
-    android:layout_marginTop="@dimen/margin_small"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_small">
 
     <TextView
         android:id="@+id/provider_name"
@@ -20,14 +20,17 @@
 
     <TextView
         android:id="@+id/lastUpdateTime"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/adaptive"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_small"
         android:padding="2dp"
         android:textSize="18sp"
+        android:lines="2"
+        android:breakStrategy="balanced"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/barrier_right"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="22:27:02\n03/03/2021" />
+        tools:text="03.03.2021\n22:27:02" />
 
     <ImageView
         android:id="@+id/icon"
@@ -41,24 +44,12 @@
         app:layout_constraintTop_toBottomOf="@id/provider_name" />
 
     <TextView
-        android:id="@+id/description"
-        style="@style/details_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/temp"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/icon"
-        app:layout_constraintTop_toTopOf="@id/icon"
-        tools:text="Rain" />
-
-    <TextView
         android:id="@+id/temp"
         style="@style/details_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/barrier_right"
-        app:layout_constraintStart_toEndOf="@id/description"
-        app:layout_constraintTop_toTopOf="@id/icon"
+        app:layout_constraintStart_toEndOf="@+id/icon"
+        app:layout_constraintTop_toTopOf="@+id/icon"
         tools:text="@string/temp_celsium_stub" />
 
     <TextView
@@ -66,23 +57,34 @@
         style="@style/details_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/barrier_right"
-        app:layout_constraintStart_toEndOf="@id/wind_dir"
-        app:layout_constraintTop_toBottomOf="@id/temp"
+        android:layout_marginEnd="@dimen/margin_xsmall"
+        app:layout_constraintEnd_toStartOf="@+id/wind_direction"
+        app:layout_constraintTop_toTopOf="@+id/icon"
         tools:text="@string/wind_speed_ms_stub" />
 
     <ImageView
-        android:id="@+id/wind_dir"
+        android:id="@+id/wind_direction"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/round_frame"
         android:contentDescription="@string/wind_degree_description"
         android:rotation="45"
         android:src="@drawable/wind_degree"
-        app:layout_constraintEnd_toStartOf="@id/wind_speed"
-        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintBottom_toBottomOf="@+id/wind_speed"
+        app:layout_constraintTop_toTopOf="@+id/wind_speed"
+        app:layout_constraintEnd_toStartOf="@id/barrier_right"/>
+
+    <TextView
+        android:id="@+id/description"
+        style="@style/details_info"
+        android:layout_width="@dimen/adaptive"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
+        app:layout_constraintEnd_toStartOf="@id/barrier_right"
         app:layout_constraintStart_toEndOf="@id/icon"
-        app:layout_constraintTop_toTopOf="@id/wind_speed" />
+        app:layout_constraintTop_toBottomOf="@id/wind_speed"
+        tools:text="Rain sdfsdf sdfsdf sdfsdf sdfsdf" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier_right"
@@ -96,8 +98,9 @@
         style="@style/details_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/wind_direction"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/icon"
+        app:layout_constraintTop_toTopOf="@+id/wind_direction"
         tools:text="1020 hPa" />
 
     <TextView

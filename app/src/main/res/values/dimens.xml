@@ -8,7 +8,9 @@
 <!--    <dimen name="counter_height">300dp</dimen>-->
 
     <dimen name="activity_horizontal_padding">16dp</dimen>
+    <dimen name="padding_xsmall">4dp</dimen>
     <dimen name="padding_small">8dp</dimen>
+    <dimen name="margin_xsmall">4dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_regular">16dp</dimen>
 <!--    <dimen name="content_left_margin_wh">8sp</dimen>-->
@@ -33,7 +35,7 @@
     <dimen name="details_name">@dimen/text_heading_text_size</dimen>
     <dimen name="details_info">@dimen/text_large_text_size</dimen>
     <dimen name="details_main">@dimen/text_xlarge_text_size</dimen>
-    <dimen name="details_padding">@dimen/padding_small</dimen>
+    <dimen name="details_padding">@dimen/padding_xsmall</dimen>
     <dimen name="details_margin">@dimen/margin_small</dimen>
 
     <dimen name="progress_bar_size">100dp</dimen>
