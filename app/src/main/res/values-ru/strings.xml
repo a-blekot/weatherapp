@@ -14,7 +14,7 @@
     <string name="wind_speed_short_ms">%1$d м/с</string>
 
     // # PRESSURE
-    <string name="pressure">Давление: %1$d hPa</string>
+    <string name="pressure">Давление: %1$d гПа</string>
 
     // # HUMIDITY
     <string name="humidity">Влажность: %1$d%%</string>
@@ -61,6 +61,7 @@
     <string name="description_521">Ливень</string>
     <string name="description_522">Сильный ливень</string>
     <string name="description_531">Прерывистый ливень</string>
+    <string name="description_532">Град</string>
 
     // # SNOW
     <string name="description_600">Легкий снег</string>
@@ -72,6 +73,8 @@
     <string name="description_621">Снег</string>
     <string name="description_622">Сильный снег</string>
     <string name="description_623">Шквал</string>
+    <string name="description_1114">Метель</string>
+    <string name="description_1117">Снежная буря</string>
 
     // # ATMOSPHERE
     <string name="description_700">Туман</string>

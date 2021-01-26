@@ -74,6 +74,7 @@
     <string name="description_521">Shower rain</string>
     <string name="description_522">Heavy shower rain</string>
     <string name="description_531">Ragged shower rain</string>
+    <string name="description_532">Hail</string>
 
     // # SNOW
     <string name="description_600">Light snow</string>
@@ -85,6 +86,8 @@
     <string name="description_621">Shower snow</string>
     <string name="description_622">Heavy shower snow</string>
     <string name="description_623">Flurries</string>
+    <string name="description_1114">Blowing snow</string>
+    <string name="description_1117">Blizzard</string>
 
     // # ATMOSPHERE
     <string name="description_700">Mist</string>

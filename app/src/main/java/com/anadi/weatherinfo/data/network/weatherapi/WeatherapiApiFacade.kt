@@ -5,7 +5,6 @@ import com.anadi.weatherinfo.data.network.ResponseMapper
 import com.anadi.weatherinfo.data.network.WeatherApi
 import com.anadi.weatherinfo.data.network.WeatherProvider
 import com.anadi.weatherinfo.data.network.WeatherResponse
-import com.anadi.weatherinfo.data.network.openweather.OpenWeatherApi
 import javax.inject.Inject
 
 class WeatherapiApiFacade @Inject constructor(private val weatherapiApi: WeatherapiApi) : WeatherApi {
