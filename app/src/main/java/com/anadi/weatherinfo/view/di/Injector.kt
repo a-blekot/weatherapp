@@ -6,7 +6,7 @@ enum class Injector {
 
     INSTANCE;
 
-    private lateinit var applicationComponent: ApplicationComponent
+    lateinit var applicationComponent: ApplicationComponent
 
     fun initialise(application: WeatherApplication) {
         applicationComponent = DaggerApplicationComponent.factory().create(application)

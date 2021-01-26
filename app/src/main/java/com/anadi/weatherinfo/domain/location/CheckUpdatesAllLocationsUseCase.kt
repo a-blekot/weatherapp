@@ -10,7 +10,7 @@ class CheckUpdatesAllLocationsUseCase @Inject constructor(
 
     override suspend fun build(params: Unit?) {
         for (location in locationRepository.fetchAll()) {
-            weatherRepositories.fetch(location)
+            weatherRepositories.update(location)
         }
     }
 }

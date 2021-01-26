@@ -14,43 +14,70 @@ private const val MAX_CODE = 804
 class WeatherCodesImpl @Inject constructor(private val context: Context) : WeatherCodes {
 
     private val allCodes: List<WeatherCode> = listOf(
+            // THUNDERSTORM
             WeatherCode(200, R.string.description_200, icon("t01d"), icon("t01n")),
             WeatherCode(201, R.string.description_201, icon("t02d"), icon("t02n")),
             WeatherCode(202, R.string.description_202, icon("t03d"), icon("t03n")),
+            WeatherCode(210, R.string.description_210, icon("t04d"), icon("t04n")),
+            WeatherCode(211, R.string.description_211, icon("t04d"), icon("t04n")),
+            WeatherCode(212, R.string.description_212, icon("t05d"), icon("t05n")),
+            WeatherCode(221, R.string.description_211, icon("t04d"), icon("t04n")),
             WeatherCode(230, R.string.description_230, icon("t04d"), icon("t04n")),
             WeatherCode(231, R.string.description_231, icon("t04d"), icon("t04n")),
             WeatherCode(232, R.string.description_232, icon("t04d"), icon("t04n")),
             WeatherCode(233, R.string.description_233, icon("t05d"), icon("t05n")),
 
+            // DRIZZLE
             WeatherCode(300, R.string.description_300, icon("d01d"), icon("d01n")),
             WeatherCode(301, R.string.description_301, icon("d02d"), icon("d02n")),
             WeatherCode(302, R.string.description_302, icon("d03d"), icon("d03n")),
+            WeatherCode(310, R.string.description_300, icon("d02d"), icon("d02n")),
+            WeatherCode(311, R.string.description_301, icon("d02d"), icon("d02n")),
+            WeatherCode(312, R.string.description_302, icon("d02d"), icon("d02n")),
+            WeatherCode(313, R.string.description_521, icon("d02d"), icon("d02n")),
+            WeatherCode(314, R.string.description_522, icon("d02d"), icon("d02n")),
+            WeatherCode(321, R.string.description_302, icon("d02d"), icon("d02n")),
 
+            // RAIN
             WeatherCode(500, R.string.description_500, icon("r01d"), icon("r01n")),
             WeatherCode(501, R.string.description_501, icon("r02d"), icon("r02n")),
             WeatherCode(502, R.string.description_502, icon("r03d"), icon("r03n")),
+            WeatherCode(503, R.string.description_503, icon("r04d"), icon("r04n")),
+            WeatherCode(504, R.string.description_504, icon("r04d"), icon("r04n")),
             WeatherCode(511, R.string.description_511, icon("f01d"), icon("f01n")),
             WeatherCode(520, R.string.description_520, icon("r04d"), icon("r04n")),
             WeatherCode(521, R.string.description_521, icon("r05d"), icon("r05n")),
             WeatherCode(522, R.string.description_522, icon("r06d"), icon("r06n")),
+            WeatherCode(531, R.string.description_531, icon("r06d"), icon("r06n")),
 
+            // SNOW
             WeatherCode(600, R.string.description_600, icon("s01d"), icon("s01n")),
             WeatherCode(601, R.string.description_601, icon("s02d"), icon("s02n")),
             WeatherCode(602, R.string.description_602, icon("s03d"), icon("s03n")),
             WeatherCode(610, R.string.description_610, icon("s04d"), icon("s04n")),
-            WeatherCode(611, R.string.description_611, icon("s05d"), icon("s05n")),
+            WeatherCode(611, R.string.description_610, icon("s04d"), icon("s04n")),
             WeatherCode(612, R.string.description_612, icon("s05d"), icon("s05n")),
+            WeatherCode(613, R.string.description_612, icon("s05d"), icon("s05n")),
+            WeatherCode(615, R.string.description_610, icon("s04d"), icon("s04n")),
+            WeatherCode(616, R.string.description_610, icon("s04d"), icon("s04n")),
+            WeatherCode(620, R.string.description_621, icon("s01d"), icon("s01n")),
             WeatherCode(621, R.string.description_621, icon("s01d"), icon("s01n")),
             WeatherCode(622, R.string.description_622, icon("s02d"), icon("s02n")),
             WeatherCode(623, R.string.description_623, icon("s06d"), icon("s06n")),
 
+            // ATMOSPHERE
             WeatherCode(700, R.string.description_700, icon("a01d"), icon("a01n")),
             WeatherCode(711, R.string.description_711, icon("a02d"), icon("a02n")),
             WeatherCode(721, R.string.description_721, icon("a03d"), icon("a03n")),
             WeatherCode(731, R.string.description_731, icon("a04d"), icon("a04n")),
             WeatherCode(741, R.string.description_741, icon("a05d"), icon("a05n")),
             WeatherCode(751, R.string.description_751, icon("a06d"), icon("a06n")),
+            WeatherCode(761, R.string.description_761, icon("a04d"), icon("a04d")),
+            WeatherCode(762, R.string.description_762, icon("a04d"), icon("a04d")),
+            WeatherCode(771, R.string.description_771, icon("s05d"), icon("s05n")),
+            WeatherCode(781, R.string.description_781, icon("s05d"), icon("s05n")),
 
+            // CLOUDS
             WeatherCode(800, R.string.description_800, icon("c01d"), icon("c01n")),
             WeatherCode(801, R.string.description_801, icon("c02d"), icon("c02n")),
             WeatherCode(802, R.string.description_802, icon("c02d"), icon("c02n")),

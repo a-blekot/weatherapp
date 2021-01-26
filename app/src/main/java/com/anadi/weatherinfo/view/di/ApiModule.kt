@@ -3,6 +3,8 @@ package com.anadi.weatherinfo.view.di
 import com.anadi.weatherinfo.data.network.WeatherApi
 import com.anadi.weatherinfo.data.network.openweather.OpenWeatherApi
 import com.anadi.weatherinfo.data.network.openweather.OpenWeatherApiFacade
+import com.anadi.weatherinfo.data.network.weatherapi.WeatherapiApi
+import com.anadi.weatherinfo.data.network.weatherapi.WeatherapiApiFacade
 import com.anadi.weatherinfo.data.network.weatherbit.WeatherbitApi
 import com.anadi.weatherinfo.data.network.weatherbit.WeatherbitApiFacade
 import dagger.Module
@@ -37,6 +39,15 @@ abstract class ApiModule {
 
         @Provides
         @Singleton
+        fun provideWeatherapiAPI(
+                @Named("Weatherapi")
+                retrofit: Retrofit
+        ): WeatherapiApi {
+            return retrofit.create(WeatherapiApi::class.java)
+        }
+
+        @Provides
+        @Singleton
         @Named("OpenWeather")
         fun provideOpenWeatherApiFacade(openWeatherApi: OpenWeatherApi): WeatherApi {
             return OpenWeatherApiFacade(openWeatherApi)
@@ -47,6 +58,13 @@ abstract class ApiModule {
         @Named("Weatherbit")
         fun provideWeatherbitApiFacade(weatherbitApi: WeatherbitApi): WeatherApi {
             return WeatherbitApiFacade(weatherbitApi)
+        }
+
+        @Provides
+        @Singleton
+        @Named("Weatherapi")
+        fun provideWeatherapiApiFacade(weatherapiApi: WeatherapiApi): WeatherApi {
+            return WeatherapiApiFacade(weatherapiApi)
         }
     }
 }

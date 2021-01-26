@@ -8,11 +8,13 @@ import javax.inject.Named
 
 class WeatherRepositoriesImpl @Inject constructor(
         @Named("OpenWeather")
-        weatherbit: WeatherRepository,
+        openweather: WeatherRepository,
         @Named("Weatherbit")
-        openweather: WeatherRepository
+        weatherbit: WeatherRepository,
+        @Named("Weatherapi")
+        weatherapi: WeatherRepository
 ) : WeatherRepositories {
-    private val repositories = listOf(openweather, weatherbit)
+    private val repositories = listOf(openweather, weatherbit, weatherapi)
 
     override suspend fun fetch(location: Location) {
         for (repository in repositories) {

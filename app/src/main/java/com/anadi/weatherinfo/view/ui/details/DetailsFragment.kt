@@ -75,10 +75,13 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
 
         binding.weatherIcon.setImageResource(weatherCodes.from(weather?.code ?: 0).iconDay)
         binding.windIcon.rotation = weather?.windDegree?.toFloat() ?: 0F
+        binding.description.text = getString(weatherCodes.from(weather?.code ?: 0).description)
         binding.locationName.text = location.name
         binding.temp.text = getString(R.string.temp_celsium, weather?.temp ?: 0)
+        binding.tempFeelsLike.text = getString(R.string.temp_feels_like_celsium, weather?.tempFeelsLike ?: 0)
         binding.wind.text = getString(R.string.wind_speed_ms, weather?.windSpeed ?: 0)
         binding.pressure.text = getString(R.string.pressure, weather?.pressure ?: 0)
         binding.humidity.text = getString(R.string.humidity, weather?.humidity ?: 0)
+        binding.clouds.text = getString(R.string.clouds, weather?.clouds ?: 0)
     }
 }

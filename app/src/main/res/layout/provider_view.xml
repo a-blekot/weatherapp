@@ -20,15 +20,14 @@
 
     <TextView
         android:id="@+id/lastUpdateTime"
-        android:layout_width="@dimen/adaptive"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_small"
+        android:breakStrategy="balanced"
+        android:lines="2"
         android:padding="2dp"
         android:textSize="18sp"
-        android:lines="2"
-        android:breakStrategy="balanced"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/barrier_right"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="03.03.2021\n22:27:02" />
 
@@ -71,8 +70,8 @@
         android:rotation="45"
         android:src="@drawable/wind_degree"
         app:layout_constraintBottom_toBottomOf="@+id/wind_speed"
-        app:layout_constraintTop_toTopOf="@+id/wind_speed"
-        app:layout_constraintEnd_toStartOf="@id/barrier_right"/>
+        app:layout_constraintEnd_toStartOf="@id/barrier_right"
+        app:layout_constraintTop_toTopOf="@+id/wind_speed" />
 
     <TextView
         android:id="@+id/description"
@@ -91,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:barrierDirection="start"
-        app:constraint_referenced_ids="pressure,humidity" />
+        app:constraint_referenced_ids="lastUpdateTime,pressure,humidity" />
 
     <TextView
         android:id="@+id/pressure"
@@ -106,14 +105,10 @@
     <TextView
         android:id="@+id/humidity"
         style="@style/details_info"
-        app:layout_constraintStart_toStartOf="@id/pressure"
+        android:gravity="center"
+        app:drawableStartCompat="@drawable/ic_drop"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pressure"
-        tools:text="rh: 52%" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorAccent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        tools:text="52%" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

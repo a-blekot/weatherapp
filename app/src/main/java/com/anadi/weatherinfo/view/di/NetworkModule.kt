@@ -1,5 +1,8 @@
 package com.anadi.weatherinfo.view.di
 
+import android.content.Context
+import android.net.ConnectivityManager
+import com.anadi.weatherinfo.data.network.state.*
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
@@ -40,6 +43,13 @@ abstract class NetworkModule {
 
         @Provides
         @Singleton
+        @Named("Weatherapi")
+        fun provideOkHttpClientWeatherapi(interceptor: HttpLoggingInterceptor): OkHttpClient {
+            return OkHttpClient.Builder().addInterceptor(interceptor).addNetworkInterceptor(StethoInterceptor()).build()
+        }
+
+        @Provides
+        @Singleton
         @Named("OpenWeather")
         fun provideRetrofitOpenWeather(
                 @Named("OpenWeather")
@@ -64,6 +74,42 @@ abstract class NetworkModule {
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client)
                     .build()
+        }
+
+        @Provides
+        @Singleton
+        @Named("Weatherapi")
+        fun provideRetrofitWeatherapi(
+                @Named("Weatherapi")
+                client: OkHttpClient
+        ): Retrofit {
+            return Retrofit.Builder()
+                    .baseUrl("http://api.weatherapi.com/v1/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client)
+                    .build()
+        }
+
+        @Provides
+        @Singleton
+        fun provideNetworkState(): NetworkState {
+            return NetworkStateImpl()
+        }
+
+        @Provides
+        @Singleton
+        fun provideNetworkCallBack(networkState: NetworkState): ConnectivityManager.NetworkCallback {
+            return NetworkCallbackImpl(networkState)
+        }
+
+        @Provides
+        @Singleton
+        fun provideNetworkMonitor(
+                context: Context,
+                networkState: NetworkState,
+                networkCallback: ConnectivityManager.NetworkCallback
+        ): NetworkMonitor {
+            return NetworkMonitorImpl(context, networkState, networkCallback)
         }
     }
 }

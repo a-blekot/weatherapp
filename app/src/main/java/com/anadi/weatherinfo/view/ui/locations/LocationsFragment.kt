@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.data.db.location.Location
@@ -40,15 +41,19 @@ class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAda
 
         // Get the viewModel
         viewModel = ViewModelProvider(this, viewModelFactory).get(LocationsViewModel::class.java)
-        viewModel.updateLocations()
+//        viewModel.updateLocations()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = LocationAdapter(this, weatherCodes)
-        binding.recyclerView.adapter = adapter
+        binding.recyclerView.apply {
+            adapter = this@LocationsFragment.adapter
+            addItemDecoration(DividerItemDecoration(binding.recyclerView.context, DividerItemDecoration.VERTICAL))
+        }
 
+        viewModel.isConnected.observe(viewLifecycleOwner, Observer { onConnectionChanged(it) })
         viewModel.locationsNotifier.observe(viewLifecycleOwner, Observer { adapter.dataset = it })
 
         binding.addLocationButton.setOnClickListener {
@@ -67,13 +72,6 @@ class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAda
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
 
             val place = Autocomplete.getPlaceFromIntent(data)
-
-            place.utcOffsetMinutes
-
-            val coord = place.latLng!!
-
-            Toasty.success(requireContext(), "Coordinates: $coord", Toast.LENGTH_LONG).show()
-
             viewModel.addLocation(place)
 
         } else if (resultCode == AutocompleteActivity.RESULT_ERROR && data != null) {
@@ -81,6 +79,10 @@ class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAda
             Toasty.error(requireContext(), "Error: " + status.statusMessage, Toast.LENGTH_LONG).show()
             Timber.e(status.statusMessage)
         }
+    }
+
+    private fun onConnectionChanged(isConnected: Boolean) {
+        binding.addLocationButton.visibility = if (isConnected) View.VISIBLE else View.GONE
     }
 
     override fun onSelected(location: Location) {

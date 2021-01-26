@@ -4,15 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
 import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.data.weather.WeatherMapper
 import com.anadi.weatherinfo.domain.location.LocationRepository
 import com.anadi.weatherinfo.utils.Resource
-import com.anadi.weatherinfo.utils.WeatherException
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 class ProvidersViewModel @Inject constructor(private val locationRepository: LocationRepository) : ViewModel() {
@@ -27,30 +24,17 @@ class ProvidersViewModel @Inject constructor(private val locationRepository: Loc
         get() = _mergedWeather
 
     fun fetch() {
+        _details.value = Resource.loading()
         viewModelScope.launch {
-            _details.value = Resource.loading()
+            val data = locationRepository.fetchWithWeathers(id)
+            _details.postValue(Resource.success(data = data))
 
-            try {
-                val data = locationRepository.fetchWithWeathers(id)
-
-                _details.postValue(Resource.success(data = data))
-
-                data?.weathers?.let {
-                    val weather = WeatherMapper.merge(it)
-                    if (weather != null) {
-                        _mergedWeather.postValue(weather)
-                    }
+            data?.weathers?.let {
+                val weather = WeatherMapper.merge(it)
+                if (weather != null) {
+                    _mergedWeather.postValue(weather)
                 }
-            } catch (e: WeatherException) {
-                Timber.e(e)
-                _details.postValue(Resource.error(R.string.on_error_update))
             }
         }
-    }
-
-
-    override fun onCleared() {
-        super.onCleared()
-        Timber.i("DetailsViewModel destroyed!")
     }
 }

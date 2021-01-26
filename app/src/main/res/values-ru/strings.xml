@@ -1,0 +1,109 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+
+    // NETWORK
+    <string name="network_no_connection">Нет интернета</string>
+
+    // WEATHER DATA
+    // # TEMP
+    <string name="temp_celsium">Температура: %1$d\u2103</string>
+    <string name="temp_feels_like_celsium">Ощущается: %1$d\u2103</string>
+
+    // # WIND
+    <string name="wind_speed_ms">Ветер: %1$d м/с</string>
+    <string name="wind_speed_short_ms">%1$d м/с</string>
+
+    // # PRESSURE
+    <string name="pressure">Давление: %1$d hPa</string>
+
+    // # HUMIDITY
+    <string name="humidity">Влажность: %1$d%%</string>
+
+    // # CLOUDS
+    <string name="clouds">Облачность: %1$d%%</string>
+
+    // # SUN
+    <string name="sunrise">Рассвет: %1$s</string>
+    <string name="sunset">Закат: %1$s</string>
+
+    // LOCATION
+    <string name="location_already_added">Локация уже добавлена!</string>
+
+    // PROVIDERS
+    <string name="no_data">Нет данных …</string>
+
+    // WEATHER DESCRIPTION
+    // # THUNDERSTORM
+    <string name="description_200">Гроза с легким дождем</string>
+    <string name="description_201">Гроза с дождем</string>
+    <string name="description_202">Гроза с сильным дождь</string>
+    <string name="description_210">Легкая гроза</string>
+    <string name="description_211">Гроза</string>
+    <string name="description_212">Сильная гроза</string>
+    <string name="description_230">Гроза с легкой моросью</string>
+    <string name="description_231">Гроза с моросью</string>
+    <string name="description_232">Гроза с сильной моросью</string>
+    <string name="description_233">Гроза с градом</string>
+
+    // # DRIZZLE
+    <string name="description_300">Легкая морось</string>
+    <string name="description_301">Морось</string>
+    <string name="description_302">Сильная морось</string>
+
+    // # RAIN
+    <string name="description_500">Легкий дождь</string>
+    <string name="description_501">Умеренный дождь</string>
+    <string name="description_502">Сильный дождь</string>
+    <string name="description_503">Очень сильный дождь</string>
+    <string name="description_504">Экстримальный дождь</string>
+    <string name="description_511">Ледяной дождь</string>
+    <string name="description_520">Легкий ливень</string>
+    <string name="description_521">Ливень</string>
+    <string name="description_522">Сильный ливень</string>
+    <string name="description_531">Прерывистый ливень</string>
+
+    // # SNOW
+    <string name="description_600">Легкий снег</string>
+    <string name="description_601">Снег</string>
+    <string name="description_602">Сильный снег</string>
+    <string name="description_610">Мокрый снег</string>
+    <string name="description_612">Сильный мокрый снег</string>
+    <string name="description_620">Легкий морый снег</string>
+    <string name="description_621">Снег</string>
+    <string name="description_622">Сильный снег</string>
+    <string name="description_623">Шквал</string>
+
+    // # ATMOSPHERE
+    <string name="description_700">Туман</string>
+    <string name="description_711">Дым</string>
+    <string name="description_721">Дымка</string>
+    <string name="description_731">Песок/пыль</string>
+    <string name="description_741">Туман</string>
+    <string name="description_751">Ледяной туман</string>
+    <string name="description_761">Пыль</string>
+    <string name="description_762">Вулканический пепел</string>
+    <string name="description_771">Шквал</string>
+    <string name="description_781">Торнадо</string>
+
+    // # CLOUDS
+    <string name="description_800">Чистое небо</string>
+    <string name="description_801">Малая облачность</string>
+    <string name="description_802">Облачность</string>
+    <string name="description_803">Облачность</string>
+    <string name="description_804">Сильная облачность</string>
+
+    <string name="description_900">Возможны осадки</string>
+
+    // ACCESSABILITY
+    <string name="weather_icon_description">Weather icon</string>
+    <string name="wind_degree_description">Wind degree</string>
+
+    // MENU
+    <string name="action_settings">Settings</string>
+    <string name="action_order">Order</string>
+    <string name="menu_custom_delete">Delete</string>
+    <string name="menu_context_favorite">Add to favorite</string>
+    <string name="night_mode">Night mode</string>
+    <string name="day_mode">Day mode</string>
+
+</resources>

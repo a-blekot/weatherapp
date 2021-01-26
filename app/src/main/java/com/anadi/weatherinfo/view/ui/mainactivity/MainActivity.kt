@@ -1,13 +1,30 @@
 package com.anadi.weatherinfo.view.ui.mainactivity
 
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import androidx.lifecycle.Observer
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
+import com.anadi.weatherinfo.data.network.state.NetworkMonitor
+import com.anadi.weatherinfo.databinding.MainActivityBinding
 import com.anadi.weatherinfo.view.ui.BaseActivity
+import javax.inject.Inject
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(R.layout.main_activity) {
+
+    private val binding: MainActivityBinding by viewBinding()
+
+    @Inject
+    lateinit var networkMonitor: NetworkMonitor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
+
+        networkMonitor.isConnected.observe(this, Observer { onConnectionChanged(it) })
+    }
+
+    private fun onConnectionChanged(isConnected: Boolean) {
+        binding.offlineMode.visibility = if (isConnected) GONE else VISIBLE
     }
 }

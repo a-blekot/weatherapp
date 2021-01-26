@@ -6,6 +6,7 @@ import com.anadi.weatherinfo.data.db.location.LocationDao
 import com.anadi.weatherinfo.data.db.weather.WeatherDao
 import com.anadi.weatherinfo.data.location.LocationRepositoryImpl
 import com.anadi.weatherinfo.data.network.WeatherApi
+import com.anadi.weatherinfo.data.network.state.NetworkMonitor
 import com.anadi.weatherinfo.data.weather.WeatherCodes
 import com.anadi.weatherinfo.data.weather.WeatherCodesImpl
 import com.anadi.weatherinfo.data.weather.WeatherRepositoriesImpl
@@ -61,10 +62,11 @@ abstract class DataModule {
         @Named("OpenWeather")
         fun provideOpenWeatherRepository(
                 context: Context,
+                networkMonitor: NetworkMonitor,
                 @Named("OpenWeather")
                 weatherApi: WeatherApi, weatherDao: WeatherDao
         ): WeatherRepository {
-            return WeatherRepositoryImpl(context, weatherApi, weatherDao)
+            return WeatherRepositoryImpl(context, networkMonitor, weatherApi, weatherDao)
         }
 
         @Provides
@@ -72,21 +74,36 @@ abstract class DataModule {
         @Named("Weatherbit")
         fun provideWeatherbitRepository(
                 context: Context,
+                networkMonitor: NetworkMonitor,
                 @Named("Weatherbit")
                 weatherApi: WeatherApi, weatherDao: WeatherDao
         ): WeatherRepository {
-            return WeatherRepositoryImpl(context, weatherApi, weatherDao)
+            return WeatherRepositoryImpl(context, networkMonitor, weatherApi, weatherDao)
+        }
+
+        @Provides
+        @Singleton
+        @Named("Weatherapi")
+        fun provideWeatherapiRepository(
+                context: Context,
+                networkMonitor: NetworkMonitor,
+                @Named("Weatherapi")
+                weatherApi: WeatherApi, weatherDao: WeatherDao
+        ): WeatherRepository {
+            return WeatherRepositoryImpl(context, networkMonitor, weatherApi, weatherDao)
         }
 
         @Provides
         @Singleton
         fun provideWeatherRepositories(
                 @Named("OpenWeather")
-                weatherbit: WeatherRepository,
+                openweather: WeatherRepository,
                 @Named("Weatherbit")
-                openweather: WeatherRepository
+                weatherbit: WeatherRepository,
+                @Named("Weatherapi")
+                weatherapi: WeatherRepository
         ): WeatherRepositories {
-            return WeatherRepositoriesImpl(weatherbit, openweather)
+            return WeatherRepositoriesImpl(openweather, weatherbit, weatherapi)
         }
 
         @Provides

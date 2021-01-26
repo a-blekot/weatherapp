@@ -1,5 +1,6 @@
 package com.anadi.weatherinfo.view.di
 
+import com.anadi.weatherinfo.view.work.UpdateWorker
 import com.anadi.weatherinfo.WeatherApplication
 import com.anadi.weatherinfo.view.ui.details.DetailsFragment
 import com.anadi.weatherinfo.view.ui.locations.LocationsFragment
@@ -33,4 +34,5 @@ interface ApplicationComponent {
     fun inject(application: WeatherApplication)
     fun inject(locationsFragment: LocationsFragment)
     fun inject(detailsFragment: DetailsFragment)
+    fun inject(worker: UpdateWorker)
 }

@@ -18,6 +18,7 @@ package com.anadi.weatherinfo.view.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.anadi.weatherinfo.data.network.state.NetworkMonitor
 import com.anadi.weatherinfo.domain.location.AddLocationUseCase
 import com.anadi.weatherinfo.domain.location.CheckUpdatesAllLocationsUseCase
 import com.anadi.weatherinfo.domain.location.LocationRepository
@@ -64,13 +65,18 @@ class ViewModelModule {
     @IntoMap
     @ViewModelKey(LocationsViewModel::class)
     fun locationsViewModel(
+            networkMonitor: NetworkMonitor,
             addLocationUseCase: AddLocationUseCase,
             placesWrapper: PlacesWrapper,
             checkUpdatesAllLocationsUseCase: CheckUpdatesAllLocationsUseCase,
             locationRepository: LocationRepository
     ): ViewModel {
         return LocationsViewModel(
-                addLocationUseCase, placesWrapper, checkUpdatesAllLocationsUseCase, locationRepository
+                networkMonitor,
+                addLocationUseCase,
+                placesWrapper,
+                checkUpdatesAllLocationsUseCase,
+                locationRepository
         )
     }
 

@@ -1,4 +1,4 @@
-package com.anadi.weatherinfo
+package com.anadi.weatherinfo.view.work
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -26,7 +26,7 @@ class UpdateReceiver @Inject constructor(
                 try {
                     updateAllLocationsUseCase.build(null)
 
-                    val intent = Intent().apply {
+                    val mainIntent = Intent().apply {
                         setClassName(
                                 "com.anadi.weatherinfo",
                                 "com.anadi.weatherinfo.view.ui.mainactivity.MainActivity"
@@ -34,7 +34,7 @@ class UpdateReceiver @Inject constructor(
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     }
 
-                    context.startActivity(intent)
+                    context.startActivity(mainIntent)
 
                 } catch (e: WeatherException) {
                     Timber.e(e)

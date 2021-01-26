@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
@@ -43,7 +44,10 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
         viewModel.id = DetailsFragmentArgs.fromBundle(requireArguments()).locationId
 
         adapter = ProvidersAdapter(this, weatherCodes)
-        binding.recyclerView.adapter = adapter
+        binding.recyclerView.apply {
+            adapter = this@ProvidersFragment.adapter
+            addItemDecoration(DividerItemDecoration(binding.recyclerView.context, DividerItemDecoration.VERTICAL))
+        }
 
         viewModel.details.observe(viewLifecycleOwner, Observer { update(it) })
         viewModel.mergedWeather.observe(viewLifecycleOwner, Observer { updateMerged(it) })

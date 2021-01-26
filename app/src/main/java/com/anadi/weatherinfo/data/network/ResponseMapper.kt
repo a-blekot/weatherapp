@@ -1,6 +1,7 @@
 package com.anadi.weatherinfo.data.network
 
 import com.anadi.weatherinfo.data.network.openweather.OpenWeatherResponse
+import com.anadi.weatherinfo.data.network.weatherapi.WeatherapiResponse
 import com.anadi.weatherinfo.data.network.weatherbit.WeatherbitResponse
 
 object ResponseMapper {
@@ -44,6 +45,23 @@ object ResponseMapper {
         )
     }
 
-    const val PI2_RADIAN = 360
-    const val MILLISECONDS = 1000
+    fun convert(response: WeatherapiResponse): WeatherResponse {
+        val weatherapi = response.current
+
+        return WeatherResponse(
+                provider = WeatherProvider.WEATHER_API,
+                code = weatherapi.condition.code,
+                temp = weatherapi.temp.toInt(),
+                tempFeelsLike = weatherapi.tempFeelsLike.toInt(),
+                windSpeed = weatherapi.windSpeed.toInt(),
+                windDegree = weatherapi.windDegree, // PI2_RADIAN -
+                pressure = weatherapi.pressure.toInt(),
+                humidity = weatherapi.humidity,
+                clouds = weatherapi.clouds,
+                dataCalcTimestamp = weatherapi.dataCalcTimestamp * MILLISECONDS,
+        )
+    }
+
+    private const val PI2_RADIAN = 360
+    private const val MILLISECONDS = 1000L
 }

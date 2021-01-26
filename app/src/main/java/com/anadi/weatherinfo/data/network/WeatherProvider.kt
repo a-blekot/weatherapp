@@ -2,7 +2,10 @@ package com.anadi.weatherinfo.data.network
 
 @Suppress("MagicNumber")
 enum class WeatherProvider constructor(val code: Int, val providerName: String) {
-    OPEN_WEATHER(1, "OpenWeather"), WEATHER_BIT(2, "Weatherbit"), MERGED(3, "Merged info");
+    OPEN_WEATHER(1, "OpenWeather"),
+    WEATHER_BIT(2, "Weatherbit"),
+    WEATHER_API(3, "Weatherapi"),
+    MERGED(4, "Merged info");
 
     companion object {
         fun fromCode(code: Int): WeatherProvider {

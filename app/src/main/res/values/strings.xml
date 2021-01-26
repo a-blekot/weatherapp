@@ -1,81 +1,122 @@
 <resources>
     <string name="app_name">WeatherApp</string>
-    <string name="on_error_select_city">Wrong location, please select again</string>
-    <string name="on_error_load_location">Error occurred while loading location, please select again</string>
-    <string name="add_location_already_added">Location already added!</string>
-    <string name="on_error_update">Can\'t update. Please check internet connection.</string>
+
+    // NETWORK
+    <string name="network_no_connection">No connection</string>
+
+    // WEATHER DATA
+    // # TEMP
+    <string name="temp_celsium">Temp: %1$d\u2103</string>
+    <string name="temp_short_celsium" translatable="false">%1$d\u2103</string>
+    <string name="temp_celsium_stub" translatable="false">8.0\u2103</string>
+    <string name="temp_feels_like_celsium">Feels like: %1$d\u2103</string>
+
+    // # WIND
     <string name="wind_speed_ms">Wind: %1$d m/s</string>
     <string name="wind_speed_short_ms">%1$d m/s</string>
     <string name="wind_speed_ms_stub" translatable="false">2.5 m/s</string>
-    <string name="temp_celsium">Temp: %1$d\u2103</string>
-    <string name="temp_short_celsium">%1$d\u2103</string>
-    <string name="temp_celsium_stub" translatable="false">8.0\u2103</string>
-    <string name="temp_fahrenheit">Temp: %1$d\u2109</string>
+
+    // # PRESSURE
     <string name="pressure">Pressure: %1$d hPa</string>
-    <string name="pressure_short">%1$d hPa</string>
+    <string name="pressure_short" translatable="false">%1$d hPa</string>
+
+    // # HUMIDITY
     <string name="humidity">Humidity: %1$d%%</string>
-    <string name="humidity_short">\u9748 %1$d%%</string>
+    <string name="humidity_short" translatable="false">%1$d%%</string>
+
+    // # CLOUDS
+    <string name="clouds">Clouds: %1$d%%</string>
+
+    // # SUN
     <string name="sunrise">Sunrise: %1$s</string>
     <string name="sunset">Sunset: %1$s</string>
-    <string name="details_temp_label">Current \ntemp</string>
-    <string name="wind_speed">Wind\nspeed</string>
-    <string name="weather_icon_description">Weather icon</string>
-    <string name="wind_degree_description">Wind degree</string>
+
+    // # TIMEZONE
     <string name="timezone" translatable="false">GMT %1$s%2$02d:%3$02d</string>
-    <string name="background_picture">Background picture</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_order">Order</string>
-    <string name="order_message" translatable="false">You have ordered something</string>
-    <string name="menu_custom_delete">Delete</string>
-    <string name="menu_context_favorite">Add to favorite</string>
-    <string name="night_mode">Night mode</string>
-    <string name="day_mode">Day mode</string>
+
+    // NOTIFICATIONS
+    <string name="channel_id" translatable="false">com.anadi.weatherinfo.UpdateChannel</string>
     <string name="channel_name" translatable="false">update channel</string>
     <string name="channel_description" translatable="false">Description of Update-channel</string>
 
-    <string name="no_data">No data …</string>
-    <string name="adds_location_to_the_list">Adds location to the list</string>
+    // LOCATION
+    <string name="location_already_added">Location already added!</string>
 
+    // PROVIDERS
+    <string name="no_data">No data …</string>
 
     // WEATHER DESCRIPTION
+    // # THUNDERSTORM
     <string name="description_200">Thunderstorm with light rain</string>
     <string name="description_201">Thunderstorm with rain</string>
     <string name="description_202">Thunderstorm with heavy rain</string>
+    <string name="description_210">Light thunderstorm</string>
+    <string name="description_211">Thunderstorm</string>
+    <string name="description_212">Heavy thunderstorm</string>
     <string name="description_230">Thunderstorm with light drizzle</string>
     <string name="description_231">Thunderstorm with drizzle</string>
     <string name="description_232">Thunderstorm with heavy drizzle</string>
     <string name="description_233">Thunderstorm with Hail</string>
-    <string name="description_300">Light Drizzle</string>
+
+    // # DRIZZLE
+    <string name="description_300">Light drizzle</string>
     <string name="description_301">Drizzle</string>
-    <string name="description_302">Heavy Drizzle</string>
-    <string name="description_500">Light Rain</string>
-    <string name="description_501">Moderate Rain</string>
-    <string name="description_502">Heavy Rain</string>
+    <string name="description_302">Heavy drizzle</string>
+
+    // # RAIN
+    <string name="description_500">Light rain</string>
+    <string name="description_501">Moderate rain</string>
+    <string name="description_502">Heavy rain</string>
+    <string name="description_503">Very heavy rain</string>
+    <string name="description_504">Extreme rain</string>
     <string name="description_511">Freezing rain</string>
     <string name="description_520">Light shower rain</string>
     <string name="description_521">Shower rain</string>
     <string name="description_522">Heavy shower rain</string>
+    <string name="description_531">Ragged shower rain</string>
+
+    // # SNOW
     <string name="description_600">Light snow</string>
     <string name="description_601">Snow</string>
-    <string name="description_602">Heavy Snow</string>
+    <string name="description_602">Heavy snow</string>
     <string name="description_610">Mix snow/rain</string>
-    <string name="description_611">Sleet</string>
     <string name="description_612">Heavy sleet</string>
-    <string name="description_621">Snow shower</string>
-    <string name="description_622">Heavy snow shower</string>
+    <string name="description_620">Light shower snow</string>
+    <string name="description_621">Shower snow</string>
+    <string name="description_622">Heavy shower snow</string>
     <string name="description_623">Flurries</string>
+
+    // # ATMOSPHERE
     <string name="description_700">Mist</string>
     <string name="description_711">Smoke</string>
     <string name="description_721">Haze</string>
     <string name="description_731">Sand/dust</string>
     <string name="description_741">Fog</string>
-    <string name="description_751">Freezing Fog</string>
+    <string name="description_751">Freezing fog</string>
+    <string name="description_761">Dust</string>
+    <string name="description_762">Volcanic ash</string>
+    <string name="description_771">Squall</string>
+    <string name="description_781">Tornado</string>
+
+    // # CLOUDS
     <string name="description_800">Clear sky</string>
     <string name="description_801">Few clouds</string>
     <string name="description_802">Scattered clouds</string>
     <string name="description_803">Broken clouds</string>
     <string name="description_804">Overcast clouds</string>
+
     <string name="description_900">Unknown Precipitation</string>
 
+    // ACCESSABILITY
+    <string name="weather_icon_description">Weather icon</string>
+    <string name="wind_degree_description">Wind degree</string>
+
+    // MENU
+    <string name="action_settings">Settings</string>
+    <string name="action_order">Order</string>
+    <string name="menu_custom_delete">Delete</string>
+    <string name="menu_context_favorite">Add to favorite</string>
+    <string name="night_mode">Night mode</string>
+    <string name="day_mode">Day mode</string>
 
 </resources>

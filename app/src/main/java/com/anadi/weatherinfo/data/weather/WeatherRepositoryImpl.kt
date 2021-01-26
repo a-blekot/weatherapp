@@ -1,19 +1,25 @@
 package com.anadi.weatherinfo.data.weather
 
 import android.content.Context
+import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.data.db.location.Coord
 import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.data.db.weather.WeatherDao
 import com.anadi.weatherinfo.data.network.WeatherApi
 import com.anadi.weatherinfo.data.network.WeatherResponse
+import com.anadi.weatherinfo.data.network.state.NetworkMonitor
 import com.anadi.weatherinfo.domain.weather.WeatherRepository
+import com.anadi.weatherinfo.utils.Resource
 import es.dmoral.toasty.Toasty
 import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
 class WeatherRepositoryImpl @Inject constructor(
-        private val context: Context, private val weatherApi: WeatherApi, private val weatherDao: WeatherDao
+        private val context: Context,
+        private val networkMonitor: NetworkMonitor,
+        private val weatherApi: WeatherApi,
+        private val weatherDao: WeatherDao
 ) : WeatherRepository {
 
     override suspend fun fetchAll(): List<Weather> {
@@ -47,10 +53,14 @@ class WeatherRepositoryImpl @Inject constructor(
         weatherDao.fetchAll()
     }
 
-    private suspend fun update(location: Location, weather: Weather?): Weather {
+    private suspend fun update(location: Location, weather: Weather?): Weather? {
+        if (networkMonitor.offline) {
+            return weather
+        }
+
         val response = getWeatherResponse(location.coord)
         Toasty.success(
-                context, "Weather loaded from ${weatherApi.provider.providerName}", Toasty.LENGTH_LONG
+                context, "Weather loaded from ${weatherApi.provider.providerName}", Toasty.LENGTH_SHORT
         ).show()
 
         return addOrUpdate(location.id, weather, response)

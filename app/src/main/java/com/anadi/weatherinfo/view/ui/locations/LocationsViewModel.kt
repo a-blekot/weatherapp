@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.anadi.weatherinfo.data.db.location.Coord
 import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
+import com.anadi.weatherinfo.data.network.state.NetworkMonitor
 import com.anadi.weatherinfo.domain.location.AddLocationUseCase
 import com.anadi.weatherinfo.domain.location.CheckUpdatesAllLocationsUseCase
 import com.anadi.weatherinfo.domain.location.LocationRepository
@@ -18,6 +19,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class LocationsViewModel @Inject constructor(
+        private val networkMonitor: NetworkMonitor,
         private val addLocationUseCase: AddLocationUseCase,
         private val placesWrapper: PlacesWrapper,
         private val checkUpdatesAllLocationsUseCase: CheckUpdatesAllLocationsUseCase,
@@ -27,6 +29,9 @@ class LocationsViewModel @Inject constructor(
     private val locations: MutableLiveData<List<LocationWithWeathers>> = MutableLiveData(arrayListOf())
     val locationsNotifier: LiveData<List<LocationWithWeathers>>
         get() = locations
+
+    val isConnected: LiveData<Boolean>
+        get() = networkMonitor.isConnected
 
     fun updateLocations() {
         viewModelScope.launch {
@@ -68,10 +73,5 @@ class LocationsViewModel @Inject constructor(
     private suspend fun update() {
         val data = locationRepository.fetchAllWithWeathers()
         locations.postValue(data)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        Timber.i("LocationsViewModel destroyed!")
     }
 }

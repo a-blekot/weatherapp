@@ -9,31 +9,54 @@
 
     <ImageView
         android:id="@+id/weather_icon"
-        android:scaleType="fitCenter"
         android:layout_width="@dimen/adaptive"
         android:layout_height="@dimen/adaptive"
-        android:layout_marginTop="@dimen/margin_small"
         android:contentDescription="@string/weather_icon_description"
-        app:layout_constraintBottom_toTopOf="@+id/temp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/s01d" />
 
     <TextView
-        android:id="@+id/temp"
+        android:id="@+id/description"
         style="@style/details_main"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintVertical_bias="0.3"
+        tools:text="Clouds" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="@dimen/adaptive"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/description" />
+
+    <TextView
+        android:id="@+id/temp"
+        style="@style/details_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider"
         tools:text="Temp: 22,2 C" />
+
+    <TextView
+        android:id="@+id/temp_feels_like"
+        style="@style/details_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/temp"
+        tools:text="Feels like: 22,2 C" />
 
     <TextView
         android:id="@+id/wind"
         style="@style/details_main"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/temp"
+        app:layout_constraintTop_toBottomOf="@id/temp_feels_like"
         tools:text="Wind: 4,0 m/s" />
 
     <ImageView
@@ -52,8 +75,6 @@
     <TextView
         android:id="@+id/pressure"
         style="@style/details_info"
-        android:layout_marginTop="24dp"
-        app:layout_constraintBottom_toTopOf="@id/humidity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wind"
         tools:text="Presure: 1020 hPa" />
@@ -61,17 +82,22 @@
     <TextView
         android:id="@+id/humidity"
         style="@style/details_info"
-        app:layout_constraintBottom_toTopOf="@id/location_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pressure"
         tools:text="Humidity: 52%" />
+
+    <TextView
+        android:id="@+id/clouds"
+        style="@style/details_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/humidity"
+        tools:text="Clouds: 52%" />
 
     <TextView
         android:id="@+id/location_name"
         style="@style/details_name"
         app:layout_constraintBottom_toTopOf="@id/update_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/humidity"
         tools:text="Sun Francisco, USA" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
