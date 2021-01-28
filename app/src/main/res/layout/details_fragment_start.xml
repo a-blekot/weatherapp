@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layoutDescription="@xml/details_fragment_scene"
     tools:context=".view.ui.details.DetailsFragment">
 
     <ImageView
@@ -98,7 +99,58 @@
         style="@style/details_name"
         app:layout_constraintBottom_toTopOf="@id/update_button"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="Sun Francisco, USA" />
+        app:layout_constraintTop_toBottomOf="@+id/clouds"
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="Kiev" />
+
+    <TextView
+        android:id="@+id/location_address"
+        style="@style/details_info"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/coordinates"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/location_name"
+        tools:text="Kiev, Ukraine" />
+
+    <TextView
+        android:id="@+id/coordinates"
+        style="@style/details_info"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/timezone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/location_address"
+        tools:text="50.45466, 30.52380" />
+
+    <TextView
+        android:id="@+id/timezone"
+        style="@style/details_info"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/sunrise"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/coordinates"
+        tools:text="GMT+02:00" />
+
+    <TextView
+        android:id="@+id/sunrise"
+        style="@style/details_info"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/sunset"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timezone"
+        tools:text="Sunrise: 07:25" />
+
+    <TextView
+        android:id="@+id/sunset"
+        style="@style/details_info"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sunrise"
+        tools:text="Sunset: 17:22" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/update_button"
@@ -110,4 +162,4 @@
         android:id="@+id/progress_bar"
         layout="@layout/progress_bar_default" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

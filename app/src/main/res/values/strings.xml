@@ -32,7 +32,7 @@
     <string name="sunset">Sunset: %1$s</string>
 
     // # TIMEZONE
-    <string name="timezone" translatable="false">GMT %1$s%2$02d:%3$02d</string>
+    <string name="timezone" translatable="false">GMT %1$s</string>
 
     // NOTIFICATIONS
     <string name="channel_id" translatable="false">com.anadi.weatherinfo.UpdateChannel</string>
@@ -44,6 +44,7 @@
 
     // PROVIDERS
     <string name="no_data">No data …</string>
+    <string name="average_data">%1$s: average data</string>
 
     // WEATHER DESCRIPTION
     // # THUNDERSTORM

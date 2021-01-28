@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.anadi.weatherinfo.R
+import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.data.network.WeatherProvider
 import com.anadi.weatherinfo.data.weather.WeatherCode
@@ -18,6 +19,8 @@ class ProvidersAdapter(private val listener: Listener, private val weatherCodes:
     interface Listener {
         fun onSelected(weather: Weather)
     }
+
+    lateinit var location: Location
 
     var dataset = emptyList<Weather>()
         set(value) {
@@ -41,7 +44,7 @@ class ProvidersAdapter(private val listener: Listener, private val weatherCodes:
         holder.bind(weather, weatherCodes.from(weather.code))
     }
 
-    class ProviderHolder(
+    inner class ProviderHolder(
             private val binding: ProviderViewBinding,
             private val listener: Listener
     ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
@@ -59,12 +62,11 @@ class ProvidersAdapter(private val listener: Listener, private val weatherCodes:
                 providerName.text = WeatherProvider.fromCode(weather.providerId).providerName
                 lastUpdateTime.text = DateFormats.defaultTime.print(weather.dataCalcTimestamp)
 
-                icon.setImageResource(weatherCode.iconDay)
+                icon.setImageResource(weatherCode.getIcon(location))
                 description.text = context.getString(weatherCode.description)
 
                 temp.text = context.getString(R.string.temp_short_celsium, weather.temp)
                 windSpeed.text = context.getString(R.string.wind_speed_short_ms, weather.windSpeed)
-                windDirection.rotation = weather.windDegree.toFloat()
 
                 pressure.text = context.getString(R.string.pressure_short, weather.pressure)
                 humidity.text = context.getString(R.string.humidity_short, weather.humidity)

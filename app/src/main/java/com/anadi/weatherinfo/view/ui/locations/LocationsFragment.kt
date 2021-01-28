@@ -22,7 +22,6 @@ import es.dmoral.toasty.Toasty
 import timber.log.Timber
 import javax.inject.Inject
 
-
 class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAdapter.Listener {
     private val binding: LocationsFragmentBinding by viewBinding()
 
@@ -41,7 +40,7 @@ class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAda
 
         // Get the viewModel
         viewModel = ViewModelProvider(this, viewModelFactory).get(LocationsViewModel::class.java)
-//        viewModel.updateLocations()
+        viewModel.updateSuntime()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

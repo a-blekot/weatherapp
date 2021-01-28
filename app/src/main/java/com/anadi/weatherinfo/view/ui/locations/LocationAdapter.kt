@@ -56,7 +56,7 @@ class LocationAdapter(
             val location = data.location
             val weather = data.weathers.getOrNull(0)
 
-            binding.icon.setImageResource(weatherCode.iconDay)
+            binding.icon.setImageResource(weatherCode.getIcon(location))
             binding.name.text = location.name
 
             binding.temp.text = context.getString(R.string.temp_short_celsium, weather?.temp ?: 0)

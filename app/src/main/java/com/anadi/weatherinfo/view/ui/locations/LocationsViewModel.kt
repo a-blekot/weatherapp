@@ -15,8 +15,9 @@ import com.anadi.weatherinfo.domain.location.LocationRepository
 import com.anadi.weatherinfo.domain.places.PlacesWrapper
 import com.google.android.libraries.places.api.model.Place
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
+
+private const val MILLIS_IN_MINUTE = 60 * 1000
 
 class LocationsViewModel @Inject constructor(
         private val networkMonitor: NetworkMonitor,
@@ -32,6 +33,12 @@ class LocationsViewModel @Inject constructor(
 
     val isConnected: LiveData<Boolean>
         get() = networkMonitor.isConnected
+
+    fun updateSuntime() {
+        viewModelScope.launch {
+            locationRepository.updateSuntime()
+        }
+    }
 
     fun updateLocations() {
         viewModelScope.launch {
@@ -56,7 +63,7 @@ class LocationsViewModel @Inject constructor(
                             name = place.name!!,
                             address = place.address!!,
                             coord = Coord.from(place.latLng!!),
-                            utcOffsetMinutes = place.utcOffsetMinutes!!
+                            utcOffsetMillis = place.utcOffsetMinutes!! * MILLIS_IN_MINUTE
                     )
             )
             update()

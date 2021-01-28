@@ -31,6 +31,7 @@
 
     // PROVIDERS
     <string name="no_data">Нет данных …</string>
+    <string name="average_data">%1$s: средние показатели</string>
 
     // WEATHER DESCRIPTION
     // # THUNDERSTORM

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/details_fragment_scene"
+    tools:context=".view.ui.details.DetailsFragment">
+
+    <ImageView
+        android:id="@+id/weather_icon"
+        android:layout_width="@dimen/adaptive"
+        android:layout_height="@dimen/adaptive"
+        android:contentDescription="@string/weather_icon_description"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/s01d" />
+
+    <TextView
+        android:id="@+id/description"
+        style="@style/details_main"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        tools:text="Clouds" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="@dimen/adaptive"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/description" />
+
+    <TextView
+        android:id="@+id/temp"
+        style="@style/details_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        tools:text="Temp: 22,2 C" />
+
+    <TextView
+        android:id="@+id/temp_feels_like"
+        style="@style/details_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/temp"
+        tools:text="Feels like: 22,2 C" />
+
+    <TextView
+        android:id="@+id/wind"
+        style="@style/details_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/temp_feels_like"
+        tools:text="Wind: 4,0 m/s" />
+
+    <ImageView
+        android:id="@+id/wind_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:background="@drawable/round_frame"
+        android:contentDescription="@string/wind_degree_description"
+        android:rotation="45"
+        android:src="@drawable/wind_degree"
+        app:layout_constraintBottom_toBottomOf="@+id/wind"
+        app:layout_constraintStart_toEndOf="@+id/wind"
+        app:layout_constraintTop_toTopOf="@+id/wind" />
+
+    <TextView
+        android:id="@+id/pressure"
+        style="@style/details_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wind"
+        tools:text="Presure: 1020 hPa" />
+
+    <TextView
+        android:id="@+id/humidity"
+        style="@style/details_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pressure"
+        tools:text="Humidity: 52%" />
+
+    <TextView
+        android:id="@+id/clouds"
+        style="@style/details_info"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/humidity"
+        tools:text="Clouds: 52%" />
+
+    <TextView
+        android:id="@+id/location_name"
+        style="@style/details_name"
+        app:layout_constraintBottom_toTopOf="@id/location_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clouds"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Kiev" />
+
+    <TextView
+        android:id="@+id/location_address"
+        style="@style/details_info"
+        app:layout_constraintBottom_toTopOf="@id/coordinates"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/location_name"
+        tools:text="Kiev, Ukraine" />
+
+    <TextView
+        android:id="@+id/coordinates"
+        style="@style/details_info"
+        app:layout_constraintBottom_toTopOf="@id/timezone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/location_address"
+        tools:text="50.45466, 30.52380" />
+
+    <TextView
+        android:id="@+id/timezone"
+        style="@style/details_info"
+        app:layout_constraintBottom_toTopOf="@id/sunrise"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/coordinates"
+        tools:text="GMT+02:00" />
+
+    <TextView
+        android:id="@+id/sunrise"
+        style="@style/details_info"
+        app:layout_constraintBottom_toTopOf="@id/sunset"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timezone"
+        tools:text="Sunrise: 07:25" />
+
+    <TextView
+        android:id="@+id/sunset"
+        style="@style/details_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sunrise"
+        tools:text="Sunset: 17:22" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/update_button"
+        style="@style/fab"
+        app:srcCompat="@drawable/ic_update"
+        tools:ignore="MissingConstraints" />
+
+    <include
+        android:id="@+id/progress_bar"
+        layout="@layout/progress_bar_default" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

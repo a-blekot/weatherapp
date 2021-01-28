@@ -55,7 +55,7 @@
         android:id="@+id/details_destination"
         android:name="com.anadi.weatherinfo.view.ui.details.DetailsFragment"
         android:label="details_fragment"
-        tools:layout="@layout/details_fragment">
+        tools:layout="@layout/details_fragment_start">
         <argument
             android:name="location_id"
             android:defaultValue="0"

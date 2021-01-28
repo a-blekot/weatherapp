@@ -3,6 +3,7 @@ package com.anadi.weatherinfo.view.di
 import com.anadi.weatherinfo.data.network.WeatherApi
 import com.anadi.weatherinfo.data.network.openweather.OpenWeatherApi
 import com.anadi.weatherinfo.data.network.openweather.OpenWeatherApiFacade
+import com.anadi.weatherinfo.data.network.suntime.SuntimeApi
 import com.anadi.weatherinfo.data.network.weatherapi.WeatherapiApi
 import com.anadi.weatherinfo.data.network.weatherapi.WeatherapiApiFacade
 import com.anadi.weatherinfo.data.network.weatherbit.WeatherbitApi
@@ -18,6 +19,15 @@ import javax.inject.Singleton
 abstract class ApiModule {
 
     companion object {
+
+        @Provides
+        @Singleton
+        fun provideSuntimeAPI(
+                @Named("Suntime")
+                retrofit: Retrofit
+        ): SuntimeApi {
+            return retrofit.create(SuntimeApi::class.java)
+        }
 
         @Provides
         @Singleton

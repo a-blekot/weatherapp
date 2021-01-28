@@ -29,6 +29,13 @@ abstract class NetworkModule {
 
         @Provides
         @Singleton
+        @Named("Suntime")
+        fun provideOkHttpClientSuntime(interceptor: HttpLoggingInterceptor): OkHttpClient {
+            return OkHttpClient.Builder().addInterceptor(interceptor).addNetworkInterceptor(StethoInterceptor()).build()
+        }
+
+        @Provides
+        @Singleton
         @Named("OpenWeather")
         fun provideOkHttpClientOpenWeather(interceptor: HttpLoggingInterceptor): OkHttpClient {
             return OkHttpClient.Builder().addInterceptor(interceptor).addNetworkInterceptor(StethoInterceptor()).build()
@@ -46,6 +53,20 @@ abstract class NetworkModule {
         @Named("Weatherapi")
         fun provideOkHttpClientWeatherapi(interceptor: HttpLoggingInterceptor): OkHttpClient {
             return OkHttpClient.Builder().addInterceptor(interceptor).addNetworkInterceptor(StethoInterceptor()).build()
+        }
+
+        @Provides
+        @Singleton
+        @Named("Suntime")
+        fun provideRetrofitSuntime(
+                @Named("Suntime")
+                client: OkHttpClient
+        ): Retrofit {
+            return Retrofit.Builder()
+                    .baseUrl("https://api.sunrise-sunset.org/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client)
+                    .build()
         }
 
         @Provides

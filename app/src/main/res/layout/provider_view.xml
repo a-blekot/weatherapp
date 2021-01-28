@@ -4,17 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/margin_small">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/provider_name"
         style="@style/details_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
         android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="@id/lastUpdateTime"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Weatherbit" />
 
@@ -22,8 +20,6 @@
         android:id="@+id/lastUpdateTime"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
-        android:breakStrategy="balanced"
         android:lines="2"
         android:padding="2dp"
         android:textSize="18sp"
@@ -37,7 +33,7 @@
         android:layout_height="@dimen/weather_icon_normal"
         android:layout_marginStart="@dimen/margin_small"
         android:layout_marginTop="@dimen/margin_small"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:src="@drawable/d03d"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/provider_name" />
@@ -57,21 +53,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_xsmall"
-        app:layout_constraintEnd_toStartOf="@+id/wind_direction"
-        app:layout_constraintTop_toTopOf="@+id/icon"
+        app:layout_constraintStart_toEndOf="@+id/temp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/temp"
         tools:text="@string/wind_speed_ms_stub" />
-
-    <ImageView
-        android:id="@+id/wind_direction"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/round_frame"
-        android:contentDescription="@string/wind_degree_description"
-        android:rotation="45"
-        android:src="@drawable/wind_degree"
-        app:layout_constraintBottom_toBottomOf="@+id/wind_speed"
-        app:layout_constraintEnd_toStartOf="@id/barrier_right"
-        app:layout_constraintTop_toTopOf="@+id/wind_speed" />
 
     <TextView
         android:id="@+id/description"
@@ -97,9 +81,8 @@
         style="@style/details_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/wind_direction"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/wind_direction"
+        app:layout_constraintBaseline_toBaselineOf="@+id/temp"
         tools:text="1020 hPa" />
 
     <TextView
@@ -108,7 +91,7 @@
         android:gravity="center"
         app:drawableStartCompat="@drawable/ic_drop"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pressure"
+        app:layout_constraintBaseline_toBaselineOf="@+id/description"
         tools:text="52%" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

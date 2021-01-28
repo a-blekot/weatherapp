@@ -7,6 +7,7 @@ import com.anadi.weatherinfo.data.db.weather.WeatherDao
 import com.anadi.weatherinfo.data.location.LocationRepositoryImpl
 import com.anadi.weatherinfo.data.network.WeatherApi
 import com.anadi.weatherinfo.data.network.state.NetworkMonitor
+import com.anadi.weatherinfo.data.network.suntime.SuntimeApi
 import com.anadi.weatherinfo.data.weather.WeatherCodes
 import com.anadi.weatherinfo.data.weather.WeatherCodesImpl
 import com.anadi.weatherinfo.data.weather.WeatherRepositoriesImpl
@@ -53,44 +54,44 @@ abstract class DataModule {
 
         @Provides
         @Singleton
-        fun provideLocationRepository(locationDao: LocationDao): LocationRepository {
-            return LocationRepositoryImpl(locationDao)
+        fun provideLocationRepository(
+                locationDao: LocationDao,
+                suntimeApi: SuntimeApi,
+                networkMonitor: NetworkMonitor): LocationRepository {
+            return LocationRepositoryImpl(locationDao, suntimeApi, networkMonitor)
         }
 
         @Provides
         @Singleton
         @Named("OpenWeather")
         fun provideOpenWeatherRepository(
-                context: Context,
                 networkMonitor: NetworkMonitor,
                 @Named("OpenWeather")
                 weatherApi: WeatherApi, weatherDao: WeatherDao
         ): WeatherRepository {
-            return WeatherRepositoryImpl(context, networkMonitor, weatherApi, weatherDao)
+            return WeatherRepositoryImpl(networkMonitor, weatherApi, weatherDao)
         }
 
         @Provides
         @Singleton
         @Named("Weatherbit")
         fun provideWeatherbitRepository(
-                context: Context,
                 networkMonitor: NetworkMonitor,
                 @Named("Weatherbit")
                 weatherApi: WeatherApi, weatherDao: WeatherDao
         ): WeatherRepository {
-            return WeatherRepositoryImpl(context, networkMonitor, weatherApi, weatherDao)
+            return WeatherRepositoryImpl(networkMonitor, weatherApi, weatherDao)
         }
 
         @Provides
         @Singleton
         @Named("Weatherapi")
         fun provideWeatherapiRepository(
-                context: Context,
                 networkMonitor: NetworkMonitor,
                 @Named("Weatherapi")
                 weatherApi: WeatherApi, weatherDao: WeatherDao
         ): WeatherRepository {
-            return WeatherRepositoryImpl(context, networkMonitor, weatherApi, weatherDao)
+            return WeatherRepositoryImpl(networkMonitor, weatherApi, weatherDao)
         }
 
         @Provides

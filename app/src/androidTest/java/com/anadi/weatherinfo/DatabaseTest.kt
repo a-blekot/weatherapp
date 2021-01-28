@@ -25,8 +25,10 @@ import com.anadi.weatherinfo.data.db.location.Coord
 import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.data.db.location.LocationDao
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
+import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -52,8 +54,7 @@ class DatabaseTest {
         // process is killed.
         db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java)
                 // Allowing main thread queries, just for testing.
-                .allowMainThreadQueries()
-                .build()
+                .allowMainThreadQueries().build()
         locationDao = db.locationDao()
     }
 
@@ -150,22 +151,28 @@ class DatabaseTest {
         }
     }
 
-    private fun kievLocationEmptyId() = Location(NO_ID, KIEV_NAME, KIEV_ADDRESS, KIEV_COORD, KIEV_UTC_OFFSET)
+    private fun kievLocationEmptyId() = Location(
+            NO_ID, KIEV_NAME, KIEV_ADDRESS, KIEV_COORD, DateTimeZone.forOffsetMillis(KIEV_UTC_OFFSET)
+    )
 
-    private fun londonLocationWithId(id: Int) = Location(id, LONDON_NAME, LONDON_ADDRESS, LONDON_COORD, LONDON_UTC_OFFSET)
+    private fun londonLocationWithId(id: Int) = Location(
+            id, LONDON_NAME, LONDON_ADDRESS, LONDON_COORD, DateTimeZone.forOffsetMillis(LONDON_UTC_OFFSET)
+    )
 
     private fun assertKievLocation(location: Location?) {
         assertEquals(location?.name, KIEV_NAME)
         assertEquals(location?.address, KIEV_ADDRESS)
         assertEquals(location?.coord, KIEV_COORD)
-        assertEquals(location?.utcOffsetMinutes, KIEV_UTC_OFFSET)
+        assertEquals(location?.timeZone?.getOffset(DateTime()), KIEV_UTC_OFFSET)
+
+        DateTimeZone.UTC
     }
 
     private fun assertLondonLocation(location: Location?) {
         assertEquals(location?.name, LONDON_NAME)
         assertEquals(location?.address, LONDON_ADDRESS)
         assertEquals(location?.coord, LONDON_COORD)
-        assertEquals(location?.utcOffsetMinutes, LONDON_UTC_OFFSET)
+        assertEquals(location?.timeZone?.getOffset(DateTime()), LONDON_UTC_OFFSET)
     }
 
     companion object {
@@ -178,7 +185,7 @@ class DatabaseTest {
         const val KIEV_NAME = "Kiev"
         const val KIEV_ADDRESS = "Kiev, Ukraine"
         val KIEV_COORD = Coord(50.45466, 30.5238)
-        const val KIEV_UTC_OFFSET = 180
+        const val KIEV_UTC_OFFSET = 180 * 60 * 1000
 
         const val LONDON_NAME = "London"
         const val LONDON_ADDRESS = "London, UK"

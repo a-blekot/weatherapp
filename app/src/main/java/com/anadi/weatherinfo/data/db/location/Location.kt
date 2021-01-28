@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
 
 @Entity(tableName = "location")
 data class Location(
@@ -20,12 +22,21 @@ data class Location(
         @Embedded(prefix = "coord_")
         val coord: Coord,
 
-        @ColumnInfo(name = "utc_offset_minutes")
-        val utcOffsetMinutes: Int,
+        @ColumnInfo(name = "time_zone")
+        val timeZone: DateTimeZone,
 
         @ColumnInfo(name = "sunrise")
-        val sunrise: Long = 0,
+        var sunrise: DateTime = DateTime(0L),
 
         @ColumnInfo(name = "sunset")
-        val sunset: Long = 0
-)
+        var sunset: DateTime = DateTime(0L)
+) {
+    init {
+        sunrise = sunrise.toDateTime(timeZone)
+        sunset = sunset.toDateTime(timeZone)
+    }
+
+    fun isDayNow(): Boolean {
+        return sunrise.isBeforeNow && sunset.isAfterNow
+    }
+}

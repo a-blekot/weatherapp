@@ -9,7 +9,8 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
 import com.anadi.weatherinfo.data.weather.WeatherCodes
-import com.anadi.weatherinfo.databinding.DetailsFragmentBinding
+import com.anadi.weatherinfo.databinding.DetailsFragmentStartBinding
+import com.anadi.weatherinfo.utils.DateFormats
 import com.anadi.weatherinfo.utils.Resource
 import com.anadi.weatherinfo.utils.Status
 import com.anadi.weatherinfo.view.ui.BaseFragment
@@ -17,9 +18,9 @@ import es.dmoral.toasty.Toasty
 import timber.log.Timber
 import javax.inject.Inject
 
-class DetailsFragment : BaseFragment(R.layout.details_fragment) {
+class DetailsFragment : BaseFragment(R.layout.details_fragment_start) {
 
-    private val binding: DetailsFragmentBinding by viewBinding()
+    private val binding: DetailsFragmentStartBinding by viewBinding()
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -73,15 +74,20 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment) {
         val location = data.location
         val weather = data.weathers.firstOrNull { it.providerId == viewModel.providerId }
 
-        binding.weatherIcon.setImageResource(weatherCodes.from(weather?.code ?: 0).iconDay)
+        binding.weatherIcon.setImageResource(weatherCodes.from(weather?.code ?: 0).getIcon(location))
         binding.windIcon.rotation = weather?.windDegree?.toFloat() ?: 0F
         binding.description.text = getString(weatherCodes.from(weather?.code ?: 0).description)
         binding.locationName.text = location.name
+        binding.locationAddress.text = location.address
+        binding.coordinates.text = location.coord.toString()
+        binding.timezone.text = getString(R.string.timezone, location.timeZone.toString())
         binding.temp.text = getString(R.string.temp_celsium, weather?.temp ?: 0)
         binding.tempFeelsLike.text = getString(R.string.temp_feels_like_celsium, weather?.tempFeelsLike ?: 0)
         binding.wind.text = getString(R.string.wind_speed_ms, weather?.windSpeed ?: 0)
         binding.pressure.text = getString(R.string.pressure, weather?.pressure ?: 0)
         binding.humidity.text = getString(R.string.humidity, weather?.humidity ?: 0)
         binding.clouds.text = getString(R.string.clouds, weather?.clouds ?: 0)
+        binding.sunrise.text = getString(R.string.sunrise, location.sunrise.toString(DateFormats.sunTime))
+        binding.sunset.text = getString(R.string.sunset, location.sunset.toString(DateFormats.sunTime))
     }
 }

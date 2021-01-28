@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
+import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
 import com.anadi.weatherinfo.data.db.weather.Weather
 import com.anadi.weatherinfo.data.network.WeatherProvider
@@ -36,6 +37,8 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
     private lateinit var viewModel: ProvidersViewModel
 
     private lateinit var adapter: ProvidersAdapter
+
+    private lateinit var location: Location
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -85,8 +88,9 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
             return
         }
 
+        location = data.location
+        adapter.location = data.location
         adapter.dataset = data.weathers
-        binding.locationName.text = data.location.name
     }
 
     private fun updateMerged(weather: Weather) {
@@ -94,15 +98,14 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
         val weatherCode = weatherCodes.from(weather.code)
 
         with(binding.merged) {
-            providerName.text = WeatherProvider.fromCode(weather.providerId).providerName
+            providerName.text = location.name
             lastUpdateTime.text = DateFormats.defaultTime.print(weather.dataCalcTimestamp)
 
-            icon.setImageResource(weatherCode.iconDay)
+            icon.setImageResource(weatherCode.getIcon(location))
             description.text = getString(weatherCode.description)
 
             temp.text = getString(R.string.temp_short_celsium, weather.temp)
             windSpeed.text = getString(R.string.wind_speed_short_ms, weather.windSpeed)
-            windDirection.rotation = weather.windDegree.toFloat()
 
             pressure.text = getString(R.string.pressure_short, weather.pressure)
             humidity.text = getString(R.string.humidity_short, weather.humidity)

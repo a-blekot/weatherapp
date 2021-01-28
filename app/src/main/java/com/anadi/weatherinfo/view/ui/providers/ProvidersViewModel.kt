@@ -21,7 +21,7 @@ class ProvidersViewModel @Inject constructor(private val locationRepository: Loc
 
     private val _mergedWeather: MutableLiveData<Weather> = MutableLiveData()
     val mergedWeather: LiveData<Weather>
-        get() = _mergedWeather
+            get() = _mergedWeather
 
     fun fetch() {
         _details.value = Resource.loading()

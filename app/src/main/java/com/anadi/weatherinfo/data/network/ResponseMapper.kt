@@ -53,7 +53,7 @@ object ResponseMapper {
                 code = weatherapi.condition.code,
                 temp = weatherapi.temp.toInt(),
                 tempFeelsLike = weatherapi.tempFeelsLike.toInt(),
-                windSpeed = weatherapi.windSpeed.toInt(),
+                windSpeed = kphToMps(weatherapi.windSpeed).toInt(),
                 windDegree = weatherapi.windDegree, // PI2_RADIAN -
                 pressure = weatherapi.pressure.toInt(),
                 humidity = weatherapi.humidity,
@@ -61,6 +61,8 @@ object ResponseMapper {
                 dataCalcTimestamp = weatherapi.dataCalcTimestamp * MILLISECONDS,
         )
     }
+
+    private fun kphToMps(speedKph: Float) = speedKph / 3.6
 
     private const val PI2_RADIAN = 360
     private const val MILLISECONDS = 1000L
