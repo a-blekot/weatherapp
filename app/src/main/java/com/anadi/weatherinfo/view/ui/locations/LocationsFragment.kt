@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -52,8 +51,8 @@ class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAda
             addItemDecoration(DividerItemDecoration(binding.recyclerView.context, DividerItemDecoration.VERTICAL))
         }
 
-        viewModel.isConnected.observe(viewLifecycleOwner, Observer { onConnectionChanged(it) })
-        viewModel.locationsNotifier.observe(viewLifecycleOwner, Observer { adapter.dataset = it })
+        viewModel.isConnected.observe(viewLifecycleOwner, { onConnectionChanged(it) })
+        viewModel.locationsNotifier.observe(viewLifecycleOwner, { adapter.dataset = it })
 
         binding.addLocationButton.setOnClickListener {
             startActivityForResult(viewModel.placesIntent, AUTOCOMPLETE_REQUEST_CODE)

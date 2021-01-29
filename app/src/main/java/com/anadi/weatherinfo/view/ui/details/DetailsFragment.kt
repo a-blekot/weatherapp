@@ -3,7 +3,6 @@ package com.anadi.weatherinfo.view.ui.details
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
@@ -37,7 +36,7 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment_start) {
         viewModel.locationId = DetailsFragmentArgs.fromBundle(requireArguments()).locationId
         viewModel.providerId = DetailsFragmentArgs.fromBundle(requireArguments()).providerId
 
-        viewModel.detailsNotifier.observe(viewLifecycleOwner, Observer { update(it) })
+        viewModel.detailsNotifier.observe(viewLifecycleOwner, { update(it) })
         binding.updateButton.setOnClickListener { viewModel.update() }
     }
 

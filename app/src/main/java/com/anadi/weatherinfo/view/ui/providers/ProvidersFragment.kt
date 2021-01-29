@@ -3,7 +3,6 @@ package com.anadi.weatherinfo.view.ui.providers
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -12,7 +11,6 @@ import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.data.db.location.LocationWithWeathers
 import com.anadi.weatherinfo.data.db.weather.Weather
-import com.anadi.weatherinfo.data.network.WeatherProvider
 import com.anadi.weatherinfo.data.weather.WeatherCodes
 import com.anadi.weatherinfo.databinding.ProvidersFragmentBinding
 import com.anadi.weatherinfo.utils.DateFormats
@@ -52,8 +50,8 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
             addItemDecoration(DividerItemDecoration(binding.recyclerView.context, DividerItemDecoration.VERTICAL))
         }
 
-        viewModel.details.observe(viewLifecycleOwner, Observer { update(it) })
-        viewModel.mergedWeather.observe(viewLifecycleOwner, Observer { updateMerged(it) })
+        viewModel.details.observe(viewLifecycleOwner, { update(it) })
+        viewModel.mergedWeather.observe(viewLifecycleOwner, { updateMerged(it) })
 
         viewModel.fetch()
     }

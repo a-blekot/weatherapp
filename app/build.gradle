@@ -3,7 +3,6 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("androidx.navigation.safeargs")
-    id("com.noveogroup.android.check")
     id("io.gitlab.arturbosch.detekt").version("1.15.0")
 }
 
@@ -44,6 +43,12 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.incremental":"true"]
+            }
+        }
     }
 
     buildTypes {
@@ -125,8 +130,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.3.0'
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
     // OK_HTTP
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
 
@@ -151,20 +154,24 @@ dependencies {
     kapt 'com.google.dagger:dagger-android-processor:2.28.3'
 
     // Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.2"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.2"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.3"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.3"
 
     // ViewModel
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     // Room
-    def room_version = "2.2.6"
+    def room_version = "2.3.0-beta01"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
 
     // WorkManager
-    implementation "androidx.work:work-runtime-ktx:2.4.0"
+    implementation "androidx.work:work-runtime-ktx:2.5.0"
+
+    // Notifications DSL
+    implementation 'com.kirich1409.android-notification-dsl:core:0.1.0'
+    implementation 'com.kirich1409.android-notification-dsl:extensions:0.1.0'
 
     // Geo location
     implementation 'com.google.android.libraries.places:places:2.4.0'

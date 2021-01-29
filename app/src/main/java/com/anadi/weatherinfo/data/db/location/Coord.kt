@@ -30,9 +30,9 @@ data class Coord(
 
         fun from(coord: LatLng) = Coord(coord.latitude, coord.longitude)
 
-        const val PI2_RADIAN = 360.0
+        private const val PI2_RADIAN = 360.0
         const val PI_RADIAN = 180.0
-        const val MIN_LAT = -90.0
-        const val MAX_LAT = -90.0
+        private const val MIN_LAT = -90.0
+        private const val MAX_LAT = -90.0
     }
 }

@@ -9,7 +9,6 @@ import com.anadi.weatherinfo.domain.location.LocationRepository
 import com.anadi.weatherinfo.domain.location.UpdateLocationUseCase
 import com.anadi.weatherinfo.utils.Resource
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 class DetailsViewModel @Inject constructor(

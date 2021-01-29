@@ -59,11 +59,7 @@ class LocationRepositoryImpl @Inject constructor(
     }
 
     private suspend fun updateSuntime(location: Location): Location {
-        if (networkMonitor.offline) {
-            return location
-        }
-
-        if(location.sunrise.isToday) {
+        if (networkMonitor.offline || location.sunrise.isToday) {
             return location
         }
 

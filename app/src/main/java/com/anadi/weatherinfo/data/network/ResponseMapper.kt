@@ -62,6 +62,7 @@ object ResponseMapper {
         )
     }
 
+    @Suppress("MagicNumber")
     private fun kphToMps(speedKph: Float) = speedKph / 3.6
 
     private const val PI2_RADIAN = 360

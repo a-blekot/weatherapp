@@ -11,12 +11,6 @@ data class Weather(
         @PrimaryKey(autoGenerate = true)
         val weatherId: Int,
 
-        @ForeignKey(
-                entity = Location::class,
-                parentColumns = ["id"],
-                childColumns = ["locationId"],
-                onDelete = ForeignKey.CASCADE
-        )
         @ColumnInfo(name = "locationId")
         val locationId: Int,
 

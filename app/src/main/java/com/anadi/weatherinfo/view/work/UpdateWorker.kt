@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.IOException
 import javax.inject.Inject
 
 class UpdateWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
@@ -34,7 +35,7 @@ class UpdateWorker(context: Context, workerParams: WorkerParameters) : Worker(co
                 notificationManager.sendNotification(id)
             }
             Result.success()
-        } catch (ex: Exception) {
+        } catch (ex: IOException) {
             Timber.e(ex)
             Result.retry()
         }

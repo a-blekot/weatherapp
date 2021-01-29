@@ -3,7 +3,6 @@ package com.anadi.weatherinfo.view.ui.mainactivity
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import androidx.lifecycle.Observer
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.data.network.state.NetworkMonitor
@@ -21,7 +20,7 @@ class MainActivity : BaseActivity(R.layout.main_activity) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        networkMonitor.isConnected.observe(this, Observer { onConnectionChanged(it) })
+        networkMonitor.isConnected.observe(this, { onConnectionChanged(it) })
     }
 
     private fun onConnectionChanged(isConnected: Boolean) {

@@ -29,29 +29,7 @@ abstract class NetworkModule {
 
         @Provides
         @Singleton
-        @Named("Suntime")
-        fun provideOkHttpClientSuntime(interceptor: HttpLoggingInterceptor): OkHttpClient {
-            return OkHttpClient.Builder().addInterceptor(interceptor).addNetworkInterceptor(StethoInterceptor()).build()
-        }
-
-        @Provides
-        @Singleton
-        @Named("OpenWeather")
-        fun provideOkHttpClientOpenWeather(interceptor: HttpLoggingInterceptor): OkHttpClient {
-            return OkHttpClient.Builder().addInterceptor(interceptor).addNetworkInterceptor(StethoInterceptor()).build()
-        }
-
-        @Provides
-        @Singleton
-        @Named("Weatherbit")
-        fun provideOkHttpClientWeatherbit(interceptor: HttpLoggingInterceptor): OkHttpClient {
-            return OkHttpClient.Builder().addInterceptor(interceptor).addNetworkInterceptor(StethoInterceptor()).build()
-        }
-
-        @Provides
-        @Singleton
-        @Named("Weatherapi")
-        fun provideOkHttpClientWeatherapi(interceptor: HttpLoggingInterceptor): OkHttpClient {
+        fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
             return OkHttpClient.Builder().addInterceptor(interceptor).addNetworkInterceptor(StethoInterceptor()).build()
         }
 
@@ -59,7 +37,6 @@ abstract class NetworkModule {
         @Singleton
         @Named("Suntime")
         fun provideRetrofitSuntime(
-                @Named("Suntime")
                 client: OkHttpClient
         ): Retrofit {
             return Retrofit.Builder()
@@ -73,7 +50,6 @@ abstract class NetworkModule {
         @Singleton
         @Named("OpenWeather")
         fun provideRetrofitOpenWeather(
-                @Named("OpenWeather")
                 client: OkHttpClient
         ): Retrofit {
             return Retrofit.Builder()
@@ -87,7 +63,6 @@ abstract class NetworkModule {
         @Singleton
         @Named("Weatherbit")
         fun provideRetrofitWeatherbit(
-                @Named("Weatherbit")
                 client: OkHttpClient
         ): Retrofit {
             return Retrofit.Builder()
@@ -101,7 +76,7 @@ abstract class NetworkModule {
         @Singleton
         @Named("Weatherapi")
         fun provideRetrofitWeatherapi(
-                @Named("Weatherapi")
+//                @Named("Weatherapi")
                 client: OkHttpClient
         ): Retrofit {
             return Retrofit.Builder()
