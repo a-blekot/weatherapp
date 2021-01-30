@@ -38,6 +38,8 @@
     <string name="channel_id" translatable="false">com.anadi.weatherinfo.UpdateChannel</string>
     <string name="channel_name" translatable="false">update channel</string>
     <string name="channel_description" translatable="false">Description of Update-channel</string>
+    <string name="notification_summary_title">Summary Title</string>
+    <string name="notification_summary_text">Summary text</string>
 
     // LOCATION
     <string name="location_already_added">Location already added!</string>

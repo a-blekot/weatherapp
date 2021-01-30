@@ -8,6 +8,8 @@ import com.anadi.weatherinfo.R
 import com.anadi.weatherinfo.data.network.state.NetworkMonitor
 import com.anadi.weatherinfo.databinding.MainActivityBinding
 import com.anadi.weatherinfo.view.ui.BaseActivity
+import com.anadi.weatherinfo.view.ui.notification.WeatherNotificationManager
+import com.anadi.weatherinfo.view.ui.notification.buildNotificationsGroup
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(R.layout.main_activity) {
@@ -17,10 +19,15 @@ class MainActivity : BaseActivity(R.layout.main_activity) {
     @Inject
     lateinit var networkMonitor: NetworkMonitor
 
+    @Inject
+    lateinit var notificationManager: WeatherNotificationManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         networkMonitor.isConnected.observe(this, { onConnectionChanged(it) })
+
+        binding.notification.setOnClickListener { notificationManager.buildNotifications() }
     }
 
     private fun onConnectionChanged(isConnected: Boolean) {

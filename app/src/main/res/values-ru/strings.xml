@@ -26,6 +26,10 @@
     <string name="sunrise">Рассвет: %1$s</string>
     <string name="sunset">Закат: %1$s</string>
 
+    // NOTIFICATION
+    <string name="notification_summary_title">Заголовок общего нотиф</string>
+    <string name="notification_summary_text">Текст общего нотиф</string>
+
     // LOCATION
     <string name="location_already_added">Локация уже добавлена!</string>
 
