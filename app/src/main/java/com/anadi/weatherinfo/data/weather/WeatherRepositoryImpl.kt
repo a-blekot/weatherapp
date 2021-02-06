@@ -8,6 +8,8 @@ import com.anadi.weatherinfo.data.network.WeatherApi
 import com.anadi.weatherinfo.data.network.WeatherResponse
 import com.anadi.weatherinfo.data.network.state.NetworkMonitor
 import com.anadi.weatherinfo.domain.weather.WeatherRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -40,7 +42,7 @@ class WeatherRepositoryImpl @Inject constructor(
         return weatherDao.fetchAllForProvider(id)
     }
 
-    override suspend fun update(location: Location) {
+    override suspend fun update(location: Location): Unit = withContext (Dispatchers.IO) {
         val weather = weatherDao.fetch(location.id, weatherApi.provider.code)
         update(location, weather)
     }

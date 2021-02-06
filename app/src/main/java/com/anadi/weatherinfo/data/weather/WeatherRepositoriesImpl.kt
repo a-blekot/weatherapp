@@ -3,6 +3,10 @@ package com.anadi.weatherinfo.data.weather
 import com.anadi.weatherinfo.data.db.location.Location
 import com.anadi.weatherinfo.domain.weather.WeatherRepositories
 import com.anadi.weatherinfo.domain.weather.WeatherRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -22,9 +26,11 @@ class WeatherRepositoriesImpl @Inject constructor(
         }
     }
 
-    override suspend fun update(location: Location) {
-        for (repository in repositories) {
-            repository.update(location)
+    override suspend fun update(location: Location) = withContext(Dispatchers.IO) {
+        coroutineScope {
+            for (repository in repositories) {
+                launch { repository.update(location) }
+            }
         }
     }
 }

@@ -9,7 +9,9 @@ import com.anadi.weatherinfo.domain.location.LocationRepository
 import com.anadi.weatherinfo.domain.location.UpdateLocationUseCase
 import com.anadi.weatherinfo.utils.Resource
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
+import kotlin.system.measureTimeMillis
 
 class DetailsViewModel @Inject constructor(
         private val updateLocationUseCase: UpdateLocationUseCase, private val locationRepository: LocationRepository
@@ -32,10 +34,20 @@ class DetailsViewModel @Inject constructor(
     fun update() {
         details.value = Resource.loading()
         viewModelScope.launch {
-            updateLocationUseCase.build(UpdateLocationUseCase.Params(locationId))
+            measureTimeMillis("Update locationId=$locationId") {
+                updateLocationUseCase.build(UpdateLocationUseCase.Params(locationId))
 
-            val data = locationRepository.fetchWithWeathers(locationId)
-            details.postValue(Resource.success(data = data))
+                val data = locationRepository.fetchWithWeathers(locationId)
+                details.postValue(Resource.success(data = data))
+            }
         }
     }
+}
+
+inline fun measureTimeMillis(logMessage: String, function: () -> Unit) {
+    val time = measureTimeMillis {
+        function.invoke()
+    }
+
+    Timber.d( "$logMessage time = $time")
 }
