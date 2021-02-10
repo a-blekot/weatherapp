@@ -35,7 +35,7 @@
     <string name="timezone" translatable="false">GMT %1$s</string>
 
     // NOTIFICATIONS
-    <string name="channel_id" translatable="false">com.anadi.weatherinfo.UpdateChannel</string>
+    <string name="channel_id" translatable="false">com.anadi.weatherapp.UpdateChannel</string>
     <string name="channel_name" translatable="false">update channel</string>
     <string name="channel_description" translatable="false">Description of Update-channel</string>
     <string name="notification_summary_title">Summary Title</string>
@@ -124,5 +124,6 @@
     <string name="menu_context_favorite">Add to favorite</string>
     <string name="night_mode">Night mode</string>
     <string name="day_mode">Day mode</string>
+    <string name="default_notification_channel_id">DEFAULT_CHANNEL_ID</string>
 
 </resources>

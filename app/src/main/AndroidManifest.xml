@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.anadi.weatherinfo">
+    package="com.anadi.weatherapp">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:name=".WeatherApplication"
+        android:name="com.anadi.weatherapp.WeatherApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_new"
         android:label="@string/app_name"
@@ -21,8 +22,9 @@
         android:fullBackupContent="@xml/backup_descriptor">
 
         <activity
-            android:name="com.anadi.weatherinfo.view.ui.mainactivity.MainActivity"
+            android:name="com.anadi.weatherapp.view.ui.mainactivity.MainActivity"
             android:label="@string/app_name"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +32,32 @@
             </intent-filter>
         </activity>
         <!--        <receiver android:name=".UpdateReceiver" />-->
+        <service
+            android:name="com.anadi.weatherapp.view.ui.notification.WeatherMessagingService"
+            android:directBootAware="true"
+            android:exported="false"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".view.work.WeatherUpdateService"
+            android:enabled="true"
+            android:exported="true"
+            android:stopWithTask="false" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_message" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
     </application>
 
 </manifest>
