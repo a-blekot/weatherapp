@@ -7,12 +7,15 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.anadi.weatherapp.data.db.location.Location
 import com.anadi.weatherapp.data.db.location.LocationDao
+import com.anadi.weatherapp.data.db.user.*
 import com.anadi.weatherapp.data.db.weather.Weather
 import com.anadi.weatherapp.data.db.weather.WeatherDao
 
-@Database(entities = [Location::class, Weather::class], version = 2, exportSchema = false)
+@Database(entities = [User::class, Location::class, Weather::class], version = 4, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
+
+    abstract fun userDao(): UserDao
 
     abstract fun locationDao(): LocationDao
 

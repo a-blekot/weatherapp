@@ -114,4 +114,7 @@
     <string name="night_mode">Night mode</string>
     <string name="day_mode">Day mode</string>
 
+    // LOGIN
+    <string name="login">Войти</string>
+
 </resources>

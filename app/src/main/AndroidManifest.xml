@@ -21,15 +21,25 @@
         tools:targetApi="n"
         android:fullBackupContent="@xml/backup_descriptor">
 
-        <activity
-            android:name="com.anadi.weatherapp.view.ui.mainactivity.MainActivity"
-            android:label="@string/app_name"
+        <activity android:name=".view.ui.signin.SignInActivity"
+            android:label="SignIn"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.anadi.weatherapp.view.ui.mainactivity.MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <!--        <receiver android:name=".UpdateReceiver" />-->
         <service
@@ -45,8 +55,8 @@
         <service
             android:name=".view.work.WeatherUpdateService"
             android:enabled="true"
-            android:exported="true"
             android:stopWithTask="false" />
+        <!--            android:exported="true"-->
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"

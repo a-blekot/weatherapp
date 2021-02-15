@@ -124,6 +124,7 @@
     <string name="menu_context_favorite">Add to favorite</string>
     <string name="night_mode">Night mode</string>
     <string name="day_mode">Day mode</string>
-    <string name="default_notification_channel_id">DEFAULT_CHANNEL_ID</string>
+    <string name="default_notification_channel_id" translatable="false">DEFAULT_CHANNEL_ID</string>
+    <string name="login">Login</string>
 
 </resources>

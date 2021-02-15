@@ -3,11 +3,13 @@ package com.anadi.weatherapp.view.di
 import android.content.Context
 import com.anadi.weatherapp.data.db.AppDatabase
 import com.anadi.weatherapp.data.db.location.LocationDao
+import com.anadi.weatherapp.data.db.user.UserDao
 import com.anadi.weatherapp.data.db.weather.WeatherDao
 import com.anadi.weatherapp.data.location.LocationRepositoryImpl
 import com.anadi.weatherapp.data.network.WeatherApi
 import com.anadi.weatherapp.data.network.state.NetworkMonitor
 import com.anadi.weatherapp.data.network.suntime.SuntimeApi
+import com.anadi.weatherapp.data.user.UserRepositoryImpl
 import com.anadi.weatherapp.data.weather.WeatherCodes
 import com.anadi.weatherapp.data.weather.WeatherCodesImpl
 import com.anadi.weatherapp.data.weather.WeatherRepositoriesImpl
@@ -15,8 +17,10 @@ import com.anadi.weatherapp.data.weather.WeatherRepositoryImpl
 import com.anadi.weatherapp.domain.location.LocationRepository
 import com.anadi.weatherapp.domain.places.PlacesWrapper
 import com.anadi.weatherapp.domain.places.PlacesWrapperImpl
+import com.anadi.weatherapp.domain.user.UserRepository
 import com.anadi.weatherapp.domain.weather.WeatherRepositories
 import com.anadi.weatherapp.domain.weather.WeatherRepository
+import com.google.firebase.database.*
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -44,6 +48,12 @@ abstract class DataModule {
         @Singleton
         fun provideWeatherDao(appDatabase: AppDatabase): WeatherDao {
             return appDatabase.weatherDao()
+        }
+
+        @Provides
+        @Singleton
+        fun provideUserDao(appDatabase: AppDatabase): UserDao {
+            return appDatabase.userDao()
         }
 
         @Provides
@@ -110,5 +120,14 @@ abstract class DataModule {
         @Provides
         @Singleton
         fun provideWeatherCodes(context: Context): WeatherCodes = WeatherCodesImpl(context)
+
+        @Provides
+        @Singleton
+        fun provideUserRepository(
+                @Named("Users") databaseReference: DatabaseReference,
+                userDao: UserDao
+        ): UserRepository {
+            return UserRepositoryImpl(databaseReference, userDao)
+        }
     }
 }
