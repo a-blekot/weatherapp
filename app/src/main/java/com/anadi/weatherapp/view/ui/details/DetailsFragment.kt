@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherapp.R
 import com.anadi.weatherapp.data.db.location.LocationWithWeathers
@@ -13,9 +14,11 @@ import com.anadi.weatherapp.utils.DateFormats
 import com.anadi.weatherapp.utils.Resource
 import com.anadi.weatherapp.utils.Status
 import com.anadi.weatherapp.view.ui.BaseFragment
+import com.google.firebase.database.*
 import es.dmoral.toasty.Toasty
+import org.w3c.dom.Comment
 import timber.log.Timber
-import javax.inject.Inject
+import javax.inject.*
 
 class DetailsFragment : BaseFragment(R.layout.details_fragment_start) {
 
@@ -27,7 +30,12 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment_start) {
     @Inject
     lateinit var weatherCodes: WeatherCodes
 
+    @Inject
+    @Named("Messages")
+    lateinit var fbMessages: DatabaseReference
+
     private lateinit var viewModel: DetailsViewModel
+    private lateinit var adapter: MessageAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,6 +44,12 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment_start) {
         viewModel.locationId = DetailsFragmentArgs.fromBundle(requireArguments()).locationId
         viewModel.providerId = DetailsFragmentArgs.fromBundle(requireArguments()).providerId
 
+        adapter = MessageAdapter()
+        binding.messagesRecycler.apply {
+            adapter = this@DetailsFragment.adapter
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        }
+
         viewModel.detailsNotifier.observe(viewLifecycleOwner, { update(it) })
         binding.updateButton.setOnClickListener { viewModel.update() }
     }
@@ -43,6 +57,12 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment_start) {
     override fun onResume() {
         super.onResume()
         viewModel.fetch()
+        fbMessages.addChildEventListener(childEventListener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        fbMessages.removeEventListener(childEventListener)
     }
 
     private fun loading() {
@@ -88,5 +108,39 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment_start) {
         binding.clouds.text = getString(R.string.clouds, weather?.clouds ?: 0)
         binding.sunrise.text = getString(R.string.sunrise, location.sunrise.toString(DateFormats.sunTime))
         binding.sunset.text = getString(R.string.sunset, location.sunset.toString(DateFormats.sunTime))
+    }
+
+    private val messages = mutableMapOf<String, String>()
+
+    private val childEventListener = object : ChildEventListener {
+        override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
+            Timber.d("onChildAdded: ${dataSnapshot.key}")
+            messages[dataSnapshot.key!!] = dataSnapshot.value.toString()
+            Timber.d("onChildAdded: $messages")
+            adapter.dataset = messages.map { Message.TextMessage(it.key, it.value) }
+        }
+
+        override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
+            Timber.d("onChildChanged: ${dataSnapshot.key}")
+            messages[dataSnapshot.key!!] = dataSnapshot.value.toString()
+            Timber.d("onChildChanged: $messages")
+            adapter.dataset = messages.map { Message.TextMessage(it.key, it.value) }
+        }
+
+        override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+            Timber.d("onChildRemoved: ${dataSnapshot.key}")
+            messages.remove(dataSnapshot.key!!)
+            Timber.d("onChildRemoved: $messages")
+            adapter.dataset = messages.map { Message.TextMessage(it.key, it.value) }
+        }
+
+        override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
+            Timber.d("onChildChanged: ${dataSnapshot.key}")
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            Timber.w(databaseError.toException(),"postComments:onCancelled")
+            Toast.makeText(context, "Failed to load comments.", Toast.LENGTH_SHORT).show()
+        }
     }
 }

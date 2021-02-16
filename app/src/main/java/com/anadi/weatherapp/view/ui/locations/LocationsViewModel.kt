@@ -60,6 +60,7 @@ class LocationsViewModel @Inject constructor(
         viewModelScope.launch {
             addLocationUseCase.build(
                     AddLocationUseCase.Params(
+                            googlePlaceId = place.id!!,
                             name = place.name!!,
                             address = place.address!!,
                             coord = Coord.from(place.latLng!!),

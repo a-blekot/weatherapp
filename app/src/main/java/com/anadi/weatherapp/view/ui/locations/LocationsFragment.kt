@@ -55,7 +55,7 @@ class LocationsFragment : BaseFragment(R.layout.locations_fragment), LocationAda
         adapter = LocationAdapter(this, weatherCodes)
         binding.recyclerView.apply {
             adapter = this@LocationsFragment.adapter
-            addItemDecoration(DividerItemDecoration(binding.recyclerView.context, DividerItemDecoration.VERTICAL))
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
         viewModel.isConnected.observe(viewLifecycleOwner) { onConnectionChanged(it) }

@@ -94,6 +94,19 @@
         app:layout_constraintTop_toBottomOf="@+id/humidity"
         tools:text="Clouds: 52%" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:background="@color/color_blue_10_transparent"
+        android:id="@+id/messagesRecycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="2dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/update_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pressure"
+        app:layout_constraintTop_toTopOf="@id/pressure"
+        tools:listitem="@layout/message_text" />
+
     <TextView
         android:id="@+id/location_name"
         style="@style/details_name"
@@ -107,50 +120,50 @@
         android:id="@+id/location_address"
         style="@style/details_info"
         android:visibility="gone"
-        tools:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/coordinates"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/location_name"
-        tools:text="Kiev, Ukraine" />
+        tools:text="Kiev, Ukraine"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/coordinates"
         style="@style/details_info"
         android:visibility="gone"
-        tools:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/timezone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/location_address"
-        tools:text="50.45466, 30.52380" />
+        tools:text="50.45466, 30.52380"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/timezone"
         style="@style/details_info"
         android:visibility="gone"
-        tools:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/sunrise"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/coordinates"
-        tools:text="GMT+02:00" />
+        tools:text="GMT+02:00"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/sunrise"
         style="@style/details_info"
         android:visibility="gone"
-        tools:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/sunset"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/timezone"
-        tools:text="Sunrise: 07:25" />
+        tools:text="Sunrise: 07:25"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/sunset"
         style="@style/details_info"
         android:visibility="gone"
-        tools:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sunrise"
-        tools:text="Sunset: 17:22" />
+        tools:text="Sunset: 17:22"
+        tools:visibility="visible" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/update_button"

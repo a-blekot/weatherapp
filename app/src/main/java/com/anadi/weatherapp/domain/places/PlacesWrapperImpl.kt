@@ -18,8 +18,13 @@ class PlacesWrapperImpl @Inject constructor(val context: Context) : PlacesWrappe
         }
 
         val fields = listOf(
-                Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.UTC_OFFSET,
+                Place.Field.ID,
+                Place.Field.NAME,
+                Place.Field.ADDRESS,
+                Place.Field.LAT_LNG,
+                Place.Field.UTC_OFFSET,
         )
+
         return Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
                 .setTypeFilter(TypeFilter.CITIES)
                 .build(context)

@@ -94,6 +94,17 @@
         app:layout_constraintTop_toBottomOf="@+id/humidity"
         tools:text="Clouds: 52%" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messagesRecycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="2dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/update_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pressure"
+        app:layout_constraintTop_toTopOf="@id/pressure" />
+
     <TextView
         android:id="@+id/location_name"
         style="@style/details_name"

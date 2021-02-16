@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.anadi.weatherapp.data.db.Converters
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 
@@ -12,6 +13,9 @@ data class Location(
 
         @PrimaryKey(autoGenerate = true)
         val id: Int,
+
+        @ColumnInfo(name = "google_place_id")
+        val googlePlaceId: String,
 
         @ColumnInfo(name = "name")
         val name: String,
@@ -39,4 +43,15 @@ data class Location(
     fun isDayNow(): Boolean {
         return sunrise.isBeforeNow && sunset.isAfterNow
     }
+
+    fun toMap() = mapOf(
+            "name" to name,
+            "address" to address,
+            "coord" to coord,
+            "timeZone" to Converters.fromDateTimeZone(timeZone),
+            "sunrise" to Converters.fromDateTime(sunrise),
+            "sunset" to Converters.fromDateTime(sunset),
+            "weather" to emptyList<String>(),
+            "messages" to emptyList<String>()
+    )
 }

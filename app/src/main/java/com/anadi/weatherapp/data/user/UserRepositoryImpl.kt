@@ -15,7 +15,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun activate(fbUser: FirebaseUser, userName: String?) {
         val existingUser = fetch(fbUser.uid)
-        if (existingUser != null) return
+        if (existingUser != null) {
+            activeUser = existingUser
+            return
+        }
 
         with(fbUser) {
             val newUser = User(
@@ -28,8 +31,7 @@ class UserRepositoryImpl @Inject constructor(
             add(newUser)
             activeUser = newUser
 
-            val newKey = fbUsers.push().key!!
-            fbUsers.child(newKey).setValue(newUser.toMap())
+            fbUsers.child(uid).setValue(newUser.toMap())
         }
     }
 

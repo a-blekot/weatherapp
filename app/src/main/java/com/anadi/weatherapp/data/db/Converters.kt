@@ -5,7 +5,7 @@ import androidx.room.TypeConverter
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 
-class Converters {
+object Converters {
     @TypeConverter
     fun toDateTime(millis: Long): DateTime {
         return DateTime(millis)

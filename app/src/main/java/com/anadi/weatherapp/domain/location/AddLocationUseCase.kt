@@ -25,6 +25,7 @@ class AddLocationUseCase @Inject constructor(
 
         val location = locationRepository.add(
                 Location(NO_ID,
+                         params.googlePlaceId,
                          params.name,
                          params.address,
                          params.coord,
@@ -35,8 +36,10 @@ class AddLocationUseCase @Inject constructor(
         weatherRepositories.fetch(location)
     }
 
-    class Params(val name: String,
-                 val address: String,
-                 val coord: Coord,
-                 val utcOffsetMillis: Int)
+    class Params(
+            val googlePlaceId: String,
+            val name: String,
+            val address: String,
+            val coord: Coord,
+            val utcOffsetMillis: Int)
 }

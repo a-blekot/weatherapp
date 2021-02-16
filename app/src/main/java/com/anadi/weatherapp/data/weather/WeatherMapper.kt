@@ -4,6 +4,7 @@ import com.anadi.weatherapp.data.db.BaseDao.Companion.NO_ID
 import com.anadi.weatherapp.data.db.weather.Weather
 import com.anadi.weatherapp.data.network.WeatherProvider
 import com.anadi.weatherapp.data.network.WeatherResponse
+import timber.log.Timber
 
 object WeatherMapper {
 
@@ -42,6 +43,54 @@ object WeatherMapper {
                 downloadTimestamp = System.currentTimeMillis()
         )
     }
+
+    // Deserialize firebase snapshot
+    // Firebase stores Int as 64bit == Long
+    fun update(oldEntity: Weather, rawData: Any): Weather {
+        @Suppress("UNCHECKED_CAST")
+        val map = rawData as Map<String, Any>
+
+        return Weather(
+                weatherId = oldEntity.weatherId,
+                locationId = map["locationId"].toInt(),
+                providerId = map["providerId"].toInt(),
+                code = map["code"].toInt(),
+                temp = map["temp"].toInt(),
+                tempFeelsLike = map["tempFeelsLike"].toInt(),
+                windSpeed = map["windSpeed"].toInt(),
+                windDegree = map["windDegree"].toInt(),
+                pressure = map["pressure"].toInt(),
+                humidity = map["humidity"].toInt(),
+                clouds = map["clouds"].toInt(),
+                dataCalcTimestamp = map["dataCalcTimestamp"] as Long,
+                downloadTimestamp = map["downloadTimestamp"] as Long
+        )
+    }
+
+    // Deserialize firebase snapshot
+    // Firebase stores Int as 64bit == Long
+    fun convert(rawData: Any): Weather {
+        @Suppress("UNCHECKED_CAST")
+        val map = rawData as Map<String, Any>
+
+        return Weather(
+                weatherId = NO_ID,
+                locationId = map["locationId"].toInt(),
+                providerId = map["providerId"].toInt(),
+                code = map["code"].toInt(),
+                temp = map["temp"].toInt(),
+                tempFeelsLike = map["tempFeelsLike"].toInt(),
+                windSpeed = map["windSpeed"].toInt(),
+                windDegree = map["windDegree"].toInt(),
+                pressure = map["pressure"].toInt(),
+                humidity = map["humidity"].toInt(),
+                clouds = map["clouds"].toInt(),
+                dataCalcTimestamp = map["dataCalcTimestamp"] as Long,
+                downloadTimestamp = map["downloadTimestamp"] as Long
+        )
+    }
+
+    private fun Any?.toInt() = (this as Long).toInt()
 
     fun merge(weathers: List<Weather>): Weather? {
         if (weathers.isEmpty()) {
@@ -101,4 +150,5 @@ object WeatherMapper {
                 downloadTimestamp
         )
     }
+
 }

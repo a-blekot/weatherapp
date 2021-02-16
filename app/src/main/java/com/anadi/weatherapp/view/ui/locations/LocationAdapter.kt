@@ -30,7 +30,6 @@ class LocationAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationHolder {
-
         val binding = LocationRowViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return LocationHolder(binding, listener)

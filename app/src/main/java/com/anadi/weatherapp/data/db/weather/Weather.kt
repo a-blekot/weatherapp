@@ -1,11 +1,13 @@
 package com.anadi.weatherapp.data.db.weather
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "weather")
-data class Weather(
+data class Weather (
         @PrimaryKey(autoGenerate = true)
         val weatherId: Int,
 
@@ -44,4 +46,17 @@ data class Weather(
 
         @ColumnInfo(name = "download_timestamp")
         val downloadTimestamp: Long
-)
+) {
+//        fun toMap() = mapOf(
+//                "code" to code,
+//                "temp" to temp,
+//                "tempFeelsLike" to tempFeelsLike,
+//                "windSpeed" to windSpeed,
+//                "windDegree" to windDegree,
+//                "pressure" to pressure,
+//                "humidity" to humidity,
+//                "clouds" to clouds,
+//                "dataCalcTimestamp" to dataCalcTimestamp,
+//                "downloadTimestamp" to downloadTimestamp
+//        )
+}

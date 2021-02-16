@@ -64,44 +64,57 @@ abstract class DataModule {
 
         @Provides
         @Singleton
+        fun provideUserRepository(
+                @Named("Users") fbUsers: DatabaseReference,
+                userDao: UserDao
+        ): UserRepository {
+            return UserRepositoryImpl(fbUsers, userDao)
+        }
+
+        @Provides
+        @Singleton
         fun provideLocationRepository(
+                @Named("Locations") fbLocations: DatabaseReference,
                 locationDao: LocationDao,
                 suntimeApi: SuntimeApi,
                 networkMonitor: NetworkMonitor): LocationRepository {
-            return LocationRepositoryImpl(locationDao, suntimeApi, networkMonitor)
+            return LocationRepositoryImpl(fbLocations, locationDao, suntimeApi, networkMonitor)
         }
 
         @Provides
         @Singleton
         @Named("OpenWeather")
         fun provideOpenWeatherRepository(
+                @Named("Locations") fbLocations: DatabaseReference,
                 networkMonitor: NetworkMonitor,
                 @Named("OpenWeather")
                 weatherApi: WeatherApi, weatherDao: WeatherDao
         ): WeatherRepository {
-            return WeatherRepositoryImpl(networkMonitor, weatherApi, weatherDao)
+            return WeatherRepositoryImpl(fbLocations, networkMonitor, weatherApi, weatherDao)
         }
 
         @Provides
         @Singleton
         @Named("Weatherbit")
         fun provideWeatherbitRepository(
+                @Named("Locations") fbLocations: DatabaseReference,
                 networkMonitor: NetworkMonitor,
                 @Named("Weatherbit")
                 weatherApi: WeatherApi, weatherDao: WeatherDao
         ): WeatherRepository {
-            return WeatherRepositoryImpl(networkMonitor, weatherApi, weatherDao)
+            return WeatherRepositoryImpl(fbLocations, networkMonitor, weatherApi, weatherDao)
         }
 
         @Provides
         @Singleton
         @Named("Weatherapi")
         fun provideWeatherapiRepository(
+                @Named("Locations") fbLocations: DatabaseReference,
                 networkMonitor: NetworkMonitor,
                 @Named("Weatherapi")
                 weatherApi: WeatherApi, weatherDao: WeatherDao
         ): WeatherRepository {
-            return WeatherRepositoryImpl(networkMonitor, weatherApi, weatherDao)
+            return WeatherRepositoryImpl(fbLocations, networkMonitor, weatherApi, weatherDao)
         }
 
         @Provides
@@ -120,14 +133,5 @@ abstract class DataModule {
         @Provides
         @Singleton
         fun provideWeatherCodes(context: Context): WeatherCodes = WeatherCodesImpl(context)
-
-        @Provides
-        @Singleton
-        fun provideUserRepository(
-                @Named("Users") databaseReference: DatabaseReference,
-                userDao: UserDao
-        ): UserRepository {
-            return UserRepositoryImpl(databaseReference, userDao)
-        }
     }
 }
