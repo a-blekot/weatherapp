@@ -105,6 +105,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/pressure"
         app:layout_constraintTop_toTopOf="@id/pressure"
+        android:visibility="gone"
         tools:listitem="@layout/message_text" />
 
     <TextView

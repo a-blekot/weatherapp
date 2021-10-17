@@ -1,5 +1,6 @@
 package com.anadi.weatherapp.view.ui.notification
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -17,7 +18,6 @@ import com.anadi.weatherapp.R
 import com.anadi.weatherapp.view.ui.mainactivity.MainActivity
 import com.anadi.weatherapp.view.work.WeatherUpdateService
 import com.google.firebase.messaging.FirebaseMessaging
-import com.kirich1409.androidnotificationdsl.channels.createNotificationChannels
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -49,29 +49,30 @@ class WeatherNotificationManager @Inject constructor(private val context: Contex
     }
 
     private fun createNotificationChannel() {
-        createNotificationChannels(context) {
-            channel(channelId, channelName, NotificationManagerCompat.IMPORTANCE_HIGH) {
-                description = channelDesciption
-                lightsEnabled = true
-                vibrationEnabled = true
-            }
-        }
+//        createNotificationChannels(context) {
+//            channel(channelId, channelName, NotificationManagerCompat.IMPORTANCE_HIGH) {
+//                description = channelDesciption
+//                lightsEnabled = true
+//                vibrationEnabled = true
+//            }
+//        }
     }
 
-    private fun getCustomDesign(title: String, message: String): RemoteViews? {
-        val remoteViews = RemoteViews(context.packageName, R.layout.notification)
-        remoteViews.setTextViewText(R.id.title, title)
-        remoteViews.setTextViewText(R.id.message, message)
-        remoteViews.setImageViewResource(R.id.icon, R.drawable.ic_update)
-        return remoteViews
-    }
+//    private fun getCustomDesign(title: String, message: String): RemoteViews? {
+//        val remoteViews = RemoteViews(context.packageName, R.layout.notification)
+//        remoteViews.setTextViewText(R.id.title, title)
+//        remoteViews.setTextViewText(R.id.message, message)
+//        remoteViews.setImageViewResource(R.id.icon, R.drawable.ic_update)
+//        return remoteViews
+//    }
 
     fun sendNotification(title: String, body: String, id: Int = 123) {
         if (!areNotificationsEnabled()) {
             return
         }
+
         val pendingIntent = PendingIntent.getActivity(
-                context, 1, MainActivity.getIntent(context), PendingIntent.FLAG_UPDATE_CURRENT
+                context, 1, MainActivity.getIntent(context), PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
 //        notification(context, channelId, smallIcon = R.drawable.ic_update) {
@@ -109,7 +110,7 @@ class WeatherNotificationManager @Inject constructor(private val context: Contex
         val largeIcon = (ResourcesCompat.getDrawable(context.resources, R.drawable.ic_update, null) as VectorDrawable).toBitmap()
 
         val pendingIntent = PendingIntent.getService(
-                context, 1, WeatherUpdateService.getIntent(context), PendingIntent.FLAG_UPDATE_CURRENT
+                context, 1, WeatherUpdateService.getIntent(context), PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
         val action = NotificationCompat.Action(R.drawable.ic_update, "OK", pendingIntent)
@@ -157,7 +158,7 @@ class WeatherNotificationManager @Inject constructor(private val context: Contex
         return true
     }
 
-    fun buildNotifications() {
-        buildNotificationsGroup(context).notify(notificationManager)
-    }
+//    fun buildNotifications() {
+//        buildNotificationsGroup(context).notify(notificationManager)
+//    }
 }

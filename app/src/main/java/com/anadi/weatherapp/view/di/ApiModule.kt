@@ -34,9 +34,7 @@ abstract class ApiModule {
         fun provideOpenWeatherAPI(
                 @Named("OpenWeather")
                 retrofit: Retrofit
-        ): OpenWeatherApi {
-            return retrofit.create(OpenWeatherApi::class.java)
-        }
+        ): OpenWeatherApi = retrofit.create(OpenWeatherApi::class.java)
 
         @Provides
         @Singleton

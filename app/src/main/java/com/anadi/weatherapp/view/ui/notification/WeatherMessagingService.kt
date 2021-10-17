@@ -17,6 +17,16 @@ class WeatherMessagingService : FirebaseMessagingService() {
         Injector.INSTANCE.applicationComponent.inject(this)
     }
 
+//    Content-Type -> application/json
+//    Authorization -> key=AAAAhX8ajcA:APA91bGuma5XVB0MgPO7ihwxGmHZ8KhvtR1gYvnCUBahBU0X3vC9s8Mu8z__S2KjQtlPeQUmKf32NSvAahuS-4D-A_KY7xMD5hJJEHnszDmm5CYgQU8lepauErWbNc_Y9yw0Ybn_rQyD
+//    {
+//        "to":"/topics/general",
+//        "notification":{
+//        "title":"Test notification",
+//        "body":"Nice weather and cute clouds)"
+//    }
+//    }
+
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
 

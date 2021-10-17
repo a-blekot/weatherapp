@@ -1,13 +1,15 @@
 package com.anadi.weatherapp.view.ui.providers
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherapp.R
 import com.anadi.weatherapp.data.db.location.Location
 import com.anadi.weatherapp.data.db.location.LocationWithWeathers
@@ -25,7 +27,7 @@ import javax.inject.Inject
 
 class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAdapter.Listener {
 
-    private val binding: ProvidersFragmentBinding by viewBinding()
+    private var binding: ProvidersFragmentBinding? = null
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -39,6 +41,14 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
 
     private lateinit var location: Location
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+            ProvidersFragmentBinding.inflate(inflater, container, false).apply { binding = this }.root
+
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -46,9 +56,9 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
         viewModel.id = DetailsFragmentArgs.fromBundle(requireArguments()).locationId
 
         adapter = ProvidersAdapter(this, weatherCodes)
-        binding.recyclerView.apply {
+        binding?.recyclerView?.apply {
             adapter = this@ProvidersFragment.adapter
-            addItemDecoration(DividerItemDecoration(binding.recyclerView.context, DividerItemDecoration.VERTICAL))
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
         viewModel.details.observe(viewLifecycleOwner) { update(it) }
@@ -57,12 +67,15 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
         viewModel.fetch()
     }
 
-    private fun loading() {
-        binding.progressBar.root.visibility = View.VISIBLE
+    private fun loading() =
+            setProgressVisibility(true)
+
+    private fun setProgressVisibility(isVisible: Boolean) {
+        binding?.progressBar?.root?.isVisible = isVisible
     }
 
     private fun error(message: String?) {
-        binding.progressBar.root.visibility = View.GONE
+        setProgressVisibility(false)
         message?.let { Toasty.error(requireContext(), it, Toast.LENGTH_LONG).show() }
     }
 
@@ -75,15 +88,15 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
     }
 
     private fun update(data: LocationWithWeathers?) {
-        binding.progressBar.root.visibility = View.GONE
-        binding.noData.visibility = View.GONE
+        setProgressVisibility(false)
+        binding?.noData?.isVisible = false
 
         if (data == null || data.weathers.isEmpty()) {
             if (data == null) {
                 Timber.d("LocationWithWeathers is null!")
             }
 
-            binding.noData.visibility = View.VISIBLE
+            binding?.noData?.isVisible = true
             return
         }
 
@@ -96,7 +109,7 @@ class ProvidersFragment : BaseFragment(R.layout.providers_fragment), ProvidersAd
 
         val weatherCode = weatherCodes.from(weather.code)
 
-        with(binding.merged) {
+        binding?.merged?.run {
             providerName.text = location.name
             lastUpdateTime.text = DateFormats.defaultTime.print(weather.dataCalcTimestamp)
 

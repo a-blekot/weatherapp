@@ -27,10 +27,7 @@ interface ApplicationComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(
-                @BindsInstance
-                application: WeatherApplication
-        ): ApplicationComponent
+        fun create(@BindsInstance application: WeatherApplication): ApplicationComponent
     }
 
     fun inject(application: WeatherApplication)

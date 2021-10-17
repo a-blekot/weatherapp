@@ -13,7 +13,7 @@ import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
-class UpdateWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
+class UpdateWorker @Inject constructor (context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
 
     @Inject
     lateinit var notificationManager: WeatherNotificationManager

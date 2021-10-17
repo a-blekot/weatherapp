@@ -11,6 +11,7 @@
     <application
         android:name="com.anadi.weatherapp.WeatherApplication"
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher_new"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -18,11 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:targetApi="n"
-        android:fullBackupContent="@xml/backup_descriptor">
+        tools:targetApi="n">
 
-        <activity android:name=".view.ui.signin.SignInActivity"
-            android:label="SignIn"
+        <activity
+            android:name=".view.ui.signin.SignInActivity"
+            android:exported="true"
+            android:label="@string/app_name"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -33,13 +35,14 @@
 
         <activity
             android:name="com.anadi.weatherapp.view.ui.mainactivity.MainActivity"
+            android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
         <!--        <receiver android:name=".UpdateReceiver" />-->
         <service

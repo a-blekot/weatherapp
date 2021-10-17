@@ -14,7 +14,7 @@
         app:constraintSetStart="@layout/details_fragment_start">
 
         <OnSwipe
-            app:dragDirection="dragLeft" />
+            app:dragDirection="dragUp" />
 
     </Transition>
 </MotionScene>

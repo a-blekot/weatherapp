@@ -23,8 +23,6 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun weatherDao(): WeatherDao
 
-
-
     companion object {
 
         private val MIGRATION_4_5 = object : Migration(4, 5) {

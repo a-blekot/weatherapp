@@ -1,5 +1,6 @@
 package com.anadi.weatherapp.data.db.user
 
+import android.graphics.Color
 import android.os.Parcelable
 import androidx.annotation.ColorRes
 import com.anadi.weatherapp.R
@@ -7,19 +8,19 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-enum class UserColors(@ColorRes val color: Int) : Parcelable {
+enum class UserColors(val color: Int) : Parcelable {
     @SerializedName("RED")
-    RED(R.color.quantum_googred500),
+    RED(Color.RED),
 
     @SerializedName("GREEN")
-    GREEN(R.color.quantum_googgreen500),
+    GREEN(Color.GREEN),
 
     @SerializedName("BLUE")
-    BLUE(R.color.quantum_googblue500),
+    BLUE(Color.BLUE),
 
     @SerializedName("ORANGE")
-    ORANGE(R.color.quantum_orange500),
+    ORANGE(Color.rgb(255, 69, 0)),
 
     @SerializedName("PINK")
-    PINK(R.color.quantum_pink300)
+    PINK(Color.rgb(255, 192, 203))
 }

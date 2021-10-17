@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherapp.R
 import com.anadi.weatherapp.databinding.*
 import com.anadi.weatherapp.domain.user.UserRepository
@@ -22,7 +21,7 @@ private const val RC_SIGN_IN = 9001
 
 class SignInActivity : BaseActivity(R.layout.sign_in_activity) {
 
-    private val binding: SignInActivityBinding by viewBinding()
+    private var binding: SignInActivityBinding? = null
 
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
@@ -35,8 +34,10 @@ class SignInActivity : BaseActivity(R.layout.sign_in_activity) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding.signInButton.setOnClickListener { trySignIn() }
+        binding = SignInActivityBinding.inflate(layoutInflater).apply {
+            setContentView(root)
+            signInButton.setOnClickListener { trySignIn() }
+        }
     }
 
     private fun trySignIn() {

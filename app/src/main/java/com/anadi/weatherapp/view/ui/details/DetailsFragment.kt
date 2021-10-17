@@ -1,11 +1,13 @@
 package com.anadi.weatherapp.view.ui.details
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.anadi.weatherapp.R
 import com.anadi.weatherapp.data.db.location.LocationWithWeathers
 import com.anadi.weatherapp.data.weather.WeatherCodes
@@ -16,13 +18,12 @@ import com.anadi.weatherapp.utils.Status
 import com.anadi.weatherapp.view.ui.BaseFragment
 import com.google.firebase.database.*
 import es.dmoral.toasty.Toasty
-import org.w3c.dom.Comment
 import timber.log.Timber
 import javax.inject.*
 
 class DetailsFragment : BaseFragment(R.layout.details_fragment_start) {
 
-    private val binding: DetailsFragmentStartBinding by viewBinding()
+    private var binding: DetailsFragmentStartBinding? = null
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -37,6 +38,14 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment_start) {
     private lateinit var viewModel: DetailsViewModel
     private lateinit var adapter: MessageAdapter
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+            DetailsFragmentStartBinding.inflate(inflater, container, false).apply { binding = this }.root
+
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -45,13 +54,13 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment_start) {
         viewModel.providerId = DetailsFragmentArgs.fromBundle(requireArguments()).providerId
 
         adapter = MessageAdapter()
-        binding.messagesRecycler.apply {
+        binding?.messagesRecycler?.apply {
             adapter = this@DetailsFragment.adapter
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
         viewModel.detailsNotifier.observe(viewLifecycleOwner, { update(it) })
-        binding.updateButton.setOnClickListener { viewModel.update() }
+        binding?.updateButton?.setOnClickListener { viewModel.update() }
     }
 
     override fun onResume() {
@@ -65,12 +74,11 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment_start) {
         fbMessages.removeEventListener(childEventListener)
     }
 
-    private fun loading() {
-        binding.progressBar.root.visibility = View.VISIBLE
-    }
+    private fun loading() =
+            setProgressVisibility(true)
 
     private fun error(message: String?) {
-        binding.progressBar.root.visibility = View.GONE
+        setProgressVisibility(false)
         message?.let { Toasty.error(requireContext(), it, Toast.LENGTH_LONG).show() }
     }
 
@@ -83,7 +91,7 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment_start) {
     }
 
     private fun update(data: LocationWithWeathers?) {
-        binding.progressBar.root.visibility = View.GONE
+        setProgressVisibility(true)
 
         if (data == null) {
             Timber.d("LocationWithWeathers is null!")
@@ -93,21 +101,29 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment_start) {
         val location = data.location
         val weather = data.weathers.firstOrNull { it.providerId == viewModel.providerId }
 
-        binding.weatherIcon.setImageResource(weatherCodes.from(weather?.code ?: 0).getIcon(location))
-        binding.windIcon.rotation = weather?.windDegree?.toFloat() ?: 0F
-        binding.description.text = getString(weatherCodes.from(weather?.code ?: 0).description)
-        binding.locationName.text = location.name
-        binding.locationAddress.text = location.address
-        binding.coordinates.text = location.coord.toString()
-        binding.timezone.text = getString(R.string.timezone, location.timeZone.toString())
-        binding.temp.text = getString(R.string.temp_celsium, weather?.temp ?: 0)
-        binding.tempFeelsLike.text = getString(R.string.temp_feels_like_celsium, weather?.tempFeelsLike ?: 0)
-        binding.wind.text = getString(R.string.wind_speed_ms, weather?.windSpeed ?: 0)
-        binding.pressure.text = getString(R.string.pressure, weather?.pressure ?: 0)
-        binding.humidity.text = getString(R.string.humidity, weather?.humidity ?: 0)
-        binding.clouds.text = getString(R.string.clouds, weather?.clouds ?: 0)
-        binding.sunrise.text = getString(R.string.sunrise, location.sunrise.toString(DateFormats.sunTime))
-        binding.sunset.text = getString(R.string.sunset, location.sunset.toString(DateFormats.sunTime))
+        binding?.apply {
+            weatherIcon.setImageResource(weatherCodes.from(weather?.code
+                    ?: 0).getIcon(location))
+            windIcon.rotation = weather?.windDegree?.toFloat() ?: 0F
+            description.text = getString(weatherCodes.from(weather?.code ?: 0).description)
+            locationName.text = location.name
+            locationAddress.text = location.address
+            coordinates.text = location.coord.toString()
+            timezone.text = getString(R.string.timezone, location.timeZone.toString())
+            temp.text = getString(R.string.temp_celsium, weather?.temp ?: 0)
+            tempFeelsLike.text = getString(R.string.temp_feels_like_celsium, weather?.tempFeelsLike
+                    ?: 0)
+            wind.text = getString(R.string.wind_speed_ms, weather?.windSpeed ?: 0)
+            pressure.text = getString(R.string.pressure, weather?.pressure ?: 0)
+            humidity.text = getString(R.string.humidity, weather?.humidity ?: 0)
+            clouds.text = getString(R.string.clouds, weather?.clouds ?: 0)
+            sunrise.text = getString(R.string.sunrise, location.sunrise.toString(DateFormats.sunTime))
+            sunset.text = getString(R.string.sunset, location.sunset.toString(DateFormats.sunTime))
+        }
+    }
+
+    private fun setProgressVisibility(isVisible: Boolean) {
+        binding?.progressBar?.root?.isVisible = isVisible
     }
 
     private val messages = mutableMapOf<String, String>()
@@ -139,7 +155,7 @@ class DetailsFragment : BaseFragment(R.layout.details_fragment_start) {
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            Timber.w(databaseError.toException(),"postComments:onCancelled")
+            Timber.w(databaseError.toException(), "postComments:onCancelled")
             Toast.makeText(context, "Failed to load comments.", Toast.LENGTH_SHORT).show()
         }
     }

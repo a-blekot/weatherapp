@@ -1,7 +1,7 @@
 package com.anadi.weatherapp.data.db.location
 
 import androidx.room.ColumnInfo
-import com.google.android.gms.maps.model.LatLng
+import com.anadi.weatherapp.view.ui.locations.LocationsViewModel
 import kotlin.math.max
 import kotlin.math.min
 
@@ -28,7 +28,7 @@ data class Coord(
             return Coord(checkedLat, checkedLon)
         }
 
-        fun from(coord: LatLng) = Coord(coord.latitude, coord.longitude)
+        fun from(coord: LocationsViewModel.LatLng) = Coord(coord.latitude, coord.longitude)
 
         private const val PI2_RADIAN = 360.0
         const val PI_RADIAN = 180.0

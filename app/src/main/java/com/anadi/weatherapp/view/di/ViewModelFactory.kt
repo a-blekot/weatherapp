@@ -62,8 +62,7 @@ class ViewModelModule {
     }
 
     @Provides
-    @IntoMap
-    @ViewModelKey(LocationsViewModel::class)
+    @[IntoMap ViewModelKey(LocationsViewModel::class)]
     fun locationsViewModel(
             networkMonitor: NetworkMonitor,
             addLocationUseCase: AddLocationUseCase,
@@ -81,15 +80,13 @@ class ViewModelModule {
     }
 
     @Provides
-    @IntoMap
-    @ViewModelKey(ProvidersViewModel::class)
+    @[IntoMap ViewModelKey(ProvidersViewModel::class)]
     fun providersViewModel(locationRepository: LocationRepository): ViewModel {
         return ProvidersViewModel(locationRepository)
     }
 
     @Provides
-    @IntoMap
-    @ViewModelKey(DetailsViewModel::class)
+    @[IntoMap ViewModelKey(DetailsViewModel::class)]
     fun detailsViewModel(
             updateLocationUseCase: UpdateLocationUseCase, locationRepository: LocationRepository
     ): ViewModel {

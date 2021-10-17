@@ -8,7 +8,7 @@
     // # TEMP
     <string name="temp_celsium">Temp: %1$d\u2103</string>
     <string name="temp_short_celsium" translatable="false">%1$d\u2103</string>
-    <string name="temp_celsium_stub" translatable="false">8.0\u2103</string>
+    <string name="temp_celsium_stub" translatable="false">25\u2103</string>
     <string name="temp_feels_like_celsium">Feels like: %1$d\u2103</string>
 
     // # WIND

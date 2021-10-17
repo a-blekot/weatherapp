@@ -65,6 +65,16 @@
     <color name="color_green_00">#000000</color>
 
 
+    <color name="color_top_bar">#6d6b90</color>
+    <color name="color_bottom_bar">#3a5185</color>
+    <color name="color_midle_bar">#375a78</color>
+    <color name="color_midle_bar_items">#274462</color>
+    <color name="color_midle_bar2">#539dca</color>
+    <color name="text_shadow">#7F000000</color>
+
+    <color name="color_humidity_wind_layout">#3d5e7d</color>
+    <color name="color_week_day">#506786</color>
+
     <color name="row_name">@color/color_blue_01</color>
     <color name="row_info">@color/color_blue_03</color>
     <color name="details_info">@color/color_blue_03</color>

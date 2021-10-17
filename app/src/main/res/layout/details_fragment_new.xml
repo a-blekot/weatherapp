@@ -1,56 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/app_background"
     app:layoutDescription="@xml/details_fragment_scene"
     tools:context=".view.ui.details.DetailsFragment">
+
+    <TextView
+        android:id="@+id/location_address"
+        android:layout_width="@dimen/adaptive"
+        android:layout_height="@dimen/adaptive"
+        android:background="@color/color_top_bar"
+        android:gravity="center"
+        android:shadowColor="@color/text_shadow"
+        android:shadowDx="-2"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:shadowDy="-2"
+        android:shadowRadius="1"
+        android:textColor="@color/color_white"
+        app:autoSizeMaxTextSize="72sp"
+        app:autoSizeMinTextSize="24sp"
+        app:autoSizeStepGranularity="2sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        tools:text="Kiev, Ukraine" />
 
     <ImageView
         android:id="@+id/weather_icon"
         android:layout_width="@dimen/adaptive"
         android:layout_height="@dimen/adaptive"
         android:contentDescription="@string/weather_icon_description"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/description"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@id/details_image_bottom_guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintTop_toBottomOf="@id/location_address"
         tools:src="@drawable/s01d" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/details_image_bottom_guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
     <TextView
-        android:id="@+id/description"
-        style="@style/details_main"
+        android:id="@+id/temp"
+        android:layout_width="@dimen/adaptive"
+        android:layout_height="@dimen/adaptive"
+        android:gravity="center"
+        android:shadowColor="@color/text_shadow"
+        android:shadowDx="-2"
+        android:shadowDy="-2"
+        android:shadowRadius="1"
+        android:textColor="@color/color_white"
+        app:autoSizeMaxTextSize="92sp"
+        app:autoSizeMinTextSize="24sp"
+        app:autoSizeStepGranularity="2sp"
+        app:autoSizeTextType="uniform"
+        android:includeFontPadding="false"
+        app:layout_constraintWidth_percent="0.65"
+        app:layout_constraintDimensionRatio="2:1"
+        android:lines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1"
-        tools:text="Clouds" />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="@dimen/adaptive"
-        android:layout_height="2dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/description" />
-
-    <TextView
-        android:id="@+id/temp"
-        style="@style/details_main"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider"
-        tools:text="Temp: 22,2 C" />
+        app:layout_constraintVertical_bias="0.45"
+        tools:text="25 C" />
 
     <TextView
         android:id="@+id/temp_feels_like"
-        style="@style/details_main"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/temp"
+        app:layout_constraintEnd_toEndOf="@id/temp"
         app:layout_constraintTop_toBottomOf="@id/temp"
+        android:layout_width="@dimen/adaptive"
+        android:layout_height="@dimen/adaptive"
+        android:gravity="center"
+        android:shadowColor="@color/text_shadow"
+        android:shadowDx="-2"
+        android:shadowDy="-2"
+        android:shadowRadius="1"
+        android:textColor="@color/color_white"
+        app:autoSizeMaxTextSize="48sp"
+        app:autoSizeMinTextSize="24sp"
+        app:autoSizeStepGranularity="2sp"
+        app:autoSizeTextType="uniform"
+        android:includeFontPadding="false"
+        app:layout_constraintWidth_percent="0.65"
+        app:layout_constraintDimensionRatio="4:1"
+        android:lines="1"
+
         tools:text="Feels like: 22,2 C" />
 
     <TextView
@@ -98,63 +148,64 @@
         android:id="@+id/messagesRecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/color_blue_10_transparent"
         android:padding="2dp"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/update_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/pressure"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="@id/pressure" />
+        app:layout_constraintTop_toTopOf="@id/pressure"
+        tools:listitem="@layout/message_text" />
 
     <TextView
         android:id="@+id/location_name"
         style="@style/details_name"
-        app:layout_constraintBottom_toTopOf="@id/location_address"
+        app:layout_constraintBottom_toTopOf="@id/update_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clouds"
-        app:layout_constraintVertical_bias="0.1"
-        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="1.0"
         tools:text="Kiev" />
 
-    <TextView
-        android:id="@+id/location_address"
-        style="@style/details_info"
-        app:layout_constraintBottom_toTopOf="@id/coordinates"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/location_name"
-        tools:text="Kiev, Ukraine" />
 
     <TextView
         android:id="@+id/coordinates"
         style="@style/details_info"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/timezone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/location_address"
-        tools:text="50.45466, 30.52380" />
+        app:layout_constraintTop_toBottomOf="@id/location_name"
+        tools:text="50.45466, 30.52380"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/timezone"
         style="@style/details_info"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/sunrise"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/coordinates"
-        tools:text="GMT+02:00" />
+        tools:text="GMT+02:00"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/sunrise"
         style="@style/details_info"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/sunset"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/timezone"
-        tools:text="Sunrise: 07:25" />
+        tools:text="Sunrise: 07:25"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/sunset"
         style="@style/details_info"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sunrise"
-        tools:text="Sunset: 17:22" />
+        tools:text="Sunset: 17:22"
+        tools:visibility="visible" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/update_button"
@@ -166,4 +217,4 @@
         android:id="@+id/progress_bar"
         layout="@layout/progress_bar_default" />
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

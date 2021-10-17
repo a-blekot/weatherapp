@@ -13,7 +13,6 @@ import com.anadi.weatherapp.domain.location.AddLocationUseCase
 import com.anadi.weatherapp.domain.location.CheckUpdatesAllLocationsUseCase
 import com.anadi.weatherapp.domain.location.LocationRepository
 import com.anadi.weatherapp.domain.places.PlacesWrapper
-import com.google.android.libraries.places.api.model.Place
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -55,6 +54,19 @@ class LocationsViewModel @Inject constructor(
 
     val placesIntent: Intent
         get() = placesWrapper.createActivityIntent()
+
+    data class Place(
+            val id: String,
+            val name: String,
+            val address: String,
+            val latLng: LatLng,
+            val utcOffsetMinutes: Int
+    )
+
+    data class LatLng(
+            val latitude: Double,
+            val longitude: Double
+    )
 
     fun addLocation(place: Place) {
         viewModelScope.launch {
